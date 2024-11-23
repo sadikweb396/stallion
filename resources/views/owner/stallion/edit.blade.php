@@ -144,7 +144,20 @@
                                   <input type="text"id="Height"value="{{$stallion->height}}"name="height"/>
                                  
                                 </div>
-                                
+
+                                <div class="form-group">
+                                  <label for="Performance">
+                                   color
+                                  </label>
+                                  <input type="color" name="color"value="{{$stallion->color}}">
+                                </div>
+                                <div class="form-group">
+                                  <label for="Performance">
+                                  Stallion Heading
+                                  </label>
+                                  <input type="text" name="stallion_heading"value="{{$stallion->stallion_heading}}">
+                                </div>
+
                                 <div class="form-group">
                                   <label for="Performance">
                                     First foal crop year
@@ -155,6 +168,8 @@
                                     name="first_foal_crop_year"value="{{$stallion->first_foal_crop_year}}"
                                   />  
                                 </div>
+
+
                                 <div class="form-group">
                                   <label for="Performance">
                                     Please Select one Option
@@ -395,10 +410,8 @@
                               <article class="stallion_items text-center">
                                 <div
                                   class="add_stallion_bar d-flex align-items-center justify-content-center background-img"
-                                  style="background-image: url('{{ asset($stallionvideo->stallion_video) }}');"
-
-                                >
-                                  <span class="percent_box">
+                                  style="background-image: url('{{ asset($stallionvideo->stallion_video) }}');">
+                                    <span class="percent_box">
                                     <svg>
                                       <circle
                                         cx="105"
@@ -734,9 +747,11 @@
                                     <a>
                                   </div>
                                 </div> 
+                                @php $progenyImage=DB::table('progenyimages')->where('progeny_id',$progeny->id)->first(); @endphp
+                                {{$progenyImage->id}}
                                 <div
                                   class="add_stallion_bar d-flex align-items-center justify-content-center background-img"
-                                  style="background-image: url('{{ asset($progeny->stallion_image) }}');">
+                                  style="background-image:@if($progenyImage) url('{{ asset($progenyImage->image) }}'); @endif">
                                   <span class="percent_box">
                                     <svg>
                                       <circle

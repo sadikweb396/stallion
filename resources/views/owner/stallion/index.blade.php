@@ -21,7 +21,6 @@
                   <a href="{{ route('owner.stallion',['id' => $stallionlist['id']]) }}" class="d-flex align-items-center gap10">
                   @if($stallionlist['image'])
                   <div
-                 
                     class="add_stallion_bar d-flex align-items-center justify-content-center background-img"
                     style="background-image: url('{{url( $stallionlist['image']) }}');">
                     <span class="percent_box">

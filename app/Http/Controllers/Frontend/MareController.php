@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\category;
 use App\Models\stallion;
+use App\Models\maredetails;
 
 class MareController extends Controller
 {
@@ -16,12 +17,16 @@ class MareController extends Controller
         $stallions = Stallion::with(['stallionImages' => function ($query) {
             $query->orderBy('new_element', 'DESC');
         }])->where('category','mares')->where('status',1)->orderBy('id', 'ASC')->take(4)->get();
-        return view('frontend.mare', compact('categories', 'stallions'));
+
+        $maredetails = maredetails::where('id',1)->first(); 
+       
+        return view('frontend.mare', compact('categories', 'stallions','maredetails'));
        
     }
 
     public function signleMare($id)
     {  
+        
         $id=Stallion::where('name',$id)->value('id');
         $ownerId=stallion::where('id',$id)->value('id');
 

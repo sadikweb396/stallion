@@ -64,3 +64,4 @@ Route::prefix('owner')->name('owner.')->group(function (){
 
 Route::post('stripe',[StallionController::class,'stripePost'])->name('stripe.post');
 
+Route::post('stripe/mare/store',[MareController::class,'stripePost'])->name('mare.stripe.store');

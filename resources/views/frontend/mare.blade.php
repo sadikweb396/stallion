@@ -3,22 +3,21 @@
     <!-- banner section -->
     <section
       class="hero_banner_m d-flex align-items-center stallions-banner"
-      style="background-image: url('{{ asset('assets/frontend/image/stallions-banner.png') }}');">
+      style="background-image: url({{ $maredetails->banner_image }});">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <div class="hero_banner_i">
               <div class="banner_heading-m text-center mb20">
-                <h1>Mares</h1>
+                <h1>{{$maredetails->banner_heading}}</h1>
               </div>
               <div class="para_banner text-center">
                 <p>
-                  The Sire Producing Quality <br />
-                  Genetics and Performers
+                {{$maredetails->banner_pargaraph}}
                 </p>
               </div>
             </div>
-          </div>
+          </div> 
         </div>
       </div>
     </section>

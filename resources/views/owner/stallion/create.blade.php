@@ -164,6 +164,12 @@
                                   <textarea name="professional_trainer" id="editor4"></textarea>
                                 </div>
                                 <div class="form-group">
+                                  <label for="Performance">
+                                   Background Story 
+                                  </label>
+                                  <textarea name="background_story"id="backgroundstory"></textarea>
+                                </div>
+                                <div class="form-group">
                                   <label for="Performance"> Bred By </label>
                                   <input
                                     type="text"
@@ -180,7 +186,7 @@
                                     id="Registration-Details"
                                     name="registration_details"
                                   />
-                                </div>
+                                 
                                 <div class="form-group">
                                   <label for="Performance">
                                     Put semen available from
@@ -215,7 +221,18 @@
                                     name="height"
                                   />
                                 </div>
-                               
+                                <div class="form-group">
+                                  <label for="Performance">
+                                   color
+                                  </label>
+                                  <input type="color" name="color" value="#ff0000">
+                                </div>
+                                <div class="form-group">
+                                  <label for="Performance">
+                                  Stallion Heading
+                                  </label>
+                                  <input type="text" name="stallion_heading">
+                                </div>
                                 <div class="form-group">
                                   <label for="Performance">
                                     First foal crop year

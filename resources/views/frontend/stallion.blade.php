@@ -3,18 +3,17 @@
     <!-- banner section -->
     <section
       class="hero_banner_m d-flex align-items-center stallions-banner"
-      style="background-image: url('{{ asset('assets/frontend/image/stallions-banner.png') }}');">
+      style="background-image: url({{ $stalliondetails->banner_image }});">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <div class="hero_banner_i">
               <div class="banner_heading-m text-center mb20">
-                <h1>Stallions</h1>
+                <h1>{{$stalliondetails->banner_heading}}</h1>
               </div>
               <div class="para_banner text-center">
                 <p>
-                  The Sire Producing Quality <br />
-                  Genetics and Performers
+                {{$stalliondetails->banner_pargaraph}}
                 </p>
               </div>
             </div>
@@ -35,7 +34,7 @@
               <h2>Featured Lisitngs</h2>
             </div>
             <div id="catslider" class="catslider owl-carousel owl-theme">
-            @foreach($stallions as $stallion)
+                   @foreach($featureStatus as $stallion)
                     @php
                     $stallionImage = $stallion->stallionImages->firstWhere('new_element', 1) ?? 
                         $stallion->stallionImages->first();
@@ -67,24 +66,11 @@
           <div class="col-lg-12">
             <div class="about_stallion_m">
               <div class="about_stallion_heading text-center mb20">
-                <h2>Heading about something about Sttalions</h2>
+                <h2>{{$stalliondetails->heading1}}</h2>
               </div>
               <div class="about_stallions_para text-center mb20">
                 <p>
-                  About 300-500 words about Stallions and what we do and offer
-                  so that we can target SEO as well.
-                </p>
-                <p>
-                  About 300-500 words about Stallions and what we do and offer
-                  so that we can target SEO as well. About 300-500 words about
-                  Stallions and what we do and offer so that we can target SEO
-                  as well. About 300-500 words about Stallions and what we do
-                  and offer so that we can target SEO as well. About 300-500
-                  words about Stallions and what we do and offer so that we can
-                  target SEO as well.About 300-500 words about Stallions and
-                  what we do and offer so that we can target SEO as well. About
-                  300-500 words about Stallions and what we do and offer so that
-                  we can target SEO as well.
+                {!!$stalliondetails->paragraph1!!}
                 </p>
               </div>
               <div class="about_stallions_btn text-center">
@@ -175,24 +161,11 @@
           <div class="col-lg-12">
             <div class="about_stallion_m">
               <div class="about_stallion_heading text-center mb20">
-                <h2>Heading about something about Sttalions</h2>
+              <h2>{{$stalliondetails->heading1}}</h2>
               </div>
               <div class="about_stallions_para text-center mb20">
                 <p>
-                  About 300-500 words about Stallions and what we do and offer
-                  so that we can target SEO as well.
-                </p>
-                <p>
-                  About 300-500 words about Stallions and what we do and offer
-                  so that we can target SEO as well. About 300-500 words about
-                  Stallions and what we do and offer so that we can target SEO
-                  as well. About 300-500 words about Stallions and what we do
-                  and offer so that we can target SEO as well. About 300-500
-                  words about Stallions and what we do and offer so that we can
-                  target SEO as well.About 300-500 words about Stallions and
-                  what we do and offer so that we can target SEO as well. About
-                  300-500 words about Stallions and what we do and offer so that
-                  we can target SEO as well.
+                {!!$stalliondetails->paragraph2!!}
                 </p>
               </div>
               <div class="about_stallions_btn text-center">

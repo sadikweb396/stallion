@@ -184,44 +184,48 @@
     </section>
     <!-- Mares section end -->
     
-    <!-- Listing Slider start -->
-    <section id="categorySlider" class="categorySlider pdb100 listing_category">
+    <!-- Listing Slider start -->s
+    <section
+      id="categorySlider_services_m"
+      class="categorySlider slider_services_m slider_lastest_up pdb200"
+      style="background-image: url(./assets/image/Rectangle\ 43.png)"
+    >
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
-            <div class="listing_heading text-center mb50">
-              <h2>NEW TO EMINENT  
+            <div class="listing_heading text-center mb50 pdbottom50">
+            <h2>NEW TO EMINENT  
               </h2>
             </div>
             <div
-              id="catslider_listing"
-              class="catslider owl-carousel owl-theme mb50">
-                  @foreach($stallions as $stallion)
+              id="categorySlider_services"
+              class="catslider owl-carousel owl-theme"
+            >
+                   @foreach($stallions as $stallion)
                     @php
                     $stallionImage = $stallion->stallionImages->firstWhere('new_element', 1) ?? 
                         $stallion->stallionImages->first();
                     @endphp
                     @if($stallionImage)
-                      <div class="item">
-                          <a href="{{ url('single-stallion') }}">
-                              <div class="catimg d-flex align-items-end justify-content-center" style="background-image: url({{ $stallionImage->stallion_image }});">
-                                  <div class="cattitle">
-                                      <p>{{ $stallion->name }}</p>
-                                  </div>
-                                  <div class="category_badegs">
-                                      <p>
-                                          <a href="javascript:void(0)">{{ $stallion->category }}</a>
-                                      </p>
-                                  </div>
-                              </div>
-                          </a>
-                      </div>
-                      @endif
-                  @endforeach
-            </div>
-            <div class="listing_bttn text-center">
-              <a href="javascript:void()" class="btn_i">View All Listings</a>
-            </div>
+                    <div class="item">
+                      <a href="javascript:void(0)">
+                        <div
+                          class="catimg d-flex align-items-end justify-content-center"
+                          style="background-image: url({{ $stallionImage->stallion_image }});">
+                          <div class="cattitle">
+                            <p>{{$stallion->name}}</p>
+                          </div>
+                          <div class="maque_badges"style="background-color:{{$stallion->color}};">
+                            <marquee behavior="smooth" direction="left">
+                            {{ ucfirst($stallion->stallion_heading) }}  Profiles
+                            </marquee>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    @endif
+                 @endforeach
+          </div>
           </div>
         </div>
       </div>
@@ -818,79 +822,7 @@
     </section>
     <!-- who are section end -->
     <!-- service slider start -->
-    <section
-      id="categorySlider_services_m"
-      class="categorySlider pdb50 slider_services_m pdb100"
-      style="background-image: url(./assets/image/Rectangle\ 43.png)"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div
-              id="categorySlider_services"
-              class="catslider owl-carousel owl-theme"
-            >
-              <div class="item">
-                <a href="javascript:void(0)">
-                  <div
-                    class="catimg d-flex align-items-end justify-content-center"
-                    style="
-                      background-image: url(./assets/image/Rectangle\ 33.png);
-                    "
-                  >
-                    <div class="cattitle">
-                      <p>View More</p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="item">
-                <a href="javascript:void(0)">
-                  <div
-                    class="catimg d-flex align-items-end justify-content-center"
-                    style="
-                      background-image: url(./assets/image/Rectangle\ 34.png);
-                    "
-                  >
-                    <div class="cattitle">
-                      <p>View More</p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="item">
-                <a href="javascript:void(0)">
-                  <div
-                    class="catimg d-flex align-items-end justify-content-center"
-                    style="
-                      background-image: url(./assets/image/Rectangle\ 35.png);
-                    "
-                  >
-                    <div class="cattitle">
-                      <p>View More</p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="item">
-                <a href="javascript:void(0)">
-                  <div
-                    class="catimg d-flex align-items-end justify-content-center"
-                    style="
-                      background-image: url(./assets/image/Rectangle\ 36.png);
-                    "
-                  >
-                    <div class="cattitle">
-                      <p>View More</p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+   
     <!-- services slider end -->
     <!-- Get in touch start -->
     <section id="get_touch_m">

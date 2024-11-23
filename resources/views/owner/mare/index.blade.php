@@ -13,17 +13,17 @@
                     <p><a href="{{route('owner.mare.create')}}">+</a></p>
                   </div>
                 </article>
-                @foreach($stallions as $stallion)
+                @foreach($stallionlists as $stallionlist)
                 <article class="stallion_items text-center">
                   <div class="stallion_title mb20">
-                    <p>{{$stallion->name}}</p>
+                    <p>{{$stallionlist['name']}}</p>
                   </div>
-
-                  <a href="{{ route('owner.mare',['id' => $stallion->id]) }}" class="d-flex align-items-center gap10">
-                 
+                  <a href="{{ route('owner.mare',['id' => $stallionlist['id']]) }}" class="d-flex align-items-center gap10">
+                  @if($stallionlist['image'])
                   <div
+                 
                     class="add_stallion_bar d-flex align-items-center justify-content-center background-img"
-                    style="background-image: url(../assets/image/hourse.png)">
+                    style="background-image: url('{{url( $stallionlist['image']) }}');">
                     <span class="percent_box">
                       <svg>
                         <circle cx="105" cy="105" r="100"></circle>
@@ -31,11 +31,28 @@
                           cx="105"
                           cy="105"
                           r="100"
-                          style="--percent: 90"
+                          style="--percent: {{$stallionlist['completionPercentage']}}"
                         ></circle>
                       </svg>
                     </span>
                   </div>
+                  @else
+                  <div
+                    class="add_stallion_bar d-flex align-items-center justify-content-center background-img"
+                    style="">
+                    <span class="percent_box">
+                      <svg>
+                        <circle cx="105" cy="105" r="100"></circle>
+                        <circle
+                          cx="105"
+                          cy="105"
+                          r="100"
+                          style="--percent: {{$stallionlist['completionPercentage']}}"
+                        ></circle>
+                      </svg>
+                    </span>
+                  </div>
+                  @endif
                   </a>
                 </article>
                 @endforeach

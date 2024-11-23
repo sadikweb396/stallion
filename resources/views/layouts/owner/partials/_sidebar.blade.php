@@ -34,8 +34,7 @@
                   </a>
                 </li>
 
-                <li class="menu_list_items mb20">
-               
+               <li class="menu_list_items mb20">
                 <a href="{{ url('owner/mares') }}" class="d-flex align-items-center gap10">
                     <span class="list_icon">
                       <i class="fas fa-heart"></i>
@@ -43,7 +42,7 @@
                     <span class="menu_items_t">Your Mares </span>
                   </a>
                 </li>
-                
+                  <!--
                 <li class="menu_list_items mb20">
                   <a href="#" class="d-flex align-items-center gap10">
                     <span class="list_icon">
@@ -87,8 +86,8 @@
                     </span>
                     <span class="menu_items_t"> Settings </span>
                   </a>
-                </li>
-                <li class="menu_list_items mb20">
+                </li> -->
+                <!-- <li class="menu_list_items mb20">
                   <a href="#" class="d-flex align-items-center gap10">
                     <span class="list_icon">
                       <i class="fas fa-file-invoice-dollar"></i>
@@ -111,7 +110,17 @@
                     </span>
                     <span class="menu_items_t"> Documentation </span>
                   </a>
+                </li> -->
+                @can('view photographer')
+                <li class="menu_list_items mb20 collaose_menu">
+                  <a href="{{ url('admin/photographer') }}" class="d-flex align-items-center gap10">
+                    <span class="list_icon">
+                      <i class="fas fa-play-circle"></i>
+                    </span>
+                    <span class="menu_items_t">photographer</span>
+                  </a>
                 </li>
+                @endcan
                 @can('view role')
                 <li class="menu_list_items mb20 collaose_menu">
                   <a href="{{ url('roles') }}" class="d-flex align-items-center gap10">
@@ -139,6 +148,27 @@
                       <i class="fas fa-play-circle"></i>
                     </span>
                     <span class="menu_items_t">Users</span>
+                  </a>
+                </li>
+                @endcan
+                @can('stallion list')
+                <li class="menu_list_items mb20 collaose_menu">
+                  <a href="{{ url('admin/stallions') }}" class="d-flex align-items-center gap10">
+                    <span class="list_icon">
+                      <i class="fas fa-play-circle"></i>
+                    </span>
+                    <span class="menu_items_t">Stallion List</span>
+                  </a>
+                </li>
+                @endcan
+
+                @can('mare list')
+                <li class="menu_list_items mb20 collaose_menu">
+                  <a href="{{ url('admin/mares') }}" class="d-flex align-items-center gap10">
+                    <span class="list_icon">
+                      <i class="fas fa-play-circle"></i>
+                    </span>
+                    <span class="menu_items_t">Mare List</span>
                   </a>
                 </li>
                 @endcan

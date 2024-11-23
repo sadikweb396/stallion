@@ -23,11 +23,8 @@ use App\Http\Controllers\Owner\Auth;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('login',[LoginController::class,'showLoginForm'])->name('login');
 Route::post('admin/login',[LoginController::class,'login'])->name('admin.login.store');
-
-
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('permissions',App\Http\Controllers\PermissionController::class);
     Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class,'destroy']);
@@ -65,6 +62,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('approve/{id}',[StallionController::class,'approve'])->name('approve');
         Route::post('decline/{id}',[StallionController::class,'decline'])->name('decline');
 
+        Route::post('active/{id}',[StallionController::class,'active'])->name('active');
+        Route::post('inactive/{id}',[StallionController::class,'inactive'])->name('inactive');
+
         Route::get('performance-progeny',[HomeController::class,'progenyPerformance']);
       
         Route::post('progeny-performance/store',[HomeController::class,'progenyPerformanceStore'])->name('performance-progeny.store');
@@ -72,6 +72,12 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('topside',[HomeController::class,'topSide']);
 
         Route::post('topside',[HomeController::class,'topSideStore'])->name('topside.store');
+
+        Route::get('stallion/details',[StallionController::class,'stallionDetails']);
+        Route::post('stallion-details',[StallionController::class,'stallionDetailsStore'])->name('stallion-details.store');
+        Route::get('mare/details',[MareController::class,'mareDetails']);
+        Route::post('mare-details',[MareController::class,'mareDetailsStore'])->name('mare-details.store');
+       
     });
 });
 

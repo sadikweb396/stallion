@@ -188,7 +188,7 @@
                                 <div
                                   class="add_stallion_bar d-flex align-items-center justify-content-center background-img"
                                   style="
-                                    background-image: url('{{ asset($progenyImage->stallion_image) }}');
+                                    background-image: url('{{ asset($progenyImage->image) }}');
                                   "
                                 >
                                   <span class="percent_box">

@@ -25,7 +25,7 @@ class HomeController extends Controller
         
             $latestUpdates = Stallion::with(['stallionImages' => function ($query) {
                 $query->orderBy('new_element', 'DESC');
-            }])->where('status',1)->orderBy('latest_update','DESC')->get();
+            }])->where('status',1)->where('update_status',1)->orderBy('latest_update','DESC')->get();
 
             return view('frontend.home')
             ->with('categorys',$categorys)->with('topside',$topside) ->with('progenyperformance',$progenyperformance)

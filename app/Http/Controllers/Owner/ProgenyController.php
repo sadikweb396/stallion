@@ -39,11 +39,28 @@ class ProgenyController extends Controller
                 $progeny->exceptional_progeny=0;  
                 }
                 $progeny->save();
+                $updateCount=stallion::where('id',$progeny->stallion_id)->where('status',1)->count();
+                if($updateCount==1)
+                {
+                    stallion::where('id',$progeny->stallion_id)->update([
+                        'update_status' =>1,
+                        'latest_update' => Carbon::now(),
+                    ]);
+                }
+                $value=stallion::where('id',$progeny->stallion_id)->value('category');
+                if($value=='mares')
+                {
+                    $value='mare';
+                }
+                elseif($value=='stallions')
+                {
+                    $value='stallion';
+                }
                 stallion::where('id',$progeny->stallion_id)->update([
                     'latest_update' => Carbon::now(),
                 ]);
                 toast('Progeny create successfully!','success');
-                return redirect()->route('owner.stallion',['id' =>$request->stallion_id]);
+                return redirect()->route('owner.' . $value, ['id' => $request->stallion_id]);
             } catch (\Exception $e) {
                 Alert::error('Error', 'Error create Progeny: ' . $e->getMessage());
                 return redirect()->back();
@@ -83,14 +100,23 @@ class ProgenyController extends Controller
                 $progeny->progeny_image=0;
                 $progeny->save();
                 
-                $result = stallion::where('id',$progeny->stallion_id)->update([
-                    'latest_update' => Carbon::now(),
-                ]);
-
-                return redirect()->route('owner.mare',['id' =>$request->stallion_id]);
+                // $result = stallion::where('id',$progeny->stallion_id)->update([
+                //     'latest_update' => Carbon::now(),
+                // ]);
+                $stallionId=progeny::where('id',$request->stallion_id)->value('stallion_id');
+                $stallionName=stallion::where('id',$stallionId)->value('category');
+                if($stallionName=='mares')
+                {
+                    $stallionName='mare';
+                }
+                elseif($stallionName=='stallions')
+                {
+                    $stallionName='stallion';
+                }
+                toast('Progeny Image create successfully!','success');
+                return redirect()->route('owner.' . $stallionName, ['id' => $stallionId]);
             }
-            toast('Mare image create successfully!','success');
-            return redirect()->route('owner.stallion',['id' =>$request->stallion_id]);
+           
         } catch (\Exception $e) {
             Alert::error('Error', 'Error create mare image: ' . $e->getMessage());
             return redirect()->back();

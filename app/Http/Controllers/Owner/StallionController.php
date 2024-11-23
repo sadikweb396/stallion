@@ -31,7 +31,7 @@ class StallionController extends Controller
     public function index()
     {  
         
-    $stallions = Stallion::with('firstImage','firststallionvideo') // Eager load video to optimize
+    $stallions = Stallion::with('primaryImage','firststallionvideo') // Eager load video to optimize
     ->where('category', 'stallions')
     ->where('user_id', Auth::id())
     ->get();
@@ -39,63 +39,121 @@ class StallionController extends Controller
     $stallionlists = [];
     
     foreach ($stallions as $stallion) {
-        $filledFields = 1; 
+        $filledFields = 0; 
         $image = null; 
-        $videoFilled = false; 
+        // $videoFilled = false; 
+        
         if ($stallion->name) {
-            $filledFields++;
+            $filledFields=4;
+           
         }
     
         if ($stallion->performance_history) {
-            $filledFields++;
+            $filledFields=$filledFields+4;
         }
+        
     
         if ($stallion->background_story) {
-            $filledFields++;
+            $filledFields=$filledFields+4;
         }
     
+        if ($stallion->lifetime_story) {
+            $filledFields=$filledFields+4;
+        }
+
+        if ($stallion->registration_details) {
+            $filledFields=$filledFields+4;
+        }
+
         if ($stallion->height) {
-            $filledFields++;
+            $filledFields=$filledFields+4;
         }
 
         if ($stallion->bred_by) {
-            $filledFields++;
+            $filledFields=$filledFields+4;
+            
         }
 
         if ($stallion->owner_story) {
-            $filledFields++;
+            $filledFields=$filledFields+4;
+            
         }
-
         if ($stallion->first_foal_crop_year) {
-            $filledFields++;
+            $filledFields=$filledFields+4;
+            
         }
 
-        if ($stallion->firstImage) {
-            if ($stallion->firstImage->stallion_name) {
-                $filledFields++;
-                $image = $stallion->firstImage->stallion_image; // Store image
+        if ($stallion->professional_trainer) {
+            $filledFields=$filledFields+4;
+            
+        }
+
+        if ($stallion->put_semen_available_from) {
+            $filledFields=$filledFields+4;
+            
+        }
+
+        if ($stallion->current_performing_discipline) {
+            $filledFields=$filledFields+4;
+            
+        }
+
+        if ($stallion->trainer_history) {
+            $filledFields=$filledFields+4;
+            
+        }
+
+        if ($stallion->status) {
+            $filledFields=$filledFields+4;  
+            
+        }
+        
+        if ($stallion->status) {
+            $filledFields=$filledFields+4;
+            
+        }
+        
+        foreach($stallions as $stalliondata)
+        {
+            $count=StallionImage::where('stallion_id',$stalliondata->id)->count();
+            if($count>=5)
+            {
+               $filledFields=$filledFields+13;
+
+            }
+            $count=semencontract::where('stallion_id',$stalliondata->id)->count();
+            if($count==1)
+            {
+                $filledFields=$filledFields+13;
+            }
+
+        }
+        if ($stallion->primaryImage){
+            if ($stallion->primaryImage->stallion_name) {
+                $image = $stallion->primaryImage->stallion_image; 
+                
             }
         }
+
         if ($stallion->firststallionvideo) {
             if ($stallion->firststallionvideo->stallion_name) {
-                $filledFields++;
+                $filledFields=$filledFields+14;
                 $videoFilled = true; 
             }
         }
-    
+
+        
         $stallionlists[] = [
             'name' => $stallion->name ?? 'N/A', // Default to 'N/A' if name is not set
             'filledFields' => $filledFields,
             'totalFields' => 20, // Total fields are 10 as per your logic
-            'completionPercentage' => ($filledFields / 20) * 100, // Calculate completion percentage
+            'completionPercentage' => ($filledFields / 100) * 100, // Calculate completion percentage
             'image' => $image, // Image or null
-            'videoFilled' => $videoFilled, // Track if video is filled
+          
             'id' => $stallion->id ,
         ];
     }
-    
-   
-        
+      
         return view('owner.stallion.index')
         ->with('stallions',$stallions)
         ->with('stallionlists',$stallionlists);
@@ -104,36 +162,6 @@ class StallionController extends Controller
     public function create()
     {
         return view('owner.stallion.create');
-    }
-
-    public function stores()
-    {
-        try {
-            $stallion = new Stallion();
-            $stallion->category ='stallions';
-            $stallion->name = $request->name;
-            $stallion->user_id = Auth::id();
-            $stallion->lifetime_story = $request->lifetimestory;
-            $stallion->performance_history= $request->performance_history;
-            $stallion->owner_story=$request->owner_story;
-            $stallion->lifetime_story=$request->lifetime_Story;
-            $stallion->height = $request->height;
-            $stallion->registration_details=$request->registration_details;
-            $stallion->professional_trainer=$request->professional_trainer;
-            $stallion->put_semen_available_from=$request->put_semen_available_from;
-            $stallion->current_performing_discipline=$request->current_performing_discipline;
-            $stallion->trainer_history=$request->trainer_history;
-            $stallion->bred_by=$request->bred_by;
-            $stallion->first_foal_crop_year=$request->first_foal_crop_year;
-            $stallion->status=0;
-            $stallion->save();
-            $id=$stallion->id;
-            toast('Stallion created  successfully!','success');
-            return redirect()->route('owner.stallion', ['id' => $id]);
-        } catch (\Exception $e) {
-            Alert::error('Error', 'Error updating stallion: ' . $e->getMessage());
-            return redirect()->back();
-        }
     }
 
     public function store(Request $request)
@@ -149,7 +177,10 @@ class StallionController extends Controller
             'height' => $request->height,  // Ensure all required fields are captured
             'put_semen_available_from' => $request->put_semen_available_from,
             'current_performing_discipline' => $request->current_performing_discipline,
-            'first_foal_crop_year' => $request->first_foal_crop_year
+            'first_foal_crop_year' => $request->first_foal_crop_year,
+            'background_story' => $request->background_story,
+            'stallion_heading' => $request->stallion_heading,
+            'color' => $request->color
         ]);
         return view('stripe.index');
     } 
@@ -173,8 +204,15 @@ class StallionController extends Controller
             $stallion->put_semen_available_from = session('put_semen_available_from');
             $stallion->current_performing_discipline = session('current_performing_discipline');
             $stallion->first_foal_crop_year = session('first_foal_crop_year');
+            $stallion->background_story=session('background_story');
+            $stallion->color=session('color');
+            $stallion->stallion_heading=session('stallion_heading');
             $stallion->status=0;
+            $stallion->feature_status=0; 
+            $stallion->update_status=0; 
+            $stallion->status_count=1;
             $stallion->save(); 
+          
             $user = Auth::user();
             // Create a new Stripe Customer
             $customer = Stripe\Customer::create([
@@ -210,8 +248,6 @@ class StallionController extends Controller
         Alert::error('Error', 'Error Stallion created: ' . $e->getMessage());
         return redirect('owner/stallion/create');
     } 
-
-   
 }
 
     public function edit($id)
@@ -245,9 +281,19 @@ class StallionController extends Controller
             $stallion->bred_by=$request->bred_by;
             $stallion->background_story=$request->background_story;
             $stallion->first_foal_crop_year=$request->first_foal_crop_year;
-            $stallion->latest_update=Carbon::now();
+            $stallion->color=$request->color;
+            $stallion->stallion_heading=$request->stallion_heading;
             $stallion->save();
             $id=$stallion->id;
+            $updateCount=stallion::where('id',$stallion->id)->where('status',1)->count();
+            if($updateCount==1)
+            {
+                stallion::where('id',$stallion->id)->update([
+                    'update_status' =>1,
+                    'latest_update' => Carbon::now(),
+                ]);
+            }
+
             toast('Stallion update successfully!','success');
             return redirect()->route('owner.stallion',['id' => $id]);
         } catch (\Exception $e) {
@@ -269,10 +315,14 @@ class StallionController extends Controller
                     $semenData->frozen_semen_lfg = $request->frozen_semen_lfg;
                     $semenData->frozen_semen_price = $request->frozen_semen_price;
                     $semenData->save();   
-                    stallion::where('id',$semenData->stallion_id)->update([
-                        'latest_update' => Carbon::now(),
-                    ]);
-
+                    $updateCount=stallion::where('id',$request->stallion_id)->where('status',1)->count();
+                    if($updateCount==1)
+                    {
+                        stallion::where('id',$request->stallion_id)->update([
+                            'update_status' =>1,
+                            'latest_update' => Carbon::now(),
+                        ]);
+                    }
                    
                 }else{
                     $semenData = new semencontract();  
@@ -284,9 +334,7 @@ class StallionController extends Controller
                     $semenData->frozen_semen_lfg = $request->frozen_semen_lfg;
                     $semenData->frozen_semen_price = $request->frozen_semen_price;
                     $semenData->save();
-                    stallion::where('id',$semenData->stallion_id)->update([
-                        'latest_update' => Carbon::now(),
-                    ]);
+                 
 
                 }
 
@@ -301,9 +349,14 @@ class StallionController extends Controller
                         $vetDetail->email = $request->email;
                         $vetDetail->clinic_number = $request->clinic_number;
                         $vetDetail->save();
-                        stallion::where('id',$vetDetail->stallion_id)->update([
-                            'latest_update' => Carbon::now(),
-                        ]);
+                        $updateCount=stallion::where('id',$request->stallion_id)->where('status',1)->count();
+                        if($updateCount==1)
+                        {
+                            stallion::where('id',$request->stallion_id)->update([
+                                'update_status' =>1,
+                                'latest_update' => Carbon::now(),
+                            ]);
+                        }
                 }else{
                         $vetDetail = new vetdetail();
                         $vetDetail->stallion_id = $request->stallion_id; 
@@ -314,17 +367,19 @@ class StallionController extends Controller
                         $vetDetail->email = $request->email;
                         $vetDetail->clinic_number = $request->clinic_number;
                         $vetDetail->save(); 
+                        
+                        $stallionCount=vetDetail::where('stallion_id',$vetDetail->stallion_id)->count();
+                        if($stallionCount==1)
+                        {
+                            
+                        $statusCount=stallion::where('id',$vetDetail->stallion_id)->value('status_count');
                         stallion::where('id',$vetDetail->stallion_id)->update([
-                            'latest_update' => Carbon::now(),
-                        ]); 
-
-                        $data = [
-                            'email'=>$request->email,
-                        ];
-                        $to = 'sadikalamwmi@gmail11.com';
-                        $cc='sadikalamwmi@gmail.com';
-                        Mail::to($to)->cc($cc) ->send(new SemenDetailMail($data));
+                            'status_count' =>$statusCount+1,
+                        ]);
+                        }
+          
                 }
+               
                 toast('semencontract create successfully!','success');
                 return redirect()->route('owner.stallion',['id' =>$request->stallion_id]);
             } catch (\Exception $e) {
@@ -332,9 +387,6 @@ class StallionController extends Controller
                 return redirect()->back();
             }
     }
-
-    
-
     public function stallionimagestore(Request $request)
     {
         try {
@@ -359,9 +411,22 @@ class StallionController extends Controller
                     $stallionImage->new_element=0;
                     $stallionImage->save();
                     
-                    $result = stallion::where('id',$stallionImage->stallion_id)->update([
-                        'latest_update' => Carbon::now(),
+                    $stallionCount=StallionImage::where('stallion_id',$stallionImage->stallion_id)->count();
+                    if($stallionCount==5)
+                    {
+                    $statusCount=stallion::where('id',$stallionImage->stallion_id)->value('status_count');
+                    stallion::where('id',$stallionImage->stallion_id)->update([
+                        'status_count' =>$statusCount+1,
                     ]);
+                    }
+                    $updateCount=stallion::where('id',$stallionImage->stallion_id)->where('status',1)->count();
+                    if($updateCount==1)
+                    {
+                        stallion::where('id',$stallionImage->stallion_id)->update([
+                            'update_status' =>1,
+                            'latest_update' => Carbon::now(),
+                        ]);
+                    }
 
                     return redirect()->route('owner.stallion',['id' =>$request->stallion_id]);
                 }
@@ -395,10 +460,23 @@ class StallionController extends Controller
                     $stallionVideo->date=$request->calender;
                     $stallionVideo->save();
 
+                    $stallionCount=stallionvideo::where('stallion_id',$stallionVideo->stallion_id)->count();
+                    if($stallionCount==1)
+                    {
+                    $statusCount=stallion::where('id',$stallionVideo->stallion_id)->value('status_count');
                     stallion::where('id',$stallionVideo->stallion_id)->update([
-                        'latest_update' => Carbon::now(),
+                        'status_count' =>$statusCount+1,
                     ]);
+                    }
                     
+                    $updateCount=stallion::where('id',$stallionVideo->stallion_id)->where('status',1)->count();
+                    if($updateCount==1)
+                    {
+                        stallion::where('id',$stallionVideo->stallion_id)->update([
+                            'update_status' =>1,
+                            'latest_update' => Carbon::now(),
+                        ]);
+                    }
                 toast('Stallion video create successfully!','success');
                         return redirect()->route('owner.stallion',['id' =>$request->stallion_id]);
                 }
@@ -435,9 +513,14 @@ class StallionController extends Controller
             $progeny->trainer=$request->trainer;
             $progeny->exceptional_progeny=$request->exceptional_progeny;
             $progeny->save();
-            stallion::where('id',$progeny->stallion_id)->update([
-                'latest_update' => Carbon::now(),
-            ]);
+            $updateCount=stallion::where('id',$progeny->stallion_id)->where('status',1)->count();
+            if($updateCount==1)
+            {
+                stallion::where('id',$progeny->stallion_id)->update([
+                    'update_status' =>1,
+                    'latest_update' => Carbon::now(),
+                ]);
+            }
             toast('Progeny updae successfully!','success');
             return redirect()->back();
 

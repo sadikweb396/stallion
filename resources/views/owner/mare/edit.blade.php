@@ -89,6 +89,12 @@
                                   <textarea name="professional_trainer" id="editor4">{{$stallion->professional_trainer}}</textarea>
                                 </div>
                                 <div class="form-group">
+                                  <label for="Performance">
+                                   Background Story 
+                                  </label>
+                                  <textarea name="background_story"id="backgroundstory">{{$stallion->background_story}}</textarea>
+                                </div>
+                                <div class="form-group">
                                   <label for="Performance"> Bred By </label>
                                   <input type="text"id="Bred-By"value="{{$stallion->bred_by}}"name="bred_by"/>
                                  
@@ -137,6 +143,19 @@
                                   <label for="Performance">Height </label>
                                   <input type="text"id="Height"value="{{$stallion->height}}"name="height"/>
                                  
+                                </div>
+
+                                <div class="form-group">
+                                  <label for="Performance">
+                                   color
+                                  </label>
+                                  <input type="color" name="color"value="{{$stallion->color}}">
+                                </div>
+                                <div class="form-group">
+                                  <label for="Performance">
+                                  Stallion Heading
+                                  </label>
+                                  <input type="text" name="stallion_heading"value="{{$stallion->stallion_heading}}">
                                 </div>
                                 
                                 <div class="form-group">
@@ -719,6 +738,7 @@
                                     @endif
                                   </div>
                                   <div class="edit-button">
+                                  <a href="{{url('owner/progeny',$progeny->id)}}">
                                     <button class="btn">
                                       <div class="add_progeny_data">
                                       <i class="fa-solid fa-pencil"></i>
@@ -727,9 +747,11 @@
                                   </div>
                                 </div>
 
+                                @php $progenyImage=DB::table('progenyimages')->where('progeny_id',$progeny->id)->first(); @endphp
+                                
                                 <div
                                   class="add_stallion_bar d-flex align-items-center justify-content-center background-img"
-                                  style="background-image: url('{{ asset($progeny->stallion_image) }}');">
+                                  style="background-image:@if($progenyImage) url('{{ asset($progenyImage->image) }}'); @endif">
                                 
                                   <span class="percent_box">
                                     <svg>
@@ -962,6 +984,11 @@
             });
             ClassicEditor
             .create(document.querySelector('#editor5'))
+            .catch(error => {
+                console.error(error);
+            });
+            ClassicEditor
+            .create(document.querySelector('#backgroundstory'))
             .catch(error => {
                 console.error(error);
             });

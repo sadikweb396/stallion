@@ -10,7 +10,7 @@
           <div class="col-lg-12">
             <div class="hero_banner_i">
               <div class="banner_heading-m text-center mb20">
-                <h1>Stallions Name</h1>
+                <h1>  {{$stallion->name}}  </h1>
               </div>
               <div class="para_banner text-center mb50">
                 <p>Breeding quality performance.</p>
@@ -201,9 +201,16 @@
                   </ul>
                 </div>
               </div>
-              <div class="progeny_img">
+              @php
+                    $stallionImage = $stallion->stallionImages->firstWhere('new_element', 1) ?? 
+                        $stallion->stallionImages->first();
+                    @endphp
+                    @if($stallionImage)   
+                       
+              
+                <div class="progeny_img">
                 <img
-                  src="./assets/image/Rectangle 12.png"
+                  src="{{url($stallionImage->stallion_image)}}"
                   alt="progeny_img"
                   class="img-cover"
                 />
@@ -214,12 +221,13 @@
                     class="play__btn"
                   >
                     <img
-                      src="./assets/image/play-icon.png"
+                      src="{{ asset('assets/frontend/image/play-icon.png')}}"
                       class="img-contain"
                     />
                   </a>
                 </div>
               </div>
+                @endif
               <div
                 class="video__pop d-none align-items-center justify-content-center"
               >
@@ -259,14 +267,18 @@
           <div class="col-lg-12">
             <div class="pogeny_info_inner_e d-flex">
               <div class="progeny_img">
-            
+              @php
+                    $stallionImage = $stallion->stallionImages->firstWhere('new_element', 1) ?? 
+                        $stallion->stallionImages->first();
+                    @endphp
+                    @if($stallionImage)   
                        
                 <img
-                  src=""
+                  src="{{url($stallionImage->stallion_image)}}"
                   alt="progeny_img"
                   class="img-cover"
                 />
-               
+                @endif
 
               </div>
               <div class="pogeny_info_inner d-flex justify-content-center">
@@ -304,12 +316,13 @@
               class="catslider owl-carousel owl-theme"
             >
               @foreach($stallion->stallionImages as $stallionImage)
+            
               <div class="item">
                 <a href="javascript:void(0)">
-                  <div
+                <div
                     class="catimg d-flex align-items-end justify-content-center"
                     style="
-                      background-image: url('{{url( $stallionImage->stallion_image) }}');
+                      background-image: url('{{url($stallionImage->stallion_image) }}');
                     "
                   >
                     <div class="cattitle">

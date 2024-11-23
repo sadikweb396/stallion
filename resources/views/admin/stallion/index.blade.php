@@ -19,11 +19,13 @@
                             <table class="content-table" id="myTable">
                               <thead>
                                 <tr>
-                                  <th>Fetured Image</th>
+                                  <th>Image</th>
                                   <th>Name</th>
                                   <th>Author</th>
                                   <th>Date</th>
                                   <th>Status</th>
+                                  <th>Featured</th>
+                                  <th>Profile</th>
                                   <th>Action</th>
                                 </tr>
                               </thead>
@@ -33,9 +35,11 @@
                                     <td>
                                         <div class="fetured_img">
                                         @php
-                                          $stallionImage = \App\Models\stallionimage::where('id',$stallion->id)->orderBy('id','desc')->first();
+                                          $stallionImage = \App\Models\stallionimage::where('stallion_id',$stallion->id)->orderBy('id','ASC')->first();
                                         @endphp
+                                        @if( $stallionImage)
                                             <img src="{{url($stallionImage->stallion_image)}}" class="img-cover" alt="" />
+                                        @endif
                                         </div>
                                     </td>
                                   <td>
@@ -50,6 +54,7 @@
                                   <td>{{$user->username}}</td>
                                   <td>01 Dec 2023</td>
                                   <td>
+                                  @if($stallion->status_count==4)
                                   @if($stallion->status==0)
                                   <form action="{{ route('admin.approve', $stallion->id) }}" method="POST" style="display: inline;">
                                     @csrf
@@ -62,11 +67,36 @@
                                       @csrf
                                   <button type="submit" class="btn btn_i black_btn form_btn">Decline</button>
                                   </form>
+                                  @else
                                   @endif
-                                    
+                                  @else
+                                  @endif</td>
+
+                                  <td>
+                                 
+                                  @if($stallion->feature_status==0)
+                                  <form action="{{ route('admin.active', $stallion->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <!-- Or use POST if appropriate -->
+                                    <button type="submit" class="btn btn_i black_btn form_btn">Active</button>
+                                  </form>
+                                  
+                                  @elseif($stallion->feature_status==1)
+                                  <form action="{{ route('admin.inactive', $stallion->id) }}" method="POST" style="display: inline;">
+                                      @csrf
+                                  <button type="submit" class="btn btn_i black_btn form_btn">Inactive</button>
+                                  </form>
+                                  @else
+                                  @endif
+                                 </td>     
+                                  <td>
+                                  @if($stallion->status_count==4)
+                                  <p class="btn btn_i black_btn form_btn">Completed </p>
+                                  @else
+                                  <p class="btn btn_i black_btn form_btn">Incomplete </p>
+                                  @endif  
                                   </td>
                                   <td>
-                                    
                                     <button
                                       class="btn btn_i black_btn form_btn"
                                     >
@@ -76,8 +106,7 @@
                                   </td>
                                 </tr>
                                @endforeach
-                              </tbody>
-                              
+                              </tbody>     
                             </table>
                             <div class="pagination d-flex justify-content-center" id="pagination"></div>
                           </div>

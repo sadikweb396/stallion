@@ -61,6 +61,7 @@ class stallion extends Model
     {
         return $this->hasOne(StallionImage::class)->latest(); 
     }
+    
 
     public function primaryImage()
     {

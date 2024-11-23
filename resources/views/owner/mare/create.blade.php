@@ -161,6 +161,12 @@
                                   <textarea name="professional_trainer" id="editor4"></textarea>
                                 </div>
                                 <div class="form-group">
+                                  <label for="Performance">
+                                   Background Story 
+                                  </label>
+                                  <textarea name="background_story"id="backgroundstory"></textarea>
+                                </div>
+                                <div class="form-group">
                                   <label for="Performance"> Bred By </label>
                                   <input
                                     type="text"

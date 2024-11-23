@@ -1,22 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\Frontend;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\category;
 use App\Models\stallion;
+use App\Models\stallionpagedetails;
 
 class StallionController extends Controller
 {
     public function stallion()
     {
-    
         $categories = Category::all();
+        $featureStatus = Stallion::with(['stallionImages' => function ($query) {
+            $query->orderBy('new_element', 'DESC');
+        }])->where('category','stallions')->where('status',1)->where('feature_status',1)->orderBy('id', 'ASC')->get();
+  
+        $stalliondetails = stallionpagedetails::where('id',1)->first(); 
+
         $stallions = Stallion::with(['stallionImages' => function ($query) {
             $query->orderBy('new_element', 'DESC');
         }])->where('category','stallions')->where('status',1)->orderBy('id', 'ASC')->take(4)->get();
-        return view('frontend.stallion', compact('categories', 'stallions'));
+        return view('frontend.stallion', compact('categories', 'stallions','featureStatus','stalliondetails'));
        
     }
 
@@ -37,9 +42,7 @@ class StallionController extends Controller
     {  
         $id=Stallion::where('name',$id)->value('id');
         $ownerId=stallion::where('id',$id)->value('id');
-
-        $stallion = Stallion::with(['stallionImages','progeny.progenyImages','stallionvideo'])->find($id);
-       
+        $stallion = Stallion::with(['stallionImages','progeny.progenyImages','stallionvideo'])->find($id); 
         $stallionsSingleOwner = Stallion::with(['stallionImages' => function ($query) {
             $query->orderBy('new_element','DESC');
         }])
@@ -54,3 +57,4 @@ class StallionController extends Controller
         ->with('exceptionProgeny',$exceptionProgeny);
     }   
 }
+ 
