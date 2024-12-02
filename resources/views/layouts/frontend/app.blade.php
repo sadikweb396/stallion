@@ -42,5 +42,58 @@
 
     <!-- <link rel="stylesheet" href="{{url('/assets/frontend/css/style.css')}}"> -->
 
+     <!-- get in touch end -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/toastr/build/toastr.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/toastr/build/toastr.min.js"></script>
+    <script>
+   const featuredStallionsElement = document.getElementById('featured_stallions');
+
+// Variable to track if the toast is currently showing
+let toastShown = false;
+
+// Attaching the onClick event
+featuredStallionsElement.onclick = function() {
+    // Check if the toast is already shown
+    if (!toastShown) {
+        // Show the toast notification when clicked
+        toastr.warning('Please Login!', '', {
+            iconClass: 'toast-no-icon', // Hides the default icon
+            closeButton: true, // Ensures the close button is visible and functional
+            onHidden: function() {
+                // Reset the flag when the toast is fully hidden (closed)
+                toastShown = false;
+            }
+        });
+
+        // Set the flag to true so the toast won't show again until it's closed
+        toastShown = true;
+    }
+};
+
+$(document).ready(function() {
+            // Load the next page of users when the page link is clicked
+            $(document).on('click', '.pagination a', function(e) {
+             
+                e.preventDefault();
+                var page = $(this).attr('href').split('page=')[1]; // Get the page number
+                fetchUsers(page);
+            });
+
+            // Function to fetch users and update the user list
+            function fetchUsers(page) {
+              
+                $.ajax({
+                    url: '/stallions?page=' + page,
+                    type: 'GET',
+                    success: function(data) {
+                   
+                        $('#user-list').html(data); // Replace the user list with new data
+                    }
+                });
+            }
+        });
+</script>
+
   </body>
 </html>

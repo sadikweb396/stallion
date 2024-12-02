@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\progeny;
 use App\Models\progenyimage;
 use App\Models\stallion;
+use App\Models\category;
 use Carbon\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
 class ProgenyController extends Controller
@@ -119,6 +120,49 @@ class ProgenyController extends Controller
            
         } catch (\Exception $e) {
             Alert::error('Error', 'Error create mare image: ' . $e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function progenyEdit($id)
+    {
+        $progeny=progeny::where('id',$id)->first();
+        return view('owner.stallion.progny-edit')
+        ->with('progeny',$progeny);
+    }
+    public function progenyUpdate(Request $request)
+    {
+        try {
+            $id=$request->progeny_id;
+            $stallionId=progeny::where('id',$id)->first();
+            $stallion=$stallionId->stallion_id;
+            $stallionCat=category::where('id',$stallionId->id)->first();
+            $progeny = progeny::find($id); 
+            $progeny->progeny_name = $request->progeny_name;
+            $progeny->sale=$request->sale;
+            $progeny->sold=$request->sold;
+            $progeny->date_of_birth=$request->date_of_birth;
+            $progeny->gender=$request->gender;
+            $progeny->color=$request->color;
+            $progeny->registration_number=$request->registration_number;
+            $progeny->breeder=$request->breeder;
+            $progeny->performace_history=$request->progeny_performace_history;
+            $progeny->trainer=$request->trainer;
+            $progeny->exceptional_progeny=$request->exceptional_progeny;
+            $progeny->save();
+            $updateCount=stallion::where('id',$progeny->stallion_id)->where('status',1)->count();
+            if($updateCount==1)
+            {
+                stallion::where('id',$progeny->stallion_id)->update([
+                    'update_status' =>1,
+                    'latest_update' => Carbon::now(),
+                ]);
+            }
+            toast('Progeny updae successfully!','success');
+            return redirect()->back();
+
+        }   catch (\Exception $e) {
+            Alert::error('Error', 'Error updae Progeny : ' . $e->getMessage());
             return redirect()->back();
         }
     }

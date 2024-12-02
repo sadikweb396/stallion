@@ -9,13 +9,11 @@
                   <div class="stallions_title">
                     <h3>Topside</h3>
                   </div>
-                  <div class="stallions_search">
-                    
+                  <div class="stallions_search">                 
                   </div>
                 </div>
                 <div class="stallions_tabs_main">
-                  <div class="tabs_i">
-                  
+                  <div class="tabs_i">              
                     <div class=""> 
                       <div class="main_tab_content">
                         <div class="main_stallions_d">
@@ -45,10 +43,8 @@
                                 @error('image')
                                   <div class="text-danger">{{ $message  }}</div>
                                 @enderror 
-                                <img  id="imagePreview" src="{{url($topside->image)}}"width="20%">
-                               
-                              </div>
-                            
+                                <img  id="imagePreview" src="{{url($topside->image)}}"width="20%">   
+                              </div>          
                               <div class="update_btn text-right mb50">
                                <button type="submit"class="btn btn_i black_btn">Save</button>
                               </div>

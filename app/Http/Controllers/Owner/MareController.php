@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\stallion;
 use App\Models\vetdetail;
 use App\Models\semencontract;
-use App\Models\StallionImage;
-use App\Models\Stallionvideo;
+use App\Models\stallionimage;
+use App\Models\stallionvideo;
 use App\Models\progeny;
 use App\Models\Category;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -155,6 +155,7 @@ class MareController extends Controller
 
     public function mareDetails(Request $request)
     {
+        $planPrice=plan::where('plan_for','mare')->value('plan_price');
         session([
             'name' => $request->name,
             'lifetime_story' => $request->lifetime_story,
@@ -169,7 +170,8 @@ class MareController extends Controller
             'first_foal_crop_year' => $request->first_foal_crop_year,
             'background_story' => $request->background_story,
             'stallion_heading' => $request->stallion_heading,
-            'color' => $request->color
+            'color' => $request->color,
+            'planPrice' => $planPrice,
         ]);
         return view('stripe.marestripe');
     } 
@@ -203,6 +205,7 @@ class MareController extends Controller
             $stallion->save(); 
             $user = Auth::user();
            
+            $planPrice=session('planPrice');
             // Create a new Stripe Customer
             $customer = Stripe\Customer::create([
                 "email" =>  $user ? $user->email : null,
@@ -212,7 +215,7 @@ class MareController extends Controller
 
             // Charge the customer
             $charge = Stripe\Charge::create([
-                "amount" => 100 * 100,  
+                "amount" => $planPrice * 100,  
                 "currency" => "usd",
                 "customer" => $customer->id,
             ]);
@@ -246,7 +249,7 @@ class MareController extends Controller
         $semencontract=semencontract::where('stallion_id',$id)->first();
         $vetdetail=vetdetail::where('stallion_id',$stallion->id)->first();
         $progenys=progeny::where('stallion_id',$stallion->id)->get();
-        $stallionImages=stallionimage::where('stallion_id',$id)->get();
+        $stallionImages=stallionImage::where('stallion_id',$id)->get();
         $stallionVideos=stallionVideo::where('stallion_id',$id)->get();
         return view('owner.mare.edit')->with('progenys',$progenys)->with('stallion',$stallion)
         ->with('semencontract',$semencontract)->with('id',$id)->with('stallionImages',$stallionImages)
@@ -390,7 +393,7 @@ class MareController extends Controller
                     return redirect()->back();
         }
     }
-     public function progenyUpdate(Request $request)
+    public function progenyUpdate(Request $request)
     {
         try {
             $id=$request->progeny_id;

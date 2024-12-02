@@ -119,18 +119,19 @@
                             <p class="text-center">Mare Details</p>
                           </div>
                           <div class="stallions_d_form mb50">
-                            <form action="{{route('owner.mare.store')}}"method="post">
-                                @csrf
+                            <form action="{{route('owner.mare.store')}}"method="post"id="myForm">
+                            @csrf
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name"> Name </label>
-                                  <input type="text" id="name"name="name" />
+                                  <input type="text" id="name"name="name" required/>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
                                     Performance History
                                   </label>
-                                  <textarea name="performance_history" id="editor1"></textarea>
+                                  <textarea name="performance_history" id="performance_history"></textarea>
+                                  <p id="performance"class="validation-stallion"><p>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
@@ -146,32 +147,35 @@
                                   <label for="Performance">
                                     Owner’s Story
                                   </label>
-                                  <textarea name="owner_story" id="editor2"></textarea>
+                                  <textarea name="owner_story" id="owner_story"></textarea>
+                                  <p id="owner"class="validation-stallion"><p>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
                                     Lifetime Story
                                   </label>
-                                  <textarea name="lifetime_Story" id="editor3"></textarea>
+                                  <textarea name="lifetime_Story" id="lifetime_Story"></textarea>
+                                  <p id="lifetime"class="validation-stallion"><p>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
                                     Professional Trainer
                                   </label>
-                                  <textarea name="professional_trainer" id="editor4"></textarea>
+                                  <textarea name="professional_trainer" id="personal_trainer"></textarea>
+                                  <p id="personaltrainer"class="validation-stallion"><p>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
                                    Background Story 
                                   </label>
-                                  <textarea name="background_story"id="backgroundstory"></textarea>
+                                  <textarea name="background_story"id="background_story"></textarea>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance"> Bred By </label>
                                   <input
                                     type="text"
                                     id="Bred-By"
-                                    name="bred_by"
+                                    name="bred_by"required
                                   />
                                 </div>
                                 <div class="form-group">
@@ -181,9 +185,9 @@
                                   <input
                                     type="text"
                                     id="Registration-Details"
-                                    name="registration_details"
+                                    name="registration_details"required
                                   />
-                                </div>
+                                 
                                 <div class="form-group">
                                   <label for="Performance">
                                     Put semen available from
@@ -191,7 +195,7 @@
                                   <input
                                     type="text"
                                     id="semen-available-from"
-                                    name="put_semen_available_from"
+                                    name="put_semen_available_from"required
                                   />
                                 </div>
                                 <div class="form-group">
@@ -201,30 +205,35 @@
                                   <input
                                     type="text"
                                     id="performing-discipline"
-                                    name="current_performing_discipline"
+                                    name="current_performing_discipline"required
                                   />
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
                                     Trainer History
                                   </label>
-                                  <textarea name="trainer_history" id="editor5"></textarea>
+                                  <textarea name="trainer_history"id="trainer_history"></textarea>
+                                  <p id="trainerhistory"class="validation-stallion"><p>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance"> Height </label>
                                   <input
                                     type="text"
                                     id="Height"
-                                    name="height"
+                                    name="height"required
                                   />
                                 </div>
                                 <div class="form-group">
-                                  <label for="Performance"> Gender </label>
-                                  <input
-                                    type="text"
-                                    id="Gender"
-                                    name="gender"
-                                  />
+                                  <label for="Performance">
+                                   color
+                                  </label>
+                                  <input type="text" name="color" required>
+                                </div>
+                                <div class="form-group">
+                                  <label for="Performance">
+                                  Stallion Heading
+                                  </label>
+                                  <input type="text" name="stallion_heading"required>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
@@ -233,14 +242,14 @@
                                   <input
                                     type="text"
                                     id="First-foal-crop-year"
-                                    name="first_foal_crop_year"
+                                    name="first_foal_crop_year"required
                                   />
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
                                     Please Select one Option
                                   </label>
-                                  <select id="registration" name="registration">
+                                  <select id="registration" name="registration"required>
                                     <option value="" disabled selected>
                                       Please choose below one
                                     </option>
@@ -277,7 +286,7 @@
                                 </div>
                               </div>
                               <div class="update_btn text-right mb50">
-                               <button type="submit"class="btn btn_i black_btn">Update</button>
+                               <button type="submit"class="btn btn_i black_btn">save</button>
                               </div>
                             </form>
                           </div>

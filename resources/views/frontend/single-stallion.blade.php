@@ -1,10 +1,15 @@
 
 @extends('layouts.frontend.app')
 @section('content')
+<style>
+  .main_stallion_list > div {
+    flex: 0 40%;
+}
+</style>
 <section
       class="hero_banner_m d-flex align-items-center stallions-banner"
-      style="background-image: url('{{ asset('assets/frontend/image/stallions-banner.png') }}');">
-    
+      style="background-image: url(@if($bannerImage){{url( $bannerImage->stallion_image) }} @endif);" >
+  
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -13,7 +18,7 @@
               <h1>  {{$stallion->name}}  </h1>
               </div>
               <div class="para_banner text-center mb50">
-                <p>Breeding quality performance.</p>
+                <!-- <p>Breeding quality performance.</p> -->
               </div>
               <div class="semen_performence text-center">
                 <a
@@ -30,124 +35,39 @@
     </section>
     <!-- banner section end-->
     <!-- stallion info list -->
-    <section class="stallion-info_m">
+    <section class="sire_dam_m stallion-info_m">
       <div class="container">
         <div class="row">
-          <div class="col-lg-3">
-            <div class="progeny_list mb20">
-              <ul class="list-none">
-                <li>
-                  <span class="check_listing"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 448 512"
-                    >
-                      <path
-                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                      /></svg></span
-                  >Animal : IDNMMR48
-                </li>
-                <li>
-                  <span class="check_listing"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 448 512"
-                    >
-                      <path
-                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                      /></svg></span
-                  >Date of Birth : 28/01/2020
-                </li>
-                <li>
-                  <span class="check_listing"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 448 512"
-                    >
-                      <path
-                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                      /></svg></span
-                  >Sex : Female
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="progeny_list mb20">
-              <ul class="list-none">
-                <li>
-                  <span class="check_listing"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 448 512"
-                    >
-                      <path
-                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                      /></svg></span
-                  >Status : Active
-                </li>
-                <li>
-                  <span class="check_listing"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 448 512"
-                    >
-                      <path
-                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                      /></svg></span
-                  >Colour : Black
-                </li>
-                <li>
-                  <span class="check_listing"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 448 512"
-                    >
-                      <path
-                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                      /></svg></span
-                  >Register : HBR
-                </li>
-              </ul>
+          <div class="col-lg-6">
+            <div class="sire-info">
+              <div class="sire_head text-center">
+                <h4>Sire</h4>
+                <p>{{$pedigree->sirename1}} - {{$pedigree->sireregistration1}}</p>
+              </div>
+              <div class="sire_details d-flex justify-space-around">
+                <div>
+                  <p>{{$stallion->registration_details}}</p>
+                </div>
+                <div>
+                  <p>{{ $stallion->created_at->format('d/m/Y') }}</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-lg-6">
-            <div class="progeny_list mb20">
-              <ul class="list-none">
-                <li>
-                  <span class="check_listing"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 448 512"
-                    >
-                      <path
-                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                      /></svg></span
-                  >Parcentage Verification : Parent verified
-                </li>
-                <li>
-                  <span class="check_listing"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 448 512"
-                    >
-                      <path
-                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                      /></svg></span
-                  >Genetic Conditions : AMF,CAF,DDF,NHF,DWF,MAF
-                </li>
-                <li>
-                  <span class="check_listing"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 448 512"
-                    >
-                      <path
-                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                      /></svg></span
-                  >Semen Details : Lot 31, 2024-2025 ABS
-                </li>
-              </ul>
+            <div class="sire-info">
+              <div class="sire_head text-center">
+                <h4>Dam</h4>
+                <p>{{$pedigree->damname1}} - {{$pedigree->damregistration1}}</p>
+              </div>
+              <div class="sire_details d-flex justify-space-around">
+                <div>
+                  <p>{{$stallion->height}} HH</p>
+                </div>
+                <div>
+                  <p>{{$stallion->color}}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -163,7 +83,6 @@
         <div class="row">
           <div class="col-lg-12">
             <div id="catslider" class="catslider owl-carousel owl-theme">
-
               @foreach($stallion->stallionImages as $stallionImage)
               <div class="item">
                 <a href="javascript:void(0)">
@@ -201,19 +120,14 @@
                   </ul>
                 </div>
               </div>
-              @php
-                    $stallionImage = $stallion->stallionImages->firstWhere('new_element', 1) ?? 
-                        $stallion->stallionImages->first();
-                    @endphp
-                    @if($stallionImage)   
-                       
-              
                 <div class="progeny_img">
+                @if($performaceImage)
                 <img
-                  src="{{url($stallionImage->stallion_image)}}"
+                  src="{{url($performaceImage->stallion_image)}}"
                   alt="progeny_img"
                   class="img-cover"
                 />
+                @endif
                 <div class="video_icon_pop">
                   <a
                     href="javascript:void(0)"
@@ -226,12 +140,12 @@
                     />
                   </a>
                 </div>
-              </div>
-                @endif
-             
+              </div>  
+              @if($performanceHistoryVideo) 
               <div
                 class="video__pop d-none align-items-center justify-content-center"
               >
+             
                 <div class="video_sc">
                   <div class="clos-btn cursor-pointer">
                     <svg
@@ -246,15 +160,18 @@
                   <iframe
                     width="560"
                     height="315"
-                    src="https://www.youtube.com/embed/0_auMA2y5QI?si=pGP87COV1nZsH4fs"
+                    src="{{url($performanceHistoryVideo->stallion_video)}}"
                     title="YouTube video player"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="strict-origin-when-cross-origin"
                     allowfullscreen
                   ></iframe>
+
                 </div>
+               
               </div>
+              @endif
             </div>
           </div>
         </div>
@@ -268,14 +185,9 @@
           <div class="col-lg-12">
             <div class="pogeny_info_inner_e d-flex">
               <div class="progeny_img">
-              @php
-                    $stallionImage = $stallion->stallionImages->firstWhere('new_element', 1) ?? 
-                        $stallion->stallionImages->first();
-                    @endphp
-                    @if($stallionImage)   
-                       
+                @if($backgroundImage)       
                 <img
-                  src="{{url($stallionImage->stallion_image)}}"
+                  src="{{url($backgroundImage->stallion_image)}}"
                   alt="progeny_img"
                   class="img-cover"
                 />
@@ -340,8 +252,55 @@
         </div>
       </div>
     </section>
+
+    <section class="progeny_main_m Stallions_section single_stallions_m">
+      <div class="container no-padding hidden">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="pogeny_info_inner_e d-flex">
+              <div class="progeny_img">
+              @foreach ($exceptionProgeny->exceptionalProgeny as $key=>$progeny) 
+              @php
+                  $stallionImage = $progeny->progenyImages->firstWhere('progeny_image', 1) ?? 
+                          $progeny->progenyImages->first();
+                @endphp
+                @if ($stallionImage)
+                <img src="{{ url($stallionImage->image) }}" alt="progeny_img" class="img-cover" />
+                @endif
+                
+              @endforeach
+              </div>
+              @foreach ($exceptionProgeny->exceptionalProgeny as $key=>$progeny) 
+              <div class="pogeny_info_inner d-flex justify-content-center">
+                <div class="pogeny_heading mb20">
+                  <h2>An exceptional progeny</h2>
+                </div>
+                <div class="progeny_para">
+                  <p>
+                   {{$progeny->performace_history}}
+                  </p>
+                </div>
+
+                <div class="progeny_list mb20">
+                  <ul class="list-none">
+                    <li>Date of Birth : {{ \Carbon\Carbon::parse($progeny->birth_date)->format('d/m/Y') }}</li>
+                    <li>Sex : {{$progeny->gender}}</li>
+                    <li>Colour : {{$progeny->color}}</li>
+                    <li>Register : {{$progeny->registration_number}}</li>
+                   
+                  </ul>
+                </div>
+
+              </div>
+              @endforeach
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- Category end -->
     <!--tab section start  -->
+  
     <section class="main_tab_m pdb100">
       <div class="container">
         <div class="row">
@@ -365,93 +324,177 @@
                 </div>
               </div>
               <div id="progenysalesperformance" class="tab_content active">
-              
+
+
               @foreach ($stallion->progeny as $key=>$progeny) 
               @if(++$key<=2)
-             <div class="main_stallion_list d-flex gap20 mb50">
+                <div class="main_stallion_list d-flex gap20 mb50">
                 @php
                   $stallionImage = $progeny->progenyImages->firstWhere('progeny_image', 1) ?? 
                           $progeny->progenyImages->first();
                 @endphp
-                @if ($stallionImage)
-                {{$stallionImage->id}}
-                    <div class="stallion_img">
-                      <img src="{{ url($stallionImage->image) }}" alt="stallion image" class="img-cover" />
+                @if($stallionImage)
+               
+                  <div class="stallion_img">
+                    <img
+                      src="{{ url($stallionImage->image) }}"
+                      alt="stallion image"
+                      class="img-cover"
+                    />
+                    @if($progeny->sale=='sale')
+                    <div class="stallion_label_inner">
+                       <label> For Sale </label>
                     </div>
-                @endif
-
-                <div class="stallion_list_info">
+                    @endif
+                  </div>
+                  @endif
+ 
+                  <div class="stallion_list_info">
                     <div class="stallion_list_heading mb20">
-                        <h3>{{ $progeny->progeny_name }}</h3> <!-- Display progeny name -->
+                      <h3>{{ $progeny->progeny_name }}</h3>
                     </div>
                     <div class="stallion_list_para mb20">
-                        <p>
-                            Want to inspect every detail about the Stallion you’re breeding to? Have questions about the sire of your future progeny? Eminent Equine can provide the answers for all your inquiries.
-                        </p>
+                      <p>
+                       {{$progeny->performace_history}}
+                      </p>
                     </div>
-
                     <div class="progeny_list mb20">
-                        <ul class="list-none">
-                            <li>
-                                <span class="check_listing">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                        <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"></path>
-                                    </svg>
-                                </span> Status: Active
-                            </li>
-                            <li>
-                                <span class="check_listing">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                        <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"></path>
-                                    </svg>
-                                </span> Colour: {{$progeny->color}}
-                            </li>
-                            <li>
-                                <span class="check_listing">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                        <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"></path>
-                                    </svg>
-                                </span> Register: {{$progeny->registration_number}}
-                            </li>
-                            <li>
-                                <span class="check_listing">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                        <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"></path>
-                                    </svg>
-                                </span> DNA Profile: StoredSNP (71176 SNPs)
-                            </li>
-                        </ul>
+                      <ul class="list-none">
+                        <li>
+                          <span class="check_listing"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 448 512"
+                            >
+                              <path
+                                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                              ></path></svg></span
+                          >sex : {{$progeny->gender}}
+                        </li>
+                        <li>
+                          <span class="check_listing"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 448 512"
+                            >
+                              <path
+                                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                              ></path></svg></span
+                          >Colour : {{$progeny->color}}
+                        </li>
+                        <li>
+                          <span class="check_listing"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 448 512"
+                            >
+                              <path
+                                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                              ></path></svg></span
+                          >Register : {{$progeny->registration_number}}
+                        </li>
+                       
+                      </ul>
                     </div>
-                    
                     <div class="stallion_btn">
-                        <a href="javascript:void(0)" aria-label="View Progeny" class="btn_i">View Progeny</a>
+                      @if($progeny->sale=='sale')
+                      <a
+                        href="javascript:void(0)"
+                        aria-label="View Progeny"
+                        class="btn_i"
+                      >
+                        Interested In Purchasing
+                      </a>
+                      @else
+                      <a
+                        href="javascript:void(0)"
+                        aria-label="View Progeny"
+                        class="btn_i Interested_popup"
+                      >
+                        View Progeny
+                      </a>
+                      @endif
                     </div>
+                  </div>
                 </div>
-            </div>
-            @endif
-            @endforeach
-
+                @endif
+                @endforeach
+                <div class="main_stallions_listings d-flex align-items-center gap20">
+                @foreach ($stallion->progeny as $key=>$progeny) 
+                @if(++$key>2)
+                @php
+                  $stallionImage = $progeny->progenyImages->firstWhere('progeny_image', 1) ?? 
+                          $progeny->progenyImages->first();
+                @endphp
+                @if($stallionImage)
+                  <article
+                    class="stallion-box d-flex align-items-end justify-content-center"
+                    style="
+                      background-image: url('{{url($stallionImage->image) }}');
+                    "
+                  
+                  >
+                    <div class="stallion-items">
+                      <div
+                        class="catimg d-flex align-items-end justify-content-center"
+                      >
+                        <div class="cattitle">
+                          <h4>{{$progeny->progeny_name}}</h4>
+                          <div class="stallion_info">
+                            <div class="progeny_list mb20">
+                              <ul class="list-none">
+                                <li>Status : Active</li>
+                                <li>Colour : {{$progeny->color}}</li>
+                                <li>Register : {{$progeny->registration_number}}</li>
+                                <li>DNA Profile : StoredSNP (71176 SNPs)</li>
+                              </ul>
+                            </div>
+                            <div class="interest_btn">
+                              @if($progeny->sale=='sale')
+                              <a href="javascript:void(0);" class="btn_i btn Interested_popup">
+                                Interested In Purchasing
+                              </a>
+                              @else
+                              <a href="javascript:void(0);" class="btn_i btn Interested_popup">
+                                View progeny
+                              </a>
+                              @endif
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    @if($progeny->sale=='sale')
+                    <div class="stallion_label_inner">
+                      <label> For Sale </label>
+                    </div>
+                    @endif
+                  </article>
+                  @endif
+                  @endif
+                  @endforeach
+                 
+                </div>
               </div>
               <div id="pedigreechart" class="tab_content">
                 <div class="pedigree_chart_m">
                   <div class="chart_tree">
                     <ul class="list-none">
                       <li class="d-flex align-items-center">
-                        <a href="javascript:void(0)" class="black-node"
-                          >Q-97216 One Time Design (Q97216)
-                        </a>
+                      <a href="javascript:void(0)" class="black-node">Q-97216 One Time Design (Q97216)
+                      </a>
                         <div class="first_bix"></div>
 
                         <ul class="list-none">
                           <li class="d-flex align-items-center">
                             <a href="javascript:void(0)" class="blue-node"
-                              >Q-97216 One Time Design
+                              >@if($pedigree) {{$pedigree->sireregistration1}} @endif  @if($pedigree) {{$pedigree->sirename1}} @endif
                             </a>
                             <div class="first_bix"></div>
                             <ul class="list-none">
                               <li class="d-flex align-items-center">
                                 <a href="javascript:void(0)" class="blue-node"
-                                  >Q-97216 One Time Design
+                                  >@if($pedigree) {{$pedigree->sireregistration2}} @endif  @if($pedigree) {{$pedigree->sirename2}} @endif
                                 </a>
                                 <div class="first_bix"></div>
                                 <ul class="list-none">
@@ -459,21 +502,21 @@
                                     <a
                                       href="javascript:void(0)"
                                       class="blue-node"
-                                      >Q-97216 One Time Design
+                                      >@if($pedigree) {{$pedigree->sireregistration3}} @endif  @if($pedigree) {{$pedigree->sirename3}} @endif
                                     </a>
                                   </li>
                                   <li class="d-flex align-items-center">
                                     <a
                                       href="javascript:void(0)"
                                       class="pink-node"
-                                      >Q-97216 One Time Design
+                                      >@if($pedigree) {{$pedigree->damregistration7}} @endif  @if($pedigree) {{$pedigree->damname7}} @endif
                                     </a>
                                   </li>
                                 </ul>
                               </li>
                               <li class="d-flex align-items-center">
                                 <a href="javascript:void(0)" class="pink-node"
-                                  >Q-97216 One Time Design</a
+                                  > @if($pedigree) {{$pedigree->damregistration6}} @endif  @if($pedigree) {{$pedigree->damname6}} @endif</a
                                 >
                                 <div class="first_bix"></div>
                                 <ul class="list-none">
@@ -481,14 +524,14 @@
                                     <a
                                       href="javascript:void(0)"
                                       class="blue-node"
-                                      >Q-97216 One Time Design</a
+                                      >@if($pedigree) {{$pedigree->sireregistration4}} @endif  @if($pedigree) {{$pedigree->sirename4}} @endif</a
                                     >
                                   </li>
                                   <li class="d-flex align-items-center">
                                     <a
                                       href="javascript:void(0)"
                                       class="pink-node"
-                                      >Q-97216 One Time Design
+                                      > @if($pedigree) {{$pedigree->damregistration5}} @endif  @if($pedigree) {{$pedigree->damname5}} @endif
                                     </a>
                                   </li>
                                 </ul>
@@ -497,14 +540,14 @@
                           </li>
                           <li class="d-flex align-items-center">
                             <a href="javascript:void(0)" class="pink-node"
-                              >Q-97216 One Time Design</a
+                              >@if($pedigree) {{$pedigree->damregistration1}} @endif  @if($pedigree) {{$pedigree->damname1}} @endif</a
                             >
                             <div class="first_bix"></div>
                             <div class="first_bix"></div>
                             <ul class="list-none">
                               <li class="d-flex align-items-center">
                                 <a href="javascript:void(0)" class="blue-node"
-                                  >Q-97216 One Time Design</a
+                                  >@if($pedigree) {{$pedigree->sireregistration6}} @endif  @if($pedigree) {{$pedigree->sirename6}} @endif</a
                                 >
                                 <div class="first_bix"></div>
                                 <ul class="list-none">
@@ -512,21 +555,21 @@
                                     <a
                                       href="javascript:void(0)"
                                       class="blue-node"
-                                      >Q-97216 One Time Design</a
+                                      >@if($pedigree) {{$pedigree->sireregistration5}} @endif  @if($pedigree) {{$pedigree->sirename5}} @endif</a
                                     >
                                   </li>
                                   <li class="d-flex align-items-center">
                                     <a
                                       href="javascript:void(0)"
                                       class="pink-node"
-                                      >Q-97216 One Time Design</a
+                                      > @if($pedigree) {{$pedigree->damregistration4}} @endif  @if($pedigree) {{$pedigree->damname4}} @endif</a
                                     >
                                   </li>
                                 </ul>
                               </li>
                               <li class="d-flex align-items-center">
                                 <a href="javascript:void(0)" class="pink-node"
-                                  >Q-97216 One Time Design</a
+                                  > @if($pedigree) {{$pedigree->damregistration2}} @endif  @if($pedigree) {{$pedigree->damname2}} @endif</a
                                 >
                                 <div class="first_bix"></div>
                                 <ul class="list-none">
@@ -534,14 +577,14 @@
                                     <a
                                       href="javascript:void(0)"
                                       class="blue-node"
-                                      >Q-97216 One Time Design</a
+                                      > @if($pedigree) {{$pedigree->sireregistration7}} @endif  @if($pedigree) {{$pedigree->sirename7}} @endif</a
                                     >
                                   </li>
                                   <li class="d-flex align-items-center">
                                     <a
                                       href="javascript:void(0)"
                                       class="pink-node"
-                                      >Q-97216 One Time Design</a
+                                      >@if($pedigree) {{$pedigree->damregistration3}} @endif  @if($pedigree) {{$pedigree->damname3}} @endif</a
                                     >
                                   </li>
                                 </ul>
@@ -555,131 +598,46 @@
                 </div>
               </div>
               <div id="exclusivedata" class="tab_content">
-                <div class="gallery_masory_m">
-                  <div class="grid-wrapper_i">
+                <div class="gallery_masory_m d-flex">
+                  <div class="grid-wrapper_i"> 
+                    @foreach($stallionimages as $stallionimage)
+                    <!-- Image Items -->
                     <div class="gallery_img">
                       <img
-                        src="./assets/image/Rectangle 70.png"
-                        alt=""
+                        src="{{url($stallionimage->stallion_image) }}"
+                        alt="Image 1"
                         class="img-cover"
+                        onclick="openPreview(this)"
                       />
                     </div>
-                    <div class="gallery_img">
-                      <img
-                        src="./assets/image/Rectangle 74.png"
-                        alt=""
-                        class="img-cover"
-                      />
+                   @endforeach
+
+                   @foreach($stallionvideoS as $stallionvideo)
+                    <!-- Image Items -->
+                     <div class="gallery_img">
+                      <video
+                        src="{{url($stallionvideo->stallion_video) }}"
+                        class="video-cover img-cover"
+                        onclick="openPreview(this)"
+                      ></video>
                     </div>
-                    <div class="tall">
-                      <img
-                        src="./assets/image/Rectangle 71.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="wide">
-                      <img
-                        src="./assets/image/Rectangle 73.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="gallery_img">
-                      <img
-                        src="./assets/image/Rectangle 75.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="tall">
-                      <img
-                        src="./assets/image/Rectangle 82.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="gallery_img">
-                      <img
-                        src="./assets/image/Rectangle 82.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="wide">
-                      <img
-                        src="./assets/image/Rectangle 79.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="gallery_img">
-                      <img
-                        src="./assets/image/Rectangle 70.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="gallery_img">
-                      <img
-                        src="./assets/image/Rectangle 74.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="tall">
-                      <img
-                        src="./assets/image/Rectangle 71.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="wide">
-                      <img
-                        src="./assets/image/Rectangle 73.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="gallery_img">
-                      <img
-                        src="./assets/image/Rectangle 75.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="tall">
-                      <img
-                        src="./assets/image/Rectangle 82.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="gallery_img">
-                      <img
-                        src="./assets/image/Rectangle 82.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
-                    <div class="wide">
-                      <img
-                        src="./assets/image/Rectangle 79.png"
-                        alt=""
-                        class="img-cover"
-                      />
-                    </div>
+                   @endforeach
+                    
                   </div>
-                  <div class="gallery_load_more text-center">
-                    <a
-                      href="javascript:void(0)"
-                      class="btn_i load_btn"
-                      aria-label="load more gallery"
-                      >Load More</a
-                    >
+
+                  <!-- Preview Section -->
+                  <div class="previewContainer">
+                    <div id="previewContent">
+                      <img
+                        src="./assets/image/Rectangle 21.png"
+                        alt="Default Preview"
+                        class="img-cover"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
             <div class="view_contract_btn text-center">
               <a
@@ -693,185 +651,123 @@
           </div>
         </div>
       </div>
-    </section>
-    <!-- tab section end -->
-    <!-- Stallions section start -->
-    <section class="progeny_main_m Stallions_section single_stallions_m">
-      <div class="container-fluid no-padding hidden">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="pogeny_info_inner_e d-flex">
-              <div class="progeny_img">
-              @foreach ($exceptionProgeny->exceptionalProgeny as $key=>$progeny) 
-              @php
-                  $stallionImage = $progeny->progenyImages->firstWhere('progeny_image', 1) ?? 
-                          $progeny->progenyImages->first();
-                @endphp
-                @if ($stallionImage)
-                <img src="{{ url($stallionImage->image) }}" alt="progeny_img" class="img-cover" />
-                @endif
-                
-              @endforeach
-              </div>
-              <div class="pogeny_info_inner d-flex justify-content-center">
-                <div class="pogeny_sub_heading"></div>
-                @foreach ($exceptionProgeny->exceptionalProgeny as $key=>$progeny) 
-                <div class="pogeny_heading mb20">
-                  <h2>
-                    {{$progeny->progeny_name}}
-                  </h2>
+         <!-- call to owner popup -->
+      <div class="call_owner_pop d-none">
+        <div class="intersted_purchase">
+          <div class="pop_box">
+            <div class="close-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+                />
+              </svg>
+            </div>
+            <div class="pop-title">
+              <h4 class="text-center">
+                <span class="icon-phone">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                      d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"
+                    />
+                  </svg>
+                </span>
+                <span class="text_underline"
+                  ><a href="javascript:void(0);">Call the Owner</a>
+                </span>
+                <br />
+                or <br />
+                Fill Out the Form to Purchase <br />
+                the Progeny Name
+              </h4>
+              <form action="#">
+                <div class="main_groups d-flex gap20">
+                  <div class="group_fields">
+                    <label for="fname"
+                      ><span class="visually-hidden">First name:</span></label
+                    >
+                    <input
+                      type="text"
+                      id="fname"
+                      name="fname"
+                      placeholder="Your Name"
+                    />
+                  </div>
+                  <div class="group_fields">
+                    <label for="Yphone"
+                      ><span class="visually-hidden">Your Phone</span></label
+                    >
+                    <input
+                      type="phone"
+                      id="phone"
+                      name="phone"
+                      placeholder="Your Phone"
+                    />
+                  </div>
                 </div>
-            
-                <div class="progeny_para">
-                  <p>
-                    Want to inspect every detail about the Stallion you’re
-                    breeding to ? Have questions about the sire of your future
-                    progeny? Eminent Equine can provide the answers for all your
-                    inquiries.
-                  </p>
+                <div class="main_groups">
+                  <div class="group_fields">
+                    <label for="Youremail"
+                      ><span class="visually-hidden">Your Email</span></label
+                    >
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Your Email"
+                    />
+                  </div>
                 </div>
-                <div class="progeny_list mb20">
-                  <ul class="list-none">
-                    <li>
-                      <span class="check_listing"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                        >
-                          <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                          /></svg></span
-                      >Animal : IDNMMR48
-                    </li>
-                    <li>
-                      <span class="check_listing"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                        >
-                          <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                          /></svg></span
-                      >Date of Birth : {{$progeny->date_of_birth}}
-                    </li>
-                    <li>
-                      <span class="check_listing"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                        >
-                          <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                          /></svg></span
-                      >Sex : {{$progeny->gender}}
-                    </li>
-                    <li>
-                      <span class="check_listing"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                        >
-                          <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                          /></svg></span
-                      >Status : Active
-                    </li>
-                    <li>
-                      <span class="check_listing"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                        >
-                          <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                          /></svg></span
-                      >Colour : {{$progeny->color}}
-                    </li>
-                    <li>
-                      <span class="check_listing"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                        >
-                          <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                          /></svg></span
-                      >Register : {{$progeny->registration_number}}
-                    </li>
-                    <li>
-                      <span class="check_listing"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                        >
-                          <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                          /></svg></span
-                      >DNA Profile : StoredSNP (71176 SNPs)
-                    </li>
-                    <li>
-                      <span class="check_listing"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                        >
-                          <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                          /></svg></span
-                      >Parentage Verification : Parent verified
-                    </li>
-                    <li>
-                      <span class="check_listing"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                        >
-                          <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                          /></svg></span
-                      >Genetic Conditions : AMF,CAF,DDF,NHF,DWF,MAF
-                    </li>
-                    <li>
-                      <span class="check_listing"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                        >
-                          <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                          /></svg></span
-                      >Semen Details : Lot 31, 2024-2025 ABS
-                    </li>
-                  </ul>
+
+                <div class="main_groups">
+                  <div class="group_fields">
+                    <label for="textarea"
+                      ><span class="visually-hidden"
+                        >Enter Your Message</span
+                      ></label
+                    >
+                    <textarea
+                      id="w3review"
+                      name="w3review"
+                      rows="4"
+                      cols="48"
+                      placeholder="Enter Your Message"
+                    ></textarea>
+                  </div>
                 </div>
-                @endforeach
-              </div>
+                <div class="main_groups">
+                  <input
+                    type="submit"
+                    value="Submit"
+                    class="submit_bttn btn_i black_btn btn"
+                  />
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
+      <!-- end -->
     </section>
-    <!-- Mares section end -->
-    <!-- Stallion with us start -->
+    <!-- tab section end -->
     <section
       class="with_us_main pdb100"
-      style="background-image: url('./assets/image/Rectangle\ 43.png')"
+      style="background-image: url(@if($stallionvideoImage){{url($stallionvideoImage->stallion_image) }} @endif);" >
     >
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <div class="with_us_inner text-center">
               <div class="with_us_heading mb20">
-                <h2>Stallions Video</h2>
+                <h2>Stallions Video </h2>
               </div>
               <div class="video_icon_m d-flex justify-content-center mb20">
                 <div class="video_icon_i mb20 cursor-pointer">
-                  <img
-                    src="./assets/image/video-icon.png"
-                    alt="video icon"
-                    class="img-contain"
-                  />
+                <img
+                      src="{{ asset('assets/frontend/image/play-icon.png')}}"
+                      class="img-contain"
+                    />
                 </div>
+                @if($backgroundVideo)
                 <div
                   class="video__pop d-none align-items-center justify-content-center"
                 >
@@ -886,18 +782,21 @@
                         ></path>
                       </svg>
                     </div>
+                   
                     <iframe
                       width="560"
                       height="315"
-                      src="https://www.youtube.com/embed/0_auMA2y5QI?si=pGP87COV1nZsH4fs"
+                      src="{{url($backgroundVideo->stallion_video)}}"
                       title="YouTube video player"
                       frameborder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       referrerpolicy="strict-origin-when-cross-origin"
                       allowfullscreen
                     ></iframe>
+                  
                   </div>
                 </div>
+                @endif
               </div>
               <div class="with_us_btn">
                 <a
@@ -913,6 +812,7 @@
       </div>
     </section>
     <!-- Stallion with us end -->
+   
     <!-- Category Slider start -->
     <section id="categorySlider" class="categorySlider stallion-category">
       <div class="container">
@@ -1163,11 +1063,11 @@
           <div class="col-lg-6">
             <div
               class="get_touch_bg d-flex justify-content-center"
-              style="background-image: url('./assets/image/Rectangle\ 21.png')"
+             style="background-image: url('{{ asset('assets/frontend/image/Rectangle 21.png') }}"
             >
               <div class="get_touch_logo">
-                <img
-                  src="./assets/image/2__2_-removebg-preview (1).png"
+              <img
+                  src="{{ asset('assets/frontend/image/2__2_-removebg-preview.png') }}"
                   alt="get in touch logo"
                   class="img-contain"
                 />

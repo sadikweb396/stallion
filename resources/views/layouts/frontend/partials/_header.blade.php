@@ -74,7 +74,11 @@
           </div>
         </div>
       </div>
+      @if(session('error'))
+      <div class="popupp d-none popupp-show" style="display: block;">
+      @else
       <div class="popupp d-none">
+      @endif
         <div
           id="login"
           class="modal fade d-flex align-items-center justify-content-center"
@@ -205,6 +209,12 @@
                         <p class="logins_line">
                           <span><b>Login </b> with Others</span>
                         </p>
+
+                        @if(session('error'))
+                          <div style="color: red; margin-top: 10px;">
+                              {{ session('error') }}
+                          </div>
+                      @endif
                         
                         <a href="#" class="social">
                           <img

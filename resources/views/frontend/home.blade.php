@@ -74,6 +74,7 @@
                 </a>
               </div>
               @endforeach
+              
                 </a>
               </div>
             </div>
@@ -184,7 +185,7 @@
     </section>
     <!-- Mares section end -->
     
-    <!-- Listing Slider start -->s
+    <!-- Listing Slider start -->
     <section
       id="categorySlider_services_m"
       class="categorySlider slider_services_m slider_lastest_up pdb200"
@@ -230,12 +231,14 @@
         </div>
       </div>
     </section>
+
+    
     <!-- Listing Slider end -->
     <!-- Latest Updated animal slider start -->
     <section
       id="categorySlider_services_m"
       class="categorySlider slider_services_m slider_lastest_up pdb200"
-      style="background-image: url(./assets/image/Rectangle\ 43.png)"
+      style="background-image: url('{{ asset('assets/frontend/image/Rectangle 43.png') }}');"
     >
       <div class="container">
         <div class="row">
@@ -530,79 +533,16 @@
               <div class="pricing_main_m d-flex gap20">
                 <div class="pricing_items">
                   <div class="pricing_plan_n text-center">
-                    <h5>Silver</h5>
+                    <h5>@if($planmember){{$planmember->plan_name}}@endif</h5>
                   </div>
                   <div class="pricing_p text-center">
-                    <p>$420</p>
+                    <p>@if($planmember)${{$planmember->plan_price}}@endif</p>
                     <div class="pricing_plan_e">
-                      <p>/annually</p>
+                      <p> @if($planmember){{$planmember->plan_duration}}@endif</p>
                     </div>
                   </div>
                   <div class="pricing_listing">
-                    <div class="pricing_in text-center">
-                      <p>
-                        As a ‘silver member’ you will receive the following
-                        features
-                      </p>
-                    </div>
-                    <ul class="list-none mb20">
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >Personalized profile
-                      </li>
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >Access to exclusive mare/stallion footage
-                      </li>
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >Ability to follow and receive notifications for
-                        individual profiles
-                      </li>
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >Ability to shortlist stallion breeding contracts
-                      </li>
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >Access to all exclusive calendar features
-                      </li>
-                    </ul>
+                  @if($planmember){!!$planmember->plan_details!!}@endif
                   </div>
                   <div class="pricing_bttn text-center">
                     <a href="#" class="btn_i">Get Started</a>
@@ -662,92 +602,19 @@
               <div class="pricing_main_m d-flex gap20 justify-content-center">
                 <div class="pricing_items">
                   <div class="pricing_plan_n text-center">
-                    <h5>Owner Plan</h5>
+                    <h5>{{$planOwner->plan_name}}</h5>
                   </div>
                   <div class="pricing_p text-center">
-                    <p>$420</p>
+                    <p>${{$planOwner->plan_price}}</p>
                     <div class="pricing_plan_e">
                       <p>/annually</p>
                     </div>
                   </div>
                   <div class="pricing_listing">
-                    <div class="pricing_in text-center">
-                      <p>
-                        Nullam laoreet condimentum purus sit amet suscipit. Ut
-                        eu neque tincidunt.
-                      </p>
-                    </div>
-                    <ul class="list-none mb20">
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >Personalized profile
-                      </li>
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >Access to exclusive data
-                      </li>
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >View video footage and interviews
-                      </li>
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >Save/follow Stallion profiles
-                      </li>
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >Save/follow Embryo Auction listings
-                      </li>
-                      <li>
-                        <span class="check_listing"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                          >
-                            <path
-                              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg></span
-                        >Automatic alerts for sale times
-                      </li>
-                    </ul>
+                    {!!$planOwner->plan_details!!}
                   </div>
                   <div class="pricing_bttn text-center">
-                    <a href="#" class="btn_i">Get Started</a>
+                    <a href="{{url('owner/register')}}" class="btn_i">Get Started</a>
                   </div>
                 </div>
               </div>

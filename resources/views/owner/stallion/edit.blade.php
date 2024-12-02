@@ -1,6 +1,5 @@
 @extends('layouts.owner.app')
 @section('content')
-<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <div class="dash_body_inner">
             <div class="our_stallions stallions_details">
               <div class="add_new_stallions">
@@ -38,6 +37,10 @@
                       <button class="tab-link" data-tab="tab-5">
                         <i class="fa-solid fa-temperature-empty"></i> Progeny
                       </button>
+
+                      <button class="tab-link" data-tab="tab-6">
+                        <i class="fa-solid fa-temperature-empty"></i> Pedigree
+                      </button>
                     </div>
                     <div class="tab-content " id="tab-1">
                       <div class="main_tab_content">
@@ -59,7 +62,7 @@
                                   <label for="Performance">
                                     Performance History
                                   </label>
-                                  <textarea name="performance_history" id="editor1">{{$stallion->performance_history}}</textarea>
+                                  <textarea name="performance_history" id="performance_history">{{$stallion->performance_history}}</textarea>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
@@ -75,25 +78,25 @@
                                   <label for="Performance">
                                     Owner’s Story
                                   </label>
-                                  <textarea name="owner_story" id="editor2">{{$stallion->owner_story}}</textarea>
+                                  <textarea name="owner_story" id="owner_story">{{$stallion->owner_story}}</textarea>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
                                     Lifetime Story
                                   </label>
-                                  <textarea name="lifetime_Story" id="editor3">{{$stallion->lifetime_story}}</textarea>
+                                  <textarea name="lifetime_Story" id="lifetime_Story">{{$stallion->lifetime_story}}</textarea>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
                                     Professional Trainer
                                   </label>
-                                  <textarea name="professional_trainer" id="editor4">{{$stallion->professional_trainer}}</textarea>
+                                  <textarea name="professional_trainer" id="personal_trainer">{{$stallion->professional_trainer}}</textarea>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
                                    Background Story 
                                   </label>
-                                  <textarea name="background_story"id="backgroundstory">{{$stallion->background_story}}</textarea>
+                                  <textarea name="background_story"id="background_story">{{$stallion->background_story}}</textarea>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance"> Bred By </label>
@@ -137,7 +140,7 @@
                                     Trainer History
                                   </label>
                                   
-                                  <textarea name="trainer_history" id="editor5">{{$stallion->trainer_history}}</textarea>
+                                  <textarea name="trainer_history" id="trainer_history">{{$stallion->trainer_history}}</textarea>
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">Height </label>
@@ -149,7 +152,7 @@
                                   <label for="Performance">
                                    color
                                   </label>
-                                  <input type="color" name="color"value="{{$stallion->color}}">
+                                  <input type="text" name="color"value="{{$stallion->color}}">
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
@@ -363,7 +366,7 @@
                                         </div>
                                       </div>
                                       <button type="submit"class="btn btn_i black_btn">
-                                        Update
+                                        Save
                                       </button>
                                     </form>
                                     
@@ -527,7 +530,7 @@
                                         </div>
                                       </div>
                                       <button type="submit"class="btn btn_i black_btn">
-                                        Update
+                                        Save
                                       </button>
                                     </form>
                                     <!-- <div
@@ -748,7 +751,7 @@
                                   </div>
                                 </div> 
                                 @php $progenyImage=DB::table('progenyimages')->where('progeny_id',$progeny->id)->first(); @endphp
-                                {{$progenyImage->id}}
+                               
                                 <div
                                   class="add_stallion_bar d-flex align-items-center justify-content-center background-img"
                                   style="background-image:@if($progenyImage) url('{{ asset($progenyImage->image) }}'); @endif">
@@ -930,7 +933,7 @@
                                 </div>
                                 
                               <button class="btn btn_i black_btn">
-                                Update
+                                Save
                               </button>
                               </form>
                             </div>
@@ -943,43 +946,448 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="tab-content" id="tab-6">
+                      <div class="main_tab_content">
+                        <div class="main_stallions_d">
+                          <div class="title_bar mb20">
+                            <p class="text-center">Pedigree Details</p>
+                          </div>
+                          <form action="{{route('owner.pedigree.store')}}"method="post">
+                          @csrf
+                          <input type="hidden"name="stallion_id"value="{{$stallion->id}}">
+                          <div class="main_tab_m pedigreechart_main">
+                            <div class="tabs_list_m">
+                              <div
+                                id="pedigreechart"
+                                class="tab_content active"
+                              >
+                                 <div class="pedigree_chart_m">
+                                  <div class="chart_tree">
+                                    <ul class="list-none">
+                                      <li class="d-flex align-items-center">
+                                        <div class="pedigreeForm">
+                                        
+                                          <input
+                                            type="text"
+                                            class="input input1"
+                                            placeholder="Registration"value="@if($pedigree){{$pedigree->stallionregistration}}@endif"name="stallionregistration"required
+                                          />
+                                          <input
+                                            type="text"
+                                            class="input input2"
+                                            placeholder="Name"
+                                            style="display:none"name="stallionname"value="@if($pedigree){{$pedigree->stallionregistration}}@endif"required
+                                          />    
+                                          <input
+                                            type="text"
+                                            class="input input2"
+                                            placeholder="Link"
+                                            style="display:none"name="stallionlink"value="@if($pedigree){{$pedigree->stallionlink}}@endif"required
+                                          />
+                                        </div>
+                                        <div class="first_bix"></div>
+                                        <ul class="list-none">
+                                          <li class="d-flex align-items-center">
+                                            <div class="pedigreeForm blue-node">
+                                              <input
+                                                type="text"
+                                                class="input input1"value="@if($pedigree){{$pedigree->sireregistration1}}@endif"
+                                                placeholder="Registration"name="sireregistration1"required
+                                              />
+                                              <input
+                                                type="text"
+                                                class="input input2"value="@if($pedigree){{$pedigree->sirename1}}@endif"
+                                                placeholder="Name"
+                                                style="display: none"name="sirename1"required
+                                              />
+                                              <input
+                                                type="text"
+                                                class="input input2"
+                                                placeholder="Link"
+                                                style="display:none"name="sirelink1"value="@if($pedigree){{$pedigree->sirelink1}}@endif"required
+                                              /> 
+                                            </div>
+                                           
+                                            <div class="first_bix"></div>
+                                            <ul class="list-none">
+                                              <li
+                                                class="d-flex align-items-center"
+                                              >
+                                                <div
+                                                  class="pedigreeForm blue-node"
+                                                >
+                                                  <input
+                                                    type="text"
+                                                    class="input input1"value="@if($pedigree){{$pedigree->sireregistration2}}@endif"
+                                                    placeholder="Registration"name="sireregistration2"required
+                                                  />
+                                                  <input
+                                                    type="text"
+                                                    class="input input2"value="@if($pedigree){{$pedigree->sirename2}}@endif"
+                                                    placeholder="Name"
+                                                    style="display: none"name="sirename2"required
+                                                  />
+                                                  <input
+                                                    type="text"
+                                                    class="input input2"value="@if($pedigree){{$pedigree->sirelink2}}@endif"
+                                                    placeholder="Link"
+                                                    style="display: none"name="sirelink2"required
+                                                  />
+                                                </div>
+                                                <!-- <a
+                                                  href="javascript:void(0)"
+                                                  class="blue-node"
+                                                  >Q-97216 One Time Design
+                                                </a> -->
+                                                <div class="first_bix"></div>
+                                                <ul class="list-none">
+                                                  <li
+                                                    class="d-flex align-items-center"
+                                                  >
+                                                    <div
+                                                      class="pedigreeForm blue-node"
+                                                    >
+                                                      <input
+                                                        type="text"
+                                                        class="input input1"value="@if($pedigree){{$pedigree->sireregistration3}}@endif"
+                                                        placeholder="Registration"
+                                                        name="sireregistration3"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->sirename3}}@endif"
+                                                        placeholder="Name"
+                                                        style="display: none"
+                                                        name="sirename3"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->sirelink3}}@endif"
+                                                        placeholder="Link"
+                                                        style="display: none"
+                                                        name="sirelink3"required
+                                                      />
+                                                    </div>
+                                                  </li>
+                                                  <li
+                                                    class="d-flex align-items-center"
+                                                  >
+                                                    <div
+                                                      class="pedigreeForm pink-node"
+                                                    >
+                                                      <input
+                                                        type="text"
+                                                        class="input input1"value="@if($pedigree){{$pedigree->damregistration7}}@endif"
+                                                        placeholder="Registration"name="damregistration7"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->damname7}}@endif"
+                                                        placeholder="Name"
+                                                        style="display: none"
+                                                        name="damname7"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->damlink7}}@endif"
+                                                        placeholder="Link"
+                                                        style="display: none"
+                                                        name="damlink7"required
+                                                      />
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                              </li>
+                                              <li
+                                                class="d-flex align-items-center"
+                                              >
+                                                <div
+                                                  class="pedigreeForm pink-node"
+                                                >
+                                                  <input
+                                                    type="text"
+                                                    class="input input1"value="@if($pedigree){{$pedigree->damregistration6}}@endif"
+                                                    placeholder="Registration"name="damregistration6"required
+                                                  />
+                                                  <input
+                                                    type="text"
+                                                    class="input input2"value="@if($pedigree){{$pedigree->damname6}}@endif"
+                                                    placeholder="Name"
+                                                    style="display: none"name="damname6"required
+                                                  />
+                                                  <input
+                                                    type="text"
+                                                    class="input input2"value="@if($pedigree){{$pedigree->damlink6}}@endif"
+                                                    placeholder="Link"
+                                                    style="display: none"name="damlink6"required
+                                                  />
+                                                </div>
+                                                <div class="first_bix"></div>
+                                                <ul class="list-none">
+                                                  <li
+                                                    class="d-flex align-items-center"
+                                                  >
+                                                    <div
+                                                      class="pedigreeForm blue-node"
+                                                    >
+                                                      <input
+                                                        type="text"
+                                                        class="input input1"value="@if($pedigree){{$pedigree->sireregistration4}}@endif"
+                                                        placeholder="Registration"name="sireregistration4"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->sirename4}}@endif"
+                                                        placeholder="Name"
+                                                        style="display: none"name="sirename4"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->sirelink4}}@endif"
+                                                        placeholder="Link"
+                                                        style="display: none"name="sirelink4"required
+                                                      />
+                                                    </div>
+                                                  </li>
+                                                  <li
+                                                    class="d-flex align-items-center"
+                                                  >
+                                                    <div
+                                                      class="pedigreeForm pink-node"
+                                                    >
+                                                      <input
+                                                        type="text"
+                                                        class="input input1"value="@if($pedigree){{$pedigree->damregistration5}}@endif"
+                                                        placeholder="Registration"name="damregistration5"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->damname5}}@endif"
+                                                        placeholder="Name"
+                                                        style="display: none"name="damname5"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->damlink5}}@endif"
+                                                        placeholder="Link"
+                                                        style="display: none"name="damlink5"required
+                                                      />
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                              </li>
+                                            </ul>
+                                          </li>
+                                          <li class="d-flex align-items-center">
+                                            <div class="pedigreeForm pink-node">
+                                              <input
+                                                type="text"
+                                                class="input input1"value="@if($pedigree){{$pedigree->damregistration1}}@endif"
+                                                placeholder="Registration"name="damregistration1"required
+                                              />
+                                              <input
+                                                type="text"
+                                                class="input input2"value="@if($pedigree){{$pedigree->damname1}}@endif"
+                                                placeholder="Name"
+                                                style="display: none"name="damname1"required
+                                              />
+                                              <input type="text"
+                                                      class="input input2"value="@if($pedigree){{$pedigree->damlink1}}@endif"
+                                                        placeholder="Link"
+                                                        style="display: none"name="damlink1"required
+                                              />
+                                            </div>
+                                            <div class="first_bix"></div>
+                                            <div class="first_bix"></div>
+                                            <ul class="list-none">
+                                              <li
+                                                class="d-flex align-items-center"
+                                              >
+                                                <div
+                                                  class="pedigreeForm blue-node"
+                                                >
+                                                  <input
+                                                    type="text"
+                                                    class="input input1"value="@if($pedigree){{$pedigree->sireregistration6}}@endif"
+                                                    placeholder="Registration"name="sireregistration6"required
+                                                  />
+                                                  <input
+                                                    type="text"
+                                                    class="input input2"value="@if($pedigree){{$pedigree->sirename6}}@endif"
+                                                    placeholder="Name"
+                                                    style="display: none"name="sirename6"required
+                                                  />
+                                                  <input type="text"
+                                                      class="input input2"value="@if($pedigree){{$pedigree->sirelink6}}@endif"
+                                                        placeholder="Link"
+                                                        style="display: none"name="sirelink6"required
+                                                  />
+                                                </div>
+                                                <div class="first_bix"></div>
+                                                <ul class="list-none">
+                                                  <li
+                                                    class="d-flex align-items-center"
+                                                  >
+                                                    <div
+                                                      class="pedigreeForm blue-node"
+                                                    >
+                                                      <input
+                                                        type="text"
+                                                        class="input input1"value="@if($pedigree){{$pedigree->sireregistration5}}@endif"
+                                                        placeholder="Registration"name="sireregistration5"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->sirename5}}@endif"
+                                                        placeholder="Name"
+                                                        style="display: none"name="sirename5"required
+                                                      />
+                                                      <input type="text"
+                                                      class="input input2"value="@if($pedigree){{$pedigree->sirelink5}}@endif"
+                                                        placeholder="Link"
+                                                        style="display: none"name="sirelink5"required
+                                                      />
+                                                    </div>
+                                                  </li>
+                                                  <li
+                                                    class="d-flex align-items-center"
+                                                  >
+                                                    <div
+                                                      class="pedigreeForm pink-node"
+                                                    >
+                                                      <input
+                                                        type="text"
+                                                        class="input input1"value="@if($pedigree){{$pedigree->damregistration4}}@endif"
+                                                        placeholder="Registration"name="damregistration4"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->damname4}}@endif"
+                                                        placeholder="Name"name="damname4"required
+                                                        style="display: none"
+                                                      />
+                                                      <input type="text"
+                                                      class="input input2"value="@if($pedigree){{$pedigree->damlink4}}@endif"
+                                                        placeholder="Link"
+                                                        style="display: none"name="damlink4"required
+                                                      />
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                              </li>
+                                              <li
+                                                class="d-flex align-items-center"
+                                              >
+                                                <div
+                                                  class="pedigreeForm pink-node"
+                                                >
+                                                  <input
+                                                    type="text"
+                                                    class="input input1"value="@if($pedigree){{$pedigree->damregistration2}}@endif"
+                                                    placeholder="Registration"
+                                                    name="damregistration2"required
+                                                  />
+                                                  <input
+                                                    type="text"
+                                                    class="input input2"value="@if($pedigree){{$pedigree->damname2}}@endif"
+                                                    placeholder="Name"
+                                                    style="display: none"
+                                                    name="damname2"required
+                                                  />
+                                                  <input
+                                                    type="text"
+                                                    class="input input2"value="@if($pedigree){{$pedigree->damlink2}}@endif"
+                                                    placeholder="Link"
+                                                    style="display: none"
+                                                    name="damlink2"required
+                                                  />
+                                                </div>
+                                                <div class="first_bix"></div>
+                                                <ul class="list-none">
+                                                  <li
+                                                    class="d-flex align-items-center"
+                                                  >
+                                                    <div
+                                                      class="pedigreeForm blue-node"
+                                                    >
+                                                      <input
+                                                        type="text"
+                                                        class="input input1"value="@if($pedigree){{$pedigree->sireregistration7}}@endif"
+                                                        placeholder="Registration"
+                                                        name="sireregistration7"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->sirename7}}@endif"
+                                                        placeholder="Name"
+                                                        style="display: none"
+                                                        name="sirename7"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->sirelink7}}@endif"
+                                                        placeholder="Link"
+                                                        style="display: none"
+                                                        name="sirelink7"required
+                                                      />
+                                                    </div>
+                                                  </li>
+                                                  <li
+                                                    class="d-flex align-items-center"
+                                                  >
+                                                    <div
+                                                      class="pedigreeForm pink-node"
+                                                    >
+                                                      <input
+                                                        type="text"
+                                                        class="input input1"value="@if($pedigree){{$pedigree->damregistration3}}@endif"
+                                                        placeholder="Registration"
+                                                        name="damregistration3"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->damname3}}@endif"
+                                                        placeholder="Name"
+                                                        style="display: none"
+                                                        name="damname3"required
+                                                      />
+                                                      <input
+                                                        type="text"
+                                                        class="input input2"value="@if($pedigree){{$pedigree->damlink3}}@endif"
+                                                        placeholder="Link"
+                                                        style="display: none"
+                                                        name="damlink3"required
+                                                      />
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                              </li>
+                                            </ul>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                               
+                              
+
+                              </div>
+                            </div>
+                          </div>
+                          <div class="update_btn  mb50">
+                               <button type="submit"class="btn btn_i black_btn">save</button>
+                          </div>
+                          </form>
+                          
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
-      <script>
-        // Initialize CKEditor
-        ClassicEditor
-            .create(document.querySelector('#editor1'))
-            .catch(error => {
-                console.error(error);
-            });
-
-            ClassicEditor
-            .create(document.querySelector('#editor2'))
-            .catch(error => {
-                console.error(error);
-            });
-            ClassicEditor
-            .create(document.querySelector('#editor3'))
-            .catch(error => {
-                console.error(error);
-            });
-            ClassicEditor
-            .create(document.querySelector('#editor4'))
-            .catch(error => {
-                console.error(error);
-            });
-            ClassicEditor
-            .create(document.querySelector('#editor5'))
-            .catch(error => {
-                console.error(error);
-            });
-            ClassicEditor
-            .create(document.querySelector('#backgroundstory'))
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
 @endsection          

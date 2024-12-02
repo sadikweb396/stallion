@@ -3,17 +3,17 @@
     <!-- banner section -->
     <section
       class="hero_banner_m d-flex align-items-center stallions-banner"
-      style="background-image: url({{ $stalliondetails->banner_image }});">
+      style="background-image: url(@if($stalliondetails){{ $stalliondetails->banner_image }} @endif);" >
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <div class="hero_banner_i">
               <div class="banner_heading-m text-center mb20">
-                <h1>{{$stalliondetails->banner_heading}}</h1>
+                <h1>@if($stalliondetails){{$stalliondetails->banner_heading}}@endif</h1>
               </div>
               <div class="para_banner text-center">
                 <p>
-                {{$stalliondetails->banner_pargaraph}}
+                @if($stalliondetails){{$stalliondetails->banner_pargaraph}}@endif
                 </p>
               </div>
             </div>
@@ -66,11 +66,11 @@
           <div class="col-lg-12">
             <div class="about_stallion_m">
               <div class="about_stallion_heading text-center mb20">
-                <h2>{{$stalliondetails->heading1}}</h2>
+                <h2>@if($stalliondetails){{$stalliondetails->heading1}}@endif</h2>
               </div>
               <div class="about_stallions_para text-center mb20">
                 <p>
-                {!!$stalliondetails->paragraph1!!}
+                @if($stalliondetails){!!$stalliondetails->paragraph1!!}@endif
                 </p>
               </div>
               <div class="about_stallions_btn text-center">
@@ -83,47 +83,9 @@
         </div>
       </div>
     </section>
-    <!-- info section end -->
-    <!-- stallion listing start -->
-    <section class="stallion_listing_m pdb100">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="stallion_listing_inner">
-                    <div class="stallion_listing_heading text-center mb20">
-                        <h2>Stallions Listings</h2>
-                    </div>
-                    <div class="listing_stallion_m d-flex gap20 flexwrap mb50" id="stallion-list">
-                        @foreach($stallions as $stallion)
-                        
-                            @php
-                                $stallionImage = $stallion->stallionImages->firstWhere('new_element', 1) ?? 
-                                                 $stallion->stallionImages->first();
-                            @endphp
-                            @if($stallionImage)
-                                <article
-                                    class="list_stallion_a d-flex align-items-end justify-content-center"
-                                    style="background-image: url('{{ $stallionImage->stallion_image }}');"
-                                >
-                                    <a href="{{ url('single-stallion', $stallion->name) }}" aria-label="listing article">
-                                        <div class="listing_title">
-                                            <p>{{ $stallion->name }}</p>
-                                        </div>
-                                    </a>
-                                </article>
-                            @endif
-                        @endforeach
-                    </div>
-                    <div class="listing_load_more text-center">
-                        <button id="load-more" class="btn_i" data-offset="{{ count($stallions) }}" aria-label="Load More listing">Load More</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
+<div id="user-list">
+@include('frontend.stallionlist')
+</div>
     <!-- Stallion listing end -->
     <!-- Stallion with us start -->
     <section
@@ -161,11 +123,11 @@
           <div class="col-lg-12">
             <div class="about_stallion_m">
               <div class="about_stallion_heading text-center mb20">
-              <h2>{{$stalliondetails->heading1}}</h2>
+              <h2>@if($stalliondetails){{$stalliondetails->heading1}}@endif</h2>
               </div>
               <div class="about_stallions_para text-center mb20">
                 <p>
-                {!!$stalliondetails->paragraph2!!}
+                @if($stalliondetails){!!$stalliondetails->paragraph2!!}@endif
                 </p>
               </div>
               <div class="about_stallions_btn text-center">
@@ -182,16 +144,16 @@
 
     <!-- Get in touch start -->
     <section id="get_touch_m">
-      <div class="container-fluid no-padding hidden">
+      <div class="container-fluid no-padding ">
         <div class="row">
           <div class="col-lg-6">
-            <div
+          <div
               class="get_touch_bg d-flex justify-content-center"
-              style="background-image: url('./assets/image/Rectangle\ 21.png')"
+              style="background-image: url('{{ asset('assets/frontend/image/Rectangle 21.png') }}"
             >
               <div class="get_touch_logo">
-                <img
-                  src="./assets/image/2__2_-removebg-preview (1).png"
+              <img
+                  src="{{ asset('assets/frontend/image/2__2_-removebg-preview.png') }}"
                   alt="get in touch logo"
                   class="img-contain"
                 />
@@ -275,52 +237,5 @@
           </div>
         </div>
       </div>
-    </section>
-    <!-- get in touch end -->
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-   $(document).ready(function() {
-    $('#load-more').click(function() {
-        var offset = $(this).data('offset');
-
-        $.ajax({
-            url: "{{ route('stallionlist') }}", // Adjust with your route name
-            type: "GET",
-            data: { offset: offset },
-            success: function(data) {
-                if (data.length > 0) {
-                    $.each(data, function(index, stallion) {
-                        // Check if stallion_images exists and is an array
-                        if (Array.isArray(stallion.stallion_images)) {
-                            var stallionImage = stallion.stallion_images.find(image => image.new_element === 1) || 
-                                                (stallion.stallion_images.length > 0 ? stallion.stallion_images[0] : null);
-                            
-                            if (stallionImage) {
-                                $('#stallion-list').append(`
-                                    <article class="list_stallion_a d-flex align-items-end justify-content-center" style="background-image: url('${stallionImage.stallion_image}');">
-                                        <a href="{{ url('single-stallion', '') }}/${stallion.name}" aria-label="listing article">
-                                            <div class="listing_title">
-                                                <p>${stallion.name}</p>
-                                            </div>
-                                        </a>
-                                    </article>
-                                `);
-                            } else {
-                                console.warn(`No valid image found for stallion: ${stallion.name}`);
-                            }
-                        } else {
-                            console.warn(`stallion_images is not an array for stallion: ${stallion.name}`);
-                        }
-                    });
-                    $('#load-more').data('offset', offset + 1); // Increase offset
-                } else {
-                    $('#load-more').hide(); // Hide button if no more data
-                }
-            }
-        });
-    });
-});
-
-</script>
-    @endsection
+    </section>  
+@endsection

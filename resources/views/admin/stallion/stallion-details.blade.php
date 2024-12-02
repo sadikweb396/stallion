@@ -28,13 +28,13 @@
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Banner Heading</label>
-                                  <input type="text" id="name"name="banner_heading"value="{{$stalliondetails->banner_heading}}"required/>
+                                  <input type="text" id="name"name="banner_heading"value="@if($stalliondetails){{$stalliondetails->banner_heading}}@endif"required/>
                                 </div>
                               </div>
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Banner Text</label>
-                                  <input type="text" id="name"name="banner_text"value="{{$stalliondetails->banner_pargaraph}}"required/>
+                                  <input type="text" id="name"name="banner_text"value="@if($stalliondetails){{$stalliondetails->banner_pargaraph}}@endif"required/>
                                 </div>
                               </div>
                               <div class="form_main">
@@ -46,25 +46,25 @@
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Heading First</label>
-                                  <input type="text" id="name"name="heading_first"value="{{$stalliondetails->heading1}}"required/>
+                                  <input type="text" id="name"name="heading_first"value="@if($stalliondetails){{$stalliondetails->heading1}}@endif"required/>
                                 </div>
                               </div>
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Paragraph First</label>
-                                  <textarea name="first_paragraph" id="first_paragraph">{{$stalliondetails->paragraph1}}</textarea>
+                                  <textarea name="first_paragraph" id="first_paragraph">@if($stalliondetails){{$stalliondetails->paragraph1}}@endif</textarea>
                                 </div>
                               </div>
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Heading Second</label>
-                                  <input type="text" id="name"name="heading_second"value="{{$stalliondetails->heading2}}"required/>
+                                  <input type="text" id="name"name="heading_second"value="@if($stalliondetails){{$stalliondetails->heading2}}@endif"required/>
                                 </div>
                               </div>
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Paragraph Second</label>
-                                  <textarea name="second_paragraph" id="second_paragraph">{{$stalliondetails->paragraph2}}</textarea>
+                                  <textarea name="second_paragraph" id="second_paragraph">@if($stalliondetails){{$stalliondetails->paragraph2}}@endif</textarea>
                                 </div>
                               </div>
                               <div class="form_main">

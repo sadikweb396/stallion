@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\StallionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\MareController;
+use App\Http\Controllers\Frontend\FollowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +25,15 @@ Route::get('/', function () {
   // Auth::routes();
 
 
-Route::get('/',[HomeController::class,'home']);
+Route::get('/',[HomeController::class,'home'])->name('home');
 Route::get('stallions',[StallionController::class,'stallion']);
 Route::get('single-stallion/{id}',[StallionController::class,'signleStallion']);
 Route::get('stallionlist',[StallionController::class,'stallionlist'])->name('stallionlist');
 Route::get('mares',[MareController::class,'mare']);
 Route::get('single-mare/{id}',[MareController::class,'signleMare']);
+
+Route::post('follow/{stallionId}', [FollowController::class, 'follow'])->name('follow');
+Route::post('unfollow/{stallionId}', [FollowController::class, 'unfollow'])->name('unfollow');
 
 
 

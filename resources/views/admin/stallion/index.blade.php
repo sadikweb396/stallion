@@ -54,7 +54,7 @@
                                   <td>{{$user->username}}</td>
                                   <td>01 Dec 2023</td>
                                   <td>
-                                  @if($stallion->status_count==4)
+                                  @if($stallion->status_count==5)
                                   @if($stallion->status==0)
                                   <form action="{{ route('admin.approve', $stallion->id) }}" method="POST" style="display: inline;">
                                     @csrf

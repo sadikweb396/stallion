@@ -10,9 +10,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\StallionController;
 use App\Http\Controllers\Admin\MareController;
+use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Owner\Auth;
-
-  
+ 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -77,7 +77,13 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('stallion-details',[StallionController::class,'stallionDetailsStore'])->name('stallion-details.store');
         Route::get('mare/details',[MareController::class,'mareDetails']);
         Route::post('mare-details',[MareController::class,'mareDetailsStore'])->name('mare-details.store');
-       
+        
+        Route::get('plan',[PlanController::class,'index'])->name('plans.index');
+        Route::get('plan/create',[PlanController::class,'create']);
+        Route::post('plan',[PlanController::class,'store'])->name('plan.store');
+        Route::get('plan/edit/{id}',[PlanController::class,'edit']);
+        Route::post('plan/update/{id}',[PlanController::class,'update'])->name('plan.update');
+        Route::get('plan/delete/{id}',[PlanController::class,'delete']);
     });
 });
 

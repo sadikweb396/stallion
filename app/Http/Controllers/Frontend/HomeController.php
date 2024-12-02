@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\category;
 use App\Models\stallion;
 use App\Models\topside;
+use App\Models\plan;
 use App\Models\progenyperformance;
 
 class HomeController extends Controller
@@ -21,7 +22,8 @@ class HomeController extends Controller
 
             $progenyperformance=progenyperformance::first();
             $topside=topside::first();
-
+            $planmember=plan::where('plan_for','member')->first();
+            $planOwner=plan::where('plan_for','owner')->first();
         
             $latestUpdates = Stallion::with(['stallionImages' => function ($query) {
                 $query->orderBy('new_element', 'DESC');
@@ -29,7 +31,7 @@ class HomeController extends Controller
 
             return view('frontend.home')
             ->with('categorys',$categorys)->with('topside',$topside) ->with('progenyperformance',$progenyperformance)
-            ->with('stallions',$stallions)->with('latestUpdates',$latestUpdates);
+            ->with('stallions',$stallions)->with('latestUpdates',$latestUpdates)->with('planmember',$planmember)->with('planOwner',$planOwner);
         }
 }
   

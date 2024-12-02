@@ -71,7 +71,91 @@
             reader.readAsDataURL(file); // Convert file to base64 string
         }
     }
+
+          // Initialize CKEditor
+          ClassicEditor
+            .create(document.querySelector('#performance_history'))
+            .catch(error => {
+                console.error(error);
+            });
+
+            ClassicEditor
+            .create(document.querySelector('#owner_story'))
+            .catch(error => {
+                console.error(error);
+            });
+            ClassicEditor
+            .create(document.querySelector('#lifetime_Story'))
+            .catch(error => {
+                console.error(error);
+            });
+            ClassicEditor
+            .create(document.querySelector('#personal_trainer'))
+            .catch(error => {
+                console.error(error);
+            });
+            ClassicEditor
+            .create(document.querySelector('#trainer_history'))
+            .catch(error => {
+                console.error(error);
+            });
+            ClassicEditor
+            .create(document.querySelector('#background_story'))
+            .catch(error => {
+                console.error(error);
+            });
+            ClassicEditor
+            .create(document.querySelector('#plan'))
+            .catch(error => {
+                console.error(error);
+            });
+                
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+    // Function to validate and display messages
+    function validateField(fieldId, messageId, message) {
+        const field = document.getElementById(fieldId);
+        const messageContainer = $(messageId);
+        
+        // Clear previous messages
+        messageContainer.empty();
+        
+        if (field.value.trim() === '') {
+            messageContainer.append(message);
+            // Scroll to the invalid field and focus on it
+            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            field.focus();
+            return false; // Validation failed
+        }
+          return true; 
+    }
+    const isPerformanceValid = validateField('performance_history', '#performance', "Performance history field is required");
+    const isOwnerValid = validateField('owner_story', '#owner', "Owner story field is required");
+    const isLifestoryValid = validateField('lifetime_Story', '#lifetime', "Life time story is required");
+    const isPersonaltrainerValid = validateField('personal_trainer','#personaltrainer', "Personal Trainer required");
+    const isTrainerHistoryValid = validateField('trainer_history','#trainerhistory', "Trainer history required");
+    if (!isPerformanceValid || !isOwnerValid || !isLifestoryValid || !isPersonaltrainerValid  || !isTrainerHistoryValid)  {
+        event.preventDefault();
+    }
+});  
+
+  // Function to open the modal
+  function showModal() {
+      document.getElementById("myModal").style.display = "block";
+    }
+
+    // Function to close the modal
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+
+    // Close the modal if the user clicks outside of the modal content
+    window.onclick = function(event) {
+      if (event.target === document.getElementById("myModal")) {
+        closeModal();
+      }
+    }
     </script>
+
   @include('sweetalert::alert')
   </body>
 </html>

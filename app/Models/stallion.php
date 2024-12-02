@@ -29,7 +29,7 @@ class stallion extends Model
 
     public function stallionImages()
     {
-        return $this->hasMany(StallionImage::class);
+        return $this->hasMany(stallionimage::class);
     }
 
     public function progeny()
@@ -59,13 +59,13 @@ class stallion extends Model
 
     public function firstImage()
     {
-        return $this->hasOne(StallionImage::class)->latest(); 
+        return $this->hasOne(stallionImage::class)->latest(); 
     }
     
 
-    public function primaryImage()
+     public function primaryImage()
     {
-        return $this->hasOne(StallionImage::class); // One-to-one relationship
+        return $this->hasOne(stallionimage::class);
     }
 }
    

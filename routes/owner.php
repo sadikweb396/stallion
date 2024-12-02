@@ -8,6 +8,8 @@ use App\Http\Controllers\Owner\StallionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Owner\MareController;
 use App\Http\Controllers\Owner\ProgenyController;
+use App\Http\Controllers\Owner\PedigreeController;
+use App\Http\Controllers\Owner\FollowController;
 
 
 /*
@@ -21,7 +23,6 @@ use App\Http\Controllers\Owner\ProgenyController;
 |
 */
 
-
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('owner/register',[RegisterController::class,'showRegisterForm'])->name('owner.register');
@@ -31,7 +32,7 @@ Route::get('owner/login',[LoginController::class,'showLoginForm'])->name('owner.
 Route::post('owner/login',[LoginController::class,'login'])->name('owner.login.store');
 Route::post('logout',[LoginController::class,'logout'])->name('owner.logout');
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function(){
 Route::get('dashboard',[DashboardController::class,'dashboard'])->name('dashboard');
 // Route::get('stallion/create',[StallionController::class,'create']);
 // Route::post('stallion/store',[StallionController::class,'store'])->name('owner.stallion.store');
@@ -46,8 +47,8 @@ Route::prefix('owner')->name('owner.')->group(function (){
    
     Route::post('stallion-image',[StallionController::class,'stallionimagestore'])->name('stallion-image');
     Route::post('stallion-video',[StallionController::class,'stallionvideostore'])->name('stallion-video');
-    Route::get('progeny/edit/{id}',[StallionController::class,'progenyEdit']);
-    Route::post('progeny/update',[StallionController::class,'progenyUpdate'])->name('progeny-update');
+    Route::get('progeny/edit/{id}',[ProgenyController::class,'progenyEdit']);
+    Route::post('progeny/update',[ProgenyController::class,'progenyUpdate'])->name('progeny-update');
     // Mare
     Route::get('mares',[MareController::class,'index']);
     Route::get('mares/create',[MareController::class,'create'])->name('mare.create');
@@ -59,9 +60,11 @@ Route::prefix('owner')->name('owner.')->group(function (){
     Route::post('semen-contract',[StallionController::class,'semencontractstore'])->name('semen-contract');
     Route::get('progeny/{id}',[ProgenyController::class,'progenyImage']);
     Route::post('progeny-image',[ProgenyController::class,'progenyImageStore'])->name('progeny-image');
+    Route::post('pedigree-store',[PedigreeController::class,'pedigreeStore'])->name('pedigree.store');
+    Route::get('follow/stallion',[FollowController::class,'followstallion']);
 });
 });
 
 Route::post('stripe',[StallionController::class,'stripePost'])->name('stripe.post');
-
 Route::post('stripe/mare/store',[MareController::class,'stripePost'])->name('mare.stripe.store');
+
