@@ -44,16 +44,20 @@
                                 </div>
                               </div>
                               <div class="form_main">
-                                <div class="form-group">
+                                <div class="form-group"id="plantype">
                                   <label for="name">Plan For</label>
-                                  <select name="plan_for" required>
+                                  <select name="plan_for"id="plan_for"required>
                                     <option value="">Choose Plan For</option>
-                                    <option value="owner">Owner</option>
-                                    <option value="member">Member</option>
-                                    <option value="stallion">Stalion</option>
-                                    <option value="mare">Mare</option>
+                                    <option id="owner" value="owner">Owner</option>
+                                    <option id="member" value="member">Member</option>
+                                    <option id="stallion" value="stallion">Stalion</option>
+                                    <option id="mare" value="mare">Mare</option>
                                   </select>
                                 </div>
+                              </div>
+                              <div class="form_main">
+                              <div class="form-group"id="plantypes">
+                              </div>
                               </div>
 
                               <div class="form_main">
@@ -79,11 +83,5 @@
               </div> 
             </div>
           </div>
-          <script> 
-            ClassicEditor
-                .create(document.querySelector('#plan_details'))
-                .catch(error => {
-                    console.error(error);
-                });
-        <script> 
+         
   @endsection

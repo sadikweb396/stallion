@@ -2,17 +2,14 @@
 @extends('layouts.owner.app')
 @section('content')
 <div class="dash_body_inner">
-            <div class="our_stallions stallions_details">
-              <div class="add_new_stallions">
-                <div
-                  class="satllion_title_search_m d-flex justify-space-between align-items-center mb20"
-                >
-                  <div class="stallions_title">
-                    <h3>Create Category</h3>
-                  </div>
-                  <div class="stallions_search">
-                    
-                  </div>
+  <div class="our_stallions stallions_details">
+    <div class="add_new_stallions">
+      <div class="satllion_title_search_m d-flex justify-space-between align-items-center mb20">
+        <div class="stallions_title">
+          <h3>Create Category</h3>
+        </div>
+        <div class="stallions_search">
+                </div>
                 </div>
                 <div class="stallions_tabs_main">
                   <div class="tabs_i">

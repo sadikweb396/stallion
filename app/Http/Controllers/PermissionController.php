@@ -9,7 +9,7 @@ class PermissionController extends Controller
 {
     public function index()
     {
-        $permissions = Permission::get();
+        $permissions = Permission::paginate(10);
         return view('admin.role-permission.permission.index', ['permissions' => $permissions]);
     }
 
@@ -31,8 +31,8 @@ class PermissionController extends Controller
         Permission::create([
             'name' => $request->name
         ]);
-
-        return redirect('permissions')->with('status','Permission Created Successfully');
+        toast('Permission Created Successfully','success');
+        return redirect('permissions');
     }
 
     public function edit(Permission $permission)
@@ -53,7 +53,7 @@ class PermissionController extends Controller
         $permission->update([
             'name' => $request->name
         ]);
-
+        toast('Permission Updated Successfully','success');
         return redirect('permissions')->with('status','Permission Updated Successfully');
     }
 

@@ -12,6 +12,20 @@
     bottom: 18px;
     right: 20px;
 }
+
+.pagination nav > div:first-child {
+    display: flex;
+    justify-content: space-evenly;
+}
+.pagination nav > div:first-child span, .pagination nav > div:first-child a {
+    background-color: #171717;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 17px;
+    line-height: 20px;
+    font-family: var(--font-poppins);
+}
 </style>
 <section class="stallion_listing_m pdb100">
       <div class="container">
@@ -36,7 +50,7 @@
                       Mare Profile Updated
                     </marquee>
                   </div>
-                  <a href="#" aria-label="listing article">
+                  <a href="{{ url('single-stallion', $stallion->slug) }}" aria-label="listing article">
                     <div class="listing_title">
                       <p>{{ $stallion->name }}</p>
                     </div>
@@ -106,3 +120,4 @@
       </div>
     </section>
 
+   

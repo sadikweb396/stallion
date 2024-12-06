@@ -6,7 +6,8 @@ use App\Http\Controllers\Frontend\StallionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\MareController;
 use App\Http\Controllers\Frontend\FollowController;
-
+use App\Http\Controllers\Member\Auth\RegisterController;
+use App\Http\Controllers\Frontend\PhotographerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,24 +18,25 @@ use App\Http\Controllers\Frontend\FollowController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-  // Auth::routes();
-
-
+ // Auth::routes();
 Route::get('/',[HomeController::class,'home'])->name('home');
 Route::get('stallions',[StallionController::class,'stallion']);
-Route::get('single-stallion/{id}',[StallionController::class,'signleStallion']);
+Route::get('single-stallion/{slug}',[StallionController::class,'singleStallion'])->name('single-stallion');
 Route::get('stallionlist',[StallionController::class,'stallionlist'])->name('stallionlist');
 Route::get('mares',[MareController::class,'mare']);
-Route::get('single-mare/{id}',[MareController::class,'signleMare']);
+Route::get('single-mare/{slug}',[MareController::class,'signleMare']);
 
+// follow user route
 Route::post('follow/{stallionId}', [FollowController::class, 'follow'])->name('follow');
+// unfollow user route
 Route::post('unfollow/{stallionId}', [FollowController::class, 'unfollow'])->name('unfollow');
 
+Route::post('paymentregister',[RegisterController::class,'paymentregister'])->name('paymentregister');
+Route::get('member/register',[RegisterController::class,'showRegisterForm'])->name('member.register');
+Route::post('member/register',[RegisterController::class,'register'])->name('member.register.store');
+
+// photographer 
+Route::get('photographers',[PhotographerController::class,'index']);
 
 
 

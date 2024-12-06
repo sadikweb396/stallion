@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::get();
+        $users = User::paginate(10);
         return view('admin.role-permission.user.index', ['users' => $users]);
     }
 
@@ -49,7 +49,7 @@ class UserController extends Controller
                     ]);
 
         $user->syncRoles($request->roles);
-
+        toast('User created successfully with roles');
         return redirect('/users')->with('status','User created successfully with roles');
     }
 
@@ -86,7 +86,7 @@ class UserController extends Controller
 
         $user->update($data);
         $user->syncRoles($request->roles);
-
+        toast('User Updated Successfully with roles');
         return redirect('/users')->with('status','User Updated Successfully with roles');
     }
 
@@ -94,7 +94,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($userId);
         $user->delete();
-
-        return redirect('/users')->with('status','User Delete Successfully');
+        toast('User Delete Successfully');
+        return redirect('/users')->with('status');
     }
 }

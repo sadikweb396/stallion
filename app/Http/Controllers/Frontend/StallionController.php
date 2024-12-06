@@ -33,31 +33,22 @@ class StallionController extends Controller
         $stallions = Stallion::with(['stallionImages' => function ($query) {
             $query->orderBy('new_element', 'DESC');
         }])->where('category','stallions')->where('status',1)->orderBy('id', 'ASC')->paginate(1);
+
+        
         return view('frontend.stallion', compact('categories', 'stallions','featureStatus','stalliondetails'));
        
     }
-
-    // public function stallionlist(Request $request)
-    // {
-    //     if ($request->ajax()) {
-    //         $offset = $request->input('offset', 0);
-    //         $limit = 1; 
-    //         $stallions = Stallion::with(['stallionImages' => function ($query) {
-    //             $query->orderBy('new_element', 'DESC');
-    //         }])->where('category', 'stallions')->orderBy('id', 'ASC')->skip($offset)->take($limit)->get();
-    
-    //         return response()->json($stallions);
-    //     }
-    // }
-
-    public function signleStallion($id)
+    public function singleStallion($slug)
     {  
-        
-        $id=Stallion::where('name',$id)->value('id');
-        $ownerId=stallion::where('id',$id)->value('id');
-        $stallion = Stallion::with(['stallionImages','progeny.progenyImages','stallionvideo'])->find($id);
+        $count=Stallion::where('slug',$slug)->count();
+       
+        if($count==1){
+    
+        $id=Stallion::where('slug',$slug)->value('id');
+        $ownerId=stallion::where('id',$id)->value('user_id');
+        $stallion = Stallion::with(['stallionImages','progeny.progenyImages','stallionvideo','progeny'])->find($id);
 
-        $stallionsSingleOwner = Stallion::with(['stallionImages' => function ($query) {
+        $stallionsSingleOwner = Stallion::with(['stallionImages' => function ($query){
             $query->orderBy('new_element','DESC');
         }])
         ->where('category','stallions')
@@ -65,6 +56,8 @@ class StallionController extends Controller
         ->where('user_id',$ownerId)
         ->orderBy('id', 'ASC')
         ->get();
+
+
 
         $performaceImage=stallionimage::select('stallion_image')->where('performance_image',1)->where('stallion_id',$id)->first();
         
@@ -77,14 +70,16 @@ class StallionController extends Controller
 
         $exceptionProgeny = Stallion::with(['exceptionalProgeny.progenyImages'])->find($id);  
 
-        $stallionimages=stallionimage::select('stallion_image')->where('stallion_id',$id)->get();
-        $stallionvideoS=stallionvideo::select('stallion_video')->where('stallion_id',$id)->get();
+        $stallionimages=stallionimage::select('stallion_image')->where('stallion_id',$id)->where('exclusive_data',1)->get();
+        $stallionvideoS=stallionvideo::select('stallion_video')->where('stallion_id',$id)->where('exclusive_data',1)->get();
 
         $performanceHistoryVideo=stallionvideo::select('stallion_video')->where('performance_history_video',1)->where('stallion_id',$id)->first();
 
         $backgroundVideo=stallionvideo::select('stallion_video')->where('background_video',1)->where('stallion_id',$id)->first();
         
         $pedigree=pedigree::where('stallion_id',$id)->first();
+
+        $previewImage=stallionimage::select('stallion_image')->where('stallion_id',$id)->where('exclusive_data',1)->first();
         return view('frontend.single-stallion')
         ->with('stallion',$stallion)->with('stallionsSingleOwner',$stallionsSingleOwner)
         ->with('exceptionProgeny',$exceptionProgeny)->with('pedigree',$pedigree)
@@ -95,7 +90,28 @@ class StallionController extends Controller
         ->with('stallionvideoImage',$stallionvideoImage)
         ->with('backgroundVideo',$backgroundVideo)
         ->with('performanceHistoryVideo',$performanceHistoryVideo)
+        ->with('previewImage',$previewImage)
         ->with('stallionimages',$stallionimages);
+
+    }
+    else
+    {
+        $count=Stallion::where('registration_details',$slug)->count();
+        
+        if($count==1)
+        {
+           
+            $slug=Stallion::where('registration_details',$slug)->value('slug');
+           
+            
+            return redirect()->route('single-stallion', ['slug' => $slug]);
+        }
+
+        else
+        {
+            return redirect()->to('https://example.com');
+        }
+    }
     }   
 }
  

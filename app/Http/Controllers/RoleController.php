@@ -19,7 +19,7 @@ class RoleController extends Controller
 
     public function index()
     {
-        $roles = Role::get();
+        $roles = Role::paginate(10);
         return view('admin.role-permission.role.index', ['roles' => $roles]);
     }
 
@@ -42,7 +42,7 @@ class RoleController extends Controller
         Role::create([
             'name' => $request->name
         ]);
-
+        toast('Role Created Successfully','success');
         return redirect('roles')->with('status','Role Created Successfully');
     }
 
@@ -67,7 +67,7 @@ class RoleController extends Controller
         $role->update([
             'name' => $request->name
         ]);
-
+        toast('Role Updated Successfully','success');
         return redirect('roles')->with('status','Role Updated Successfully');
     }
 
@@ -76,6 +76,7 @@ class RoleController extends Controller
         $role = Role::find($roleId);
 
         $role->delete();
+        toast('Role Deleted Successfully');
         return redirect('roles')->with('status','Role Deleted Successfully');
     }
 

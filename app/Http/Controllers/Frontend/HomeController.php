@@ -8,6 +8,7 @@ use App\Models\category;
 use App\Models\stallion;
 use App\Models\topside;
 use App\Models\plan;
+use Session;
 use App\Models\progenyperformance;
 
 class HomeController extends Controller
@@ -27,11 +28,12 @@ class HomeController extends Controller
         
             $latestUpdates = Stallion::with(['stallionImages' => function ($query) {
                 $query->orderBy('new_element', 'DESC');
-            }])->where('status',1)->where('update_status',1)->orderBy('latest_update','DESC')->get();
+            }])->where('status',1)->where('update_status',1)->orderBy('latest_update','DESC')->take(10)->get();
 
             return view('frontend.home')
             ->with('categorys',$categorys)->with('topside',$topside) ->with('progenyperformance',$progenyperformance)
             ->with('stallions',$stallions)->with('latestUpdates',$latestUpdates)->with('planmember',$planmember)->with('planOwner',$planOwner);
         }
+
 }
   

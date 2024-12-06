@@ -1,11 +1,11 @@
+@extends('layouts.owner.app')
+@section('content')
 <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
-
                 @if (session('status'))
                     <div class="alert alert-success">{{ session('status') }}</div>
                 @endif
-
                 <div class="card">
                     <div class="card-header">
                         <h4>Role : {{ $role->name }}
@@ -43,7 +43,7 @@
 
                             </div>
                             <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit"class="btn btn_i black_btn">Update</button>
                             </div>
                         </form>
                     </div>
@@ -51,3 +51,4 @@
             </div>
         </div>
     </div>
+@endsection

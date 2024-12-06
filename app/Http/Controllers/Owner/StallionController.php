@@ -32,106 +32,97 @@ class StallionController extends Controller
 
     public function index()
     {   
-    $stallions = Stallion::with('primaryImage','firststallionvideo') // Eager load video to optimize
-    ->where('category', 'stallions')
-    ->where('user_id', Auth::id())
-    ->get();   
-    $stallionlists = [];   
-    foreach ($stallions as $stallion) {
-        $filledFields = 0; 
-        $image = null; 
-        // $videoFilled = false;  
-        if ($stallion->name) {
-            $filledFields=4;
-        }
-        if ($stallion->performance_history) {
-            $filledFields=$filledFields+4;
-        }
-        if ($stallion->background_story) {
-            $filledFields=$filledFields+4;
-        }
-        if ($stallion->lifetime_story) {
-            $filledFields=$filledFields+4;
-        }
-        
-        if ($stallion->registration_details) {
-            $filledFields=$filledFields+4;
-        }
-        if ($stallion->height) {
-            $filledFields=$filledFields+4;
-        }
-        if ($stallion->bred_by) {
-            $filledFields=$filledFields+4;
-            
-        }  
-        if ($stallion->owner_story) {
-            $filledFields=$filledFields+4;
-            
-        }
-        if ($stallion->first_foal_crop_year){
-            $filledFields=$filledFields+4;
-            
-        }
-        if ($stallion->professional_trainer){
-            $filledFields=$filledFields+4;
-            
-        }
-        if ($stallion->put_semen_available_from){
-            $filledFields=$filledFields+4;
-            
-        }
-        if ($stallion->current_performing_discipline){
-            $filledFields=$filledFields+4;
-            
-        }
-        if ($stallion->trainer_history){
-            $filledFields=$filledFields+2;
-            
-        }      
-        foreach($stallions as $stalliondata)
-        {
-            $count=StallionImage::where('stallion_id',$stalliondata->id)->count();
-            if($count>=5)
-            {
-               $filledFields=$filledFields+13;
+        $stallions = Stallion::with('primaryImage','firststallionvideo','semencontract') 
+        ->where('category', 'stallions')
+        ->where('user_id',Auth::id())
+        ->get();  
 
+        $stallionlists = [];   
+        foreach ($stallions as $stallion) {
+            $filledFields = 0; 
+            $image = null; 
+          
+            if ($stallion->name) {
+                $filledFields=4;
             }
-            $count=semencontract::where('stallion_id',$stalliondata->id)->count();
-            if($count==1)
-            {
-                $filledFields=$filledFields+13;
-            }            
-            $count=pedigree::where('stallion_id',$stalliondata->id)->count();
-            if($count==1)
-            {
-                $filledFields=$filledFields+13;
-            }     
-        }
-        if ($stallion->primaryImage){
-            if ($stallion->primaryImage->stallion_name) {
-                $image = $stallion->primaryImage->stallion_image; 
+            if ($stallion->performance_history) {
+                $filledFields=$filledFields+4;
+            }
+            if ($stallion->background_story) {
+                $filledFields=$filledFields+4;
+            }
+            if ($stallion->lifetime_story) {
+                $filledFields=$filledFields+4;
+            }
+            
+            if ($stallion->registration_details) {
+                $filledFields=$filledFields+4;
+            }
+            if ($stallion->height) {
+                $filledFields=$filledFields+4;
+            }
+            if ($stallion->bred_by) {
+                $filledFields=$filledFields+4;
+                
+            }  
+            if ($stallion->owner_story) {
+                $filledFields=$filledFields+4;
                 
             }
-        }
-        if ($stallion->firststallionvideo) {
-            if ($stallion->firststallionvideo->stallion_name) {
-                $filledFields=$filledFields+11;
-                $videoFilled = true; 
+            if ($stallion->first_foal_crop_year){
+                $filledFields=$filledFields+4;
+                
             }
-        }         
-        $stallionlists[] = [
-            'name' => $stallion->name ?? 'N/A', // Default to 'N/A' if name is not set
-            'filledFields' => $filledFields,
-            'totalFields' => 20, // Total fields are 10 as per your logic
-            'completionPercentage' => ($filledFields / 100) * 100, // Calculate completion percentage
-            'image' => $image, // Image or null
-          
-            'id' => $stallion->id ,
-        ];
-    }  
-        return view('owner.stallion.index')
-        ->with('stallions',$stallions)
-        ->with('stallionlists',$stallionlists);
+            if ($stallion->professional_trainer){
+                $filledFields=$filledFields+4;
+                
+            }
+            if ($stallion->put_semen_available_from){
+                $filledFields=$filledFields+4;
+                
+            }
+            if ($stallion->current_performing_discipline){
+                $filledFields=$filledFields+4;
+                
+            }
+            if ($stallion->trainer_history){
+                $filledFields=$filledFields+4;
+                
+            }   
+            if ($stallion->imagepercentage) {
+                $filledFields=$filledFields+12;
+            }
+            if ($stallion->pedigree) {
+                     $filledFields=$filledFields+12;
+            }
+            if ($stallion->semencontract) {
+                     $filledFields=$filledFields+12;
+            }
+            if ($stallion->primaryImage){
+                if ($stallion->primaryImage->stallion_name) {
+                    $image = $stallion->primaryImage->stallion_image; 
+                         
+                }
+            }
+            if ($stallion->firststallionvideo) {
+                if ($stallion->firststallionvideo->stallion_name) {
+                    $filledFields=$filledFields+12;
+                    $videoFilled = true; 
+                }
+            }
+                   
+            $stallionlists[] = [
+                'name' => $stallion->name ?? 'N/A', 
+                'filledFields' => $filledFields, 
+                'completionPercentage' => ($filledFields / 100) * 100, 
+                'image' => $image,   
+                'id' => $stallion->id ,
+                'slug'=>$stallion->slug,
+            ];
+        }  
+            return view('owner.stallion.index')
+            ->with('stallions',$stallions)
+            ->with('stallionlists',$stallionlists);
     }
 
     public function create()
@@ -152,12 +143,21 @@ class StallionController extends Controller
     }
     public function store(Request $request)
     {
+    
+        $count=stallion::where('user_id',Auth::id())->count();
+        
+        if($count==0){
+           $planPrice=plan::where('plan_for','stallion')->value('plan_price');
+        }
+        elseif($count==1 || $count==2 || $count==3 || $count==4 || $count == 5)
+        {
         $planPrice=plan::where('plan_for','stallion')->value('plan_price');
-
-          // Generate the initial slug from the title
+        }
+        elseif($count>5)
+        {
+            $planPrice=plan::where('plan_for','stallion')->value('plan_price');
+        }
         $slug = Str::slug($request->name);
-
-        // Ensure the slug is unique by checking if it already exists in the database
         $slug = $this->getUniqueSlug($slug);
 
         session([
@@ -168,7 +168,7 @@ class StallionController extends Controller
             'registration_details' => $request->registration_details,
             'bred_by' => $request->bred_by,
             'trainer_history' => $request->trainer_history,
-            'height' => $request->height,  // Ensure all required fields are captured
+            'height' => $request->height,  
             'put_semen_available_from' => $request->put_semen_available_from,
             'current_performing_discipline' => $request->current_performing_discipline,
             'first_foal_crop_year' => $request->first_foal_crop_year,
@@ -177,101 +177,112 @@ class StallionController extends Controller
             'color' => $request->color,
             'planPrice' => $planPrice,
             'photographer'=>$request->photographer,
+            'professional_trainer'=>$request->professional_trainer,
             'slug'=>$slug,
         ]);
 
         return view('stripe.index')
         ->with('planPrice',$planPrice);
     } 
-
     public function stripePost(Request $request)
     {
-    Stripe\Stripe::setApiKey(config('services.stripe.secret'));
-     try {
-            $stallion = new Stallion();
-            $stallion->category ='stallions';
-            $stallion->name=session('name');
-            $stallion->user_id = Auth::id();
-            $stallion->performance_history = session('performance_history');
-            $stallion->owner_story = session('owner_story');
-            $stallion->lifetime_story = session('lifetime_story');
-            $stallion->height = session('height');
-            $stallion->registration_details = session('registration_details');
-            $stallion->trainer_history = session('trainer_history');
-            $stallion->bred_by = session('bred_by');
-            $stallion->professional_trainer = session('professional_trainer');
-            $stallion->put_semen_available_from = session('put_semen_available_from');
-            $stallion->current_performing_discipline = session('current_performing_discipline');
-            $stallion->first_foal_crop_year = session('first_foal_crop_year');
-            $stallion->background_story=session('background_story');
-            $stallion->color=session('color');
-            $stallion->stallion_heading=session('stallion_heading');
-            $stallion->slug=session('slug');
-            $stallion->status=0;
-            $stallion->feature_status=0; 
-            $stallion->update_status=0; 
-            $stallion->status_count=1;
-            $stallion->save(); 
-            
-            $planPrice=session('planPrice');
-            $user = Auth::user();
-            // Create a new Stripe Customer
-            $customer = Stripe\Customer::create([
-                "email" =>  $user ? $user->email : null,
-                "name" =>   $user ? $user->name : null,
-                "source" => $request->stripeToken
-            ]);
+        Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        try {
+                $stallion = new Stallion();
+                $stallion->category ='stallions';
+                $stallion->name=session('name');
+                $stallion->user_id = Auth::id();
+                $stallion->performance_history = session('performance_history');
+                $stallion->owner_story = session('owner_story');
+                $stallion->lifetime_story = session('lifetime_story');
+                $stallion->height = session('height');
+                $stallion->registration_details = session('registration_details');
+                $stallion->trainer_history = session('trainer_history');
+                $stallion->bred_by = session('bred_by');
+                $stallion->professional_trainer = session('professional_trainer');
+                $stallion->put_semen_available_from = session('put_semen_available_from');
+                $stallion->current_performing_discipline = session('current_performing_discipline');
+                $stallion->first_foal_crop_year = session('first_foal_crop_year');
+                $stallion->background_story=session('background_story');
+                $stallion->color=session('color');
+                $stallion->stallion_heading=session('stallion_heading');
+                $stallion->slug=session('slug');
+                $stallion->photographer=session('photographer');
+                $stallion->status=0;
+                $stallion->feature_status=0; 
+                $stallion->update_status=0; 
+                $stallion->status_count=1;
+                $stallion->save(); 
+                
+                $planPrice=session('planPrice');
+                $user = Auth::user();
+                // Create a new Stripe Customer
+                $customer = Stripe\Customer::create([
+                    "email" =>  $user ? $user->email : null,
+                    "name" =>   $user ? $user->name : null,
+                    "source" => $request->stripeToken
+                ]);
 
-            // Charge the customer
-            $charge = Stripe\Charge::create([
-                "amount" => $planPrice * 100,  
-                "currency" => "usd",
-                "customer" => $customer->id,
-            ]);
+                // Charge the customer
+                $charge = Stripe\Charge::create([
+                    "amount" => $planPrice * 100,  
+                    "currency" => "usd",
+                    "customer" => $customer->id,
+                ]);
 
-            $payment = new payment();
-            $payment->stripe_payment_id =$charge->id;
-            $payment->stallion_id=$stallion->id;
-            $payment->user_id = Auth::id();
-            $payment->amount =$charge->amount/100;
-            $payment->status='successful';
-            $payment->save(); 
-            $photographer=session('photographersession');
-            
-            if($photographer=='Provide-Photographer-for-me'){
-            $data=[
-                    'name' => $user->username,
-                    'phone' => $user->phone,
-                    'email'=>$user->email,
-                    'stallionName'=>session('name'),
-                    'stallionregistration'=>session('stallionregistration'),
-               ];
-            $email='sadikalampatna@gmail.com';
-            Mail::to($email)->send(new photographerMail($data));
-            }
-        toast('Stallion created  successfully!','success');
-        return redirect()->route('owner.stallion', ['id' => $stallion->id]);
+                $payment = new payment();
+                $payment->stripe_payment_id =$charge->id;
+                $payment->stallion_id=$stallion->id;
+                $payment->user_id = Auth::id();
+                $payment->amount =$charge->amount/100;
+                $payment->status='successful';
+                $payment->save(); 
+                $photographer=session('photographer');
+                
+                if($photographer==1){
+                $data=[
+                        'name' => $user->username,
+                        'phone' => $user->phone,
+                        'email'=>$user->email,
+                        'stallionName'=>session('name'),
+                        'stallionregistration'=>session('stallionregistration'),
+                ];
+                $email='sadikalampatna@gmail.com';
+                Mail::to($email)->send(new photographerMail($data));
+                }
+            toast('Stallion created  successfully!','success');
+            return redirect()->route('owner.stallion', ['id' => $stallion->slug]);
 
+        }
+        catch (\Stripe\Exception\CardException $e) {
+            $errorMessage = $e->getError()->message;
+            Alert::error('Error', 'Payment failed:'. $errorMessage);
+        
+        }  catch (\Exception $e) {
+            Alert::error('Error', 'Error Stallion created: ' . $e->getMessage());
+            return redirect('owner/stallion/create');
+        }
     }
-    catch (\Stripe\Exception\CardException $e) {
-        $errorMessage = $e->getError()->message;
-        Alert::error('Error', 'Payment failed:'. $errorMessage);
-      
-     }  catch (\Exception $e) {
-        Alert::error('Error', 'Error Stallion created: ' . $e->getMessage());
-        return redirect('owner/stallion/create');
-    } 
-}
 
     public function edit($id)
     {
+       
+        $id=Stallion::select('id')->where('slug',$id)->value('id');
+        
         $stallion=Stallion::where('id',$id)->first(); 
+
         $semencontract=semencontract::where('stallion_id',$id)->first();
-        $vetdetail=vetdetail::where('stallion_id',$stallion->id)->first();
-        $progenys=progeny::where('stallion_id',$stallion->id)->get();
+
+        $vetdetail=vetdetail::where('stallion_id',$id)->first();
+
+        $progenys=progeny::where('stallion_id',$id)->get();
+
         $stallionImages=stallionimage::where('stallion_id',$id)->get();
+
         $stallionVideos=stallionVideo::where('stallion_id',$id)->get();
+
         $pedigree=pedigree::where('stallion_id',$id)->first();
+
         return view('owner.stallion.edit')->with('progenys',$progenys)->with('stallion',$stallion)
         ->with('semencontract',$semencontract)->with('id',$id)->with('stallionImages',$stallionImages)
         ->with('stallionVideos',$stallionVideos)->with('vetdetail',$vetdetail)->with('pedigree',$pedigree);
@@ -279,9 +290,13 @@ class StallionController extends Controller
     public function update(Request $request)
     {    
         try {
+           
+            $slug = Str::slug($request->name);
+            $slug = $this->getUniqueSlug($slug);
             $id=$request->stallion_id;   
             $stallion = Stallion::find($id);
             $stallion->name = $request->name;  
+            $stallion->slug = $slug; 
             $stallion->lifetime_story = $request->lifetimestory;
             $stallion->performance_history= $request->performance_history;
             $stallion->owner_story=$request->owner_story;
@@ -309,13 +324,12 @@ class StallionController extends Controller
             }
 
             toast('Stallion update successfully!','success');
-            return redirect()->route('owner.stallion',['id' => $id]);
+            return redirect()->route('owner.stallion',['id' => $stallion->slug]);
         } catch (\Exception $e) {
             Alert::error('Error', 'Error updating stallion: ' . $e->getMessage());
             return redirect()->back();
         }
     } 
-   
     public function semencontractstore(Request $request)
     {
         try {
@@ -393,7 +407,7 @@ class StallionController extends Controller
                         }
                 }   
                 toast('semencontract create successfully!','success');
-                return redirect()->route('owner.stallion',['id' =>$request->stallion_id]);
+                return redirect()->back();
             } catch (\Exception $e) {
                 Alert::error('Error', 'Error create semencontract: ' . $e->getMessage());
                 return redirect()->back();
@@ -434,6 +448,7 @@ class StallionController extends Controller
                     $statusCount=stallion::where('id',$stallionImage->stallion_id)->value('status_count');
                     stallion::where('id',$stallionImage->stallion_id)->update([
                         'status_count' =>$statusCount+1,
+                        'imagepercentage'=>12,
                     ]);
                     }
                     $updateCount=stallion::where('id',$stallionImage->stallion_id)->where('status',1)->count();
@@ -445,10 +460,10 @@ class StallionController extends Controller
                         ]);
                     }
 
-                    return redirect()->route('owner.stallion',['id' =>$request->stallion_id]);
+                   
                 }
                 toast('Stallion image create successfully!','success');
-                return redirect()->route('owner.stallion',['id' =>$request->stallion_id]);
+                return back();
             } catch (\Exception $e) {
                 Alert::error('Error', 'Error create Stallion image: ' . $e->getMessage());
                 return redirect()->back();
@@ -495,12 +510,11 @@ class StallionController extends Controller
                         ]);
                     }
                 toast('Stallion video create successfully!','success');
-                        return redirect()->route('owner.stallion',['id' =>$request->stallion_id]);
+                   return back();
                 }
             }   catch (\Exception $e) {
                         Alert::error('Error', 'Error create Stallion video: ' . $e->getMessage());
                         return redirect()->back();
             }
     }
-
 }    

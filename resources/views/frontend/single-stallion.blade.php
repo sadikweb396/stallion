@@ -42,7 +42,7 @@
             <div class="sire-info">
               <div class="sire_head text-center">
                 <h4>Sire</h4>
-                <p>{{$pedigree->sirename1}} - {{$pedigree->sireregistration1}}</p>
+                <p>@if($pedigree){{$pedigree->sirename1}} - {{$pedigree->sireregistration1}}@endif</p>
               </div>
               <div class="sire_details d-flex justify-space-around">
                 <div>
@@ -58,7 +58,7 @@
             <div class="sire-info">
               <div class="sire_head text-center">
                 <h4>Dam</h4>
-                <p>{{$pedigree->damname1}} - {{$pedigree->damregistration1}}</p>
+                <p>@if($pedigree){{$pedigree->damname1}} - {{$pedigree->damregistration1}}@endif</p>
               </div>
               <div class="sire_details d-flex justify-space-around">
                 <div>
@@ -324,8 +324,6 @@
                 </div>
               </div>
               <div id="progenysalesperformance" class="tab_content active">
-
-
               @foreach ($stallion->progeny as $key=>$progeny) 
               @if(++$key<=2)
                 <div class="main_stallion_list d-flex gap20 mb50">
@@ -431,9 +429,7 @@
                     class="stallion-box d-flex align-items-end justify-content-center"
                     style="
                       background-image: url('{{url($stallionImage->image) }}');
-                    "
-                  
-                  >
+                    " >
                     <div class="stallion-items">
                       <div
                         class="catimg d-flex align-items-end justify-content-center"
@@ -481,7 +477,7 @@
                   <div class="chart_tree">
                     <ul class="list-none">
                       <li class="d-flex align-items-center">
-                      <a href="javascript:void(0)" class="black-node">Q-97216 One Time Design (Q97216)
+                      <a href="javascript:void(0)" class="black-node">@if($pedigree) {{$pedigree->stallionregistration}} {{$pedigree->stallionname}}   @endif  @if($pedigree) {{$pedigree->stallionname}} @endif
                       </a>
                         <div class="first_bix"></div>
 
@@ -493,15 +489,15 @@
                             <div class="first_bix"></div>
                             <ul class="list-none">
                               <li class="d-flex align-items-center">
-                                <a href="javascript:void(0)" class="blue-node"
+                                <a href="javascript:void(0)" class="blue-node" 
                                   >@if($pedigree) {{$pedigree->sireregistration2}} @endif  @if($pedigree) {{$pedigree->sirename2}} @endif
                                 </a>
                                 <div class="first_bix"></div>
                                 <ul class="list-none">
                                   <li class="d-flex align-items-center">
                                     <a
-                                      href="javascript:void(0)"
-                                      class="blue-node"
+                                      href="@if($pedigree) {{url('single-stallion/'.$pedigree->sireregistration3)}} @endif"
+                                      class="blue-node" target="_blank"
                                       >@if($pedigree) {{$pedigree->sireregistration3}} @endif  @if($pedigree) {{$pedigree->sirename3}} @endif
                                     </a>
                                   </li>
@@ -621,18 +617,19 @@
                         onclick="openPreview(this)"
                       ></video>
                     </div>
-                   @endforeach
-                    
+                   @endforeach                    
                   </div>
 
                   <!-- Preview Section -->
                   <div class="previewContainer">
                     <div id="previewContent">
+                      @if($previewImage)
                       <img
-                        src="./assets/image/Rectangle 21.png"
+                        src="{{url($previewImage->stallion_image)}}"
                         alt="Default Preview"
                         class="img-cover"
                       />
+                      @endif
                     </div>
                   </div>
                 </div>
@@ -679,7 +676,8 @@
                 Fill Out the Form to Purchase <br />
                 the Progeny Name
               </h4>
-              <form action="#">
+              <form action="{{route('progeny-form')}}"method="post">
+                @csrf
                 <div class="main_groups d-flex gap20">
                   <div class="group_fields">
                     <label for="fname"
@@ -688,8 +686,8 @@
                     <input
                       type="text"
                       id="fname"
-                      name="fname"
-                      placeholder="Your Name"
+                      name="name"
+                      placeholder="Your Name"required
                     />
                   </div>
                   <div class="group_fields">
@@ -700,7 +698,7 @@
                       type="phone"
                       id="phone"
                       name="phone"
-                      placeholder="Your Phone"
+                      placeholder="Your Phone"required
                     />
                   </div>
                 </div>
@@ -713,7 +711,7 @@
                       type="email"
                       id="email"
                       name="email"
-                      placeholder="Your Email"
+                      placeholder="Your Email"required
                     />
                   </div>
                 </div>
@@ -727,10 +725,10 @@
                     >
                     <textarea
                       id="w3review"
-                      name="w3review"
+                      name="message"
                       rows="4"
                       cols="48"
-                      placeholder="Enter Your Message"
+                      placeholder="Enter Your Message"required
                     ></textarea>
                   </div>
                 </div>

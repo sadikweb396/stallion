@@ -53,7 +53,17 @@
 
                                 </div>
                               </div>
-
+                              <div class="form_main">
+                              <div class="form-group"id="plantypes">
+                              <label for="name">Plan For</label>
+                                    <select name="plan_for" required>
+                                        <option value="">Choose Plan For</option>
+                                        @foreach($plansfor as $plasfor)
+                                            <option value="{{ $plasfor }}" @if($plasfor == $plan->plan_for) selected @endif>{{ ucfirst($plasfor) }}</option>
+                                        @endforeach
+                                    </select>
+                              </div>
+                              </div>
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Plan Details</label>

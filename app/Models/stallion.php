@@ -61,7 +61,16 @@ class stallion extends Model
     {
         return $this->hasOne(stallionImage::class)->latest(); 
     }
+
+    public function semencontract()
+    {
+        return $this->hasOne(semencontract::class); 
+    }
     
+    public function pedigree()
+    {
+        return $this->hasOne(pedigree::class); 
+    }
 
      public function primaryImage()
     {

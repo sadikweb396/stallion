@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categorys=category::get();
+        $categorys=category::select('id','categoryname','catimage')->get();
         return view('admin.category.index')
         ->with('categorys',$categorys);
     }
@@ -20,44 +20,49 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        
+        try { 
         $validatedData = $request->validate([
-            'categoryname' => 'required',
-            'catimage'=>'required'
-            
+                'categoryname' => 'required',
+                'catimage'=>'required'
+                
         ]);
         $string = str_shuffle("abcdefghijklmnopqrstwxyz");
         if($request->catimage){
-            $image = $request->catimage;
-            $randStr = substr($string, 0, 5);
-            $currYr = date("Y");
-            $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
+                $image = $request->catimage;
+                $randStr = substr($string, 0, 5);
+                $currYr = date("Y");
+                $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
 
-            $destinationPath = 'category/'.$currYr;
-            $image->move($destinationPath,$fileName);
+                $destinationPath = 'category/'.$currYr;
+                $image->move($destinationPath,$fileName);
+        
+                // Save to the database
+                $category = new category();
+                $category->categoryname= $request->categoryname;
+                $category->catimage = $destinationPath.'/'.$fileName;
+                $category->save();
+                toast('category  create  successfully!','success');
+                return redirect('admin/category');
+        }   
+        } 
+        catch (\Exception $e) {
+            Alert::error('Error', 'Error category create: ' . $e->getMessage());
+            return back();
     
-            // Save to the database
-            $category = new category();
-            $category->categoryname= $request->categoryname;
-            $category->catimage = $destinationPath.'/'.$fileName;
-            $category->save();
-
-            return redirect('admin/category');
         }
-
     }
 
     public function edit($id)
     {
-        $category=category::where('id',$id)->first();
+        $category=category::where('id',$id)->select('id','categoryname','catimage')->first();
         return view('admin.category.edit')
         ->with('category',$category);
 
     }
 
     public function update(Request $request)
-    {
-        
+    {  
+        try { 
         $id=$request->categoryId;
         $string = str_shuffle("abcdefghijklmnopqrstwxyz");
         if($request->catimage){
@@ -68,8 +73,6 @@ class CategoryController extends Controller
 
             $destinationPath = 'category/'.$currYr;
             $image->move($destinationPath,$fileName);
-    
-            // Save to the database
             $category = category::find($id);
             $category->categoryname= $request->categoryname;
             $category->catimage = $destinationPath.'/'.$fileName;
@@ -83,5 +86,11 @@ class CategoryController extends Controller
             $category->save();
         }
         return redirect('admin/category');
+    } 
+    catch (\Exception $e) {
+        Alert::error('Error', 'Error category update: ' . $e->getMessage());
+        return back();
+
+    }
     }
 }

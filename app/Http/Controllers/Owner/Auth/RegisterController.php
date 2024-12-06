@@ -9,10 +9,18 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\OwnerRegisterMail;
 use Illuminate\Support\Facades\Mail;
+use Session;
+use App\Models\plan;
+use App\Models\payment;
+use Stripe;
  
 class RegisterController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
     public function showRegisterForm()
     {
         $request_uri = $_SERVER['REQUEST_URI'];  // e.g., /owner/stallion
@@ -33,18 +41,53 @@ class RegisterController extends Controller
        
         $request->validate([
             'email' => 'required|email|max:255|unique:users,email',
-            // 'password' => 'required|string|min:8|max:20',
+            'password' => 'required|string|min:8|max:20',
+            'phone' => ['required', 'regex:/^\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{4}$/'],
             
         ]);
+        $planPrice=plan::where('plan_for','owner')->value('plan_price');
+        session([
+            'roles' =>$request->role,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'password' => $request->password,
+            'planPrice' => $planPrice,
+        ]);
+        return view('Owner.payment.registerpayment')->with('planPrice',$planPrice);
        
-        $roles=$request->role;
+    }
+
+    public function paymentregister(Request  $request)
+    {
+        Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        try {
+        $planPrice=session('planPrice');
+
+         // Create a new Stripe Customer
+         $customer = Stripe\Customer::create([
+            "email" =>  session('email'),
+            "name" =>   session('first_name'),
+            "source" => $request->stripeToken
+        ]);
+
+        // Charge the customer
+        $charge = Stripe\Charge::create([
+            "amount" => $planPrice * 100,  
+            "currency" => "usd",
+            "customer" => $customer->id,
+        ]);
+
+        $roles=session('role');
+        
         $user = User::create([
-                        'username' => $request->first_name,
-                        'first_name' => $request->first_name,
-                        'last_name' => $request->last_name,
-                        'email' => $request->email,
-                        'phone'=>$request->phone,
-                        'password' => Hash::make($request->password),
+                        'username' => session('first_name'),
+                        'first_name' =>session('first_name'),
+                        'last_name' => session('last_name'),
+                        'email' => session('email'),
+                        'phone'=>session('phone'),
+                        'password' => Hash::make(session('password')),
                     ]);
 
         $user->syncRoles($roles);
@@ -54,16 +97,33 @@ class RegisterController extends Controller
 
         $data = [
             'baseurl'=>$baseUrl,
-            'name' => $request->first_name,
-            'password' => $request->password,
-            'email'=>$request->email,
+            'name' => session('first_name'),
+            'password' => session('password'),
+            'email'=>session('email'),
         ];
 
-        Mail::to($request->email)->send(new OwnerRegisterMail($data));
+        Mail::to(session('email'))->send(new OwnerRegisterMail($data));
+
+        $payment = new payment();
+        $payment->stripe_payment_id =$charge->id;
+        $payment->user_id = Auth::id();
+        $payment->amount =$charge->amount/100;
+        $payment->status='successful';
+        $payment->plan='owner';
+        $payment->save(); 
 
         return redirect()->route('dashboard');
+      }
+      catch (\Stripe\Exception\CardException $e) {
+        $errorMessage = $e->getError()->message;
+        Alert::error('Error', 'Payment failed:'. $errorMessage);
+      
+     }  catch (\Exception $e) {
+       
+        Alert::error('Error', 'Error Registation created: ' . $e->getMessage());
+        return redirect('owner/register');
+    } 
     }
-
 }
 
 

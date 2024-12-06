@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('progenyvideos', function (Blueprint $table) {
             $table->id();
+            $table->string('progeny_id');
+            $table->string('name');
+            $table->string('progeny_location');
+            $table->string('progeny_set_video');
+            $table->string('date');
+            $table->string('progeny_video');
             $table->timestamps();
         });
     }

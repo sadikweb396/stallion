@@ -140,7 +140,7 @@
                             </li>
                           </ul>
                         </div>
-                        <a href="#" class="btn-form"> Become a Member </a>
+                        <a href="{{url('member/register')}}" class="btn-form"> Become a Member </a>
                       </div>
                     </form>
                   </div>
@@ -164,7 +164,7 @@
                           id="Username"
                           name="email"
                           placeholder="Username"
-                          class="text_input"
+                          class="text_input"required
                         />
                         <span
                           class="input_icon"
@@ -183,7 +183,7 @@
                           id="Password"
                           name="password"
                           placeholder="Password"
-                          class="text_input"
+                          class="text_input"required
                         />
                         <span
                           class="input_icon"
@@ -192,7 +192,11 @@
                           "
                         ></span>
                       </div>
-
+                        @if(session('error'))
+                          <div style="color: red; margin-top: 10px;">
+                              {{ session('error') }}
+                          </div>   
+                        @endif
                       <div class="forgot_password mb20">
                         <p class="text-right">
                           <a href="javascript:void(0);">Forgot Password?</a>
@@ -208,14 +212,7 @@
                       <div class="social-container">
                         <p class="logins_line">
                           <span><b>Login </b> with Others</span>
-                        </p>
-
-                        @if(session('error'))
-                          <div style="color: red; margin-top: 10px;">
-                              {{ session('error') }}
-                          </div>
-                      @endif
-                        
+                        </p>                    
                         <a href="#" class="social">
                           <img
                             src="{{url('assets/frontend/image/google1.png')}}"

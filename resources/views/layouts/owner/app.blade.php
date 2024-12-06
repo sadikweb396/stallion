@@ -34,6 +34,115 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"></script>
     <script src="{{url('/assets/admin/js/main.js')}}"></script>
     <script>
+    $(document).ready(function() {
+        var url;  // Declare url outside to make it accessible globally
+
+        $('#approveBtn').click(function() {
+            var id = $('#approveBtn').data('id');
+            url = '{{ url('admin/approve') }}/' + id;  // Construct URL with the ID
+            $('#model').empty();
+            // Append the confirmation button to the modal or a container
+            $('#model').append('<div style="margin-top: 10px;" class=""><a class="btn btn_i black_btn form_btn" id="confirmApproveBtn" class="btn btn-primary">Confirm</a></div>');
+        });
+
+        // When the confirm button is clicked
+        $(document).on('click', '#confirmApproveBtn', function() {
+            $.ajax({
+                url: url,  // Use the dynamically constructed URL
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',  // Include CSRF token for security
+                    // You can add any additional data here if needed
+                },
+                success: function(response) {
+                    location.reload();  // Reload the page after successful approval
+                },
+                error: function(xhr, status, error) {
+                    alert('Error occurred! Status: ' + status + ', Error: ' + error);  // Handle error
+                }
+            });
+        });
+    });
+
+    $(document).ready(function() {
+        var url;  // Declare url outside to make it accessible globally
+
+        $('#declineBtn').click(function() {
+            var id = $('#declineBtn').data('id');
+            url = '{{ url('admin/decline') }}/' + id;  // Construct URL with the ID
+            $('#model').empty();
+            // Append the confirmation button to the modal or a container
+            $('#model').append('<div style="margin-top: 10px;" class=""><a class="btn btn_i black_btn form_btn" id="confirmApproveBtn" class="btn btn-primary">Confirm</a></div>');
+        });
+
+        // When the confirm button is clicked
+        $(document).on('click', '#confirmApproveBtn', function() {
+            $.ajax({
+                url: url,  // Use the dynamically constructed URL
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',  // Include CSRF token for security
+                    // You can add any additional data here if needed
+                },
+                success: function(response) {
+                    location.reload();  // Reload the page after successful approval
+                },
+                error: function(xhr, status, error) {
+                    alert('Error occurred! Status: ' + status + ', Error: ' + error);  // Handle error
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#photographer').change(function() {
+            // Optionally clear previous appended content if needed
+            $('#photographerappend').empty();
+
+            var selectedOptionId = $(this).find('option:selected').attr('id');
+            
+            // Check if the selected option ID matches any of the values
+            if (selectedOptionId == 2 || selectedOptionId == 3 || selectedOptionId == 4 || selectedOptionId == 5 || selectedOptionId == 6) {
+                
+                // Get the base URL
+                let baseurl = window.location.origin;
+                
+                // Create the photographer link
+                var photographer = '<a href="' + baseurl + '/photographers">Photographer Link</a>';
+
+                // Create the PDF link
+                var pdf = '<a href="' + baseurl + '/assets/admin/image/profile-image.jpeg"><i class="fas fa-file-pdf"></a>';
+                
+                // Append both links to the #photographerappend div
+                $("#photographerappend").append('<span>' + photographer + '</span>' + ' ' + '<span>' + pdf + '</span>');
+            }
+        });
+    });
+</script>
+
+    <script>
+    $(document).ready(function() {
+        $('#plan_for').change(function() {
+        $('#plantypes').empty();  //
+            var selectedOptionId = $(this).find('option:selected').attr('id');
+            // Check if the select for "Plan For" already exists 
+            if ((selectedOptionId == 'mare' || selectedOptionId == 'stallion') && $('#plan_for').next('select').length === 0) {   
+              $("#plantypes").append(
+                    '<label for="name">Plan For</label>' +
+                    '<select name="plan_for" id="plan_for" required>' +
+                    '<option value="">Choose Option</option>' +
+                    '<option value="1">Plan For First Stallion</option>' +
+                    '<option value="2">Plan For Second To Five Stallion</option>' +
+                    '<option value="3">Plan For After Five Stallion</option>' +
+                    '</select>'
+                );
+            }
+        });
+    });
+  </script>
+    <script>
       ClassicEditor
             .create(document.querySelector('#topsideheading'))
             .catch(error => {
@@ -109,34 +218,39 @@
             .catch(error => {
                 console.error(error);
             });
+            ClassicEditor
+            .create(document.querySelector('#plan_details'))
+            .catch(error => {
+                console.error(error);
+            });
                 
-    document.getElementById('myForm').addEventListener('submit', function(event) {
-    // Function to validate and display messages
-    function validateField(fieldId, messageId, message) {
-        const field = document.getElementById(fieldId);
-        const messageContainer = $(messageId);
+//     document.getElementById('myForm').addEventListener('submit', function(event) {
+  
+//     function validateField(fieldId, messageId, message) {
+//         const field = document.getElementById(fieldId);
+//         const messageContainer = $(messageId);
         
-        // Clear previous messages
-        messageContainer.empty();
+      
+//         messageContainer.empty();
         
-        if (field.value.trim() === '') {
-            messageContainer.append(message);
-            // Scroll to the invalid field and focus on it
-            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            field.focus();
-            return false; // Validation failed
-        }
-          return true; 
-    }
-    const isPerformanceValid = validateField('performance_history', '#performance', "Performance history field is required");
-    const isOwnerValid = validateField('owner_story', '#owner', "Owner story field is required");
-    const isLifestoryValid = validateField('lifetime_Story', '#lifetime', "Life time story is required");
-    const isPersonaltrainerValid = validateField('personal_trainer','#personaltrainer', "Personal Trainer required");
-    const isTrainerHistoryValid = validateField('trainer_history','#trainerhistory', "Trainer history required");
-    if (!isPerformanceValid || !isOwnerValid || !isLifestoryValid || !isPersonaltrainerValid  || !isTrainerHistoryValid)  {
-        event.preventDefault();
-    }
-});  
+//         if (field.value.trim() === '') {
+//             messageContainer.append(message);
+        
+//             field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//             field.focus();
+//             return false; 
+//         }
+//           return true; 
+//     }
+//     const isPerformanceValid = validateField('performance_history', '#performance', "Performance history field is required");
+//     const isOwnerValid = validateField('owner_story', '#owner', "Owner story field is required");
+//     const isLifestoryValid = validateField('lifetime_Story', '#lifetime', "Life time story is required");
+//     const isPersonaltrainerValid = validateField('personal_trainer','#personaltrainer', "Personal Trainer required");
+//     const isTrainerHistoryValid = validateField('trainer_history','#trainerhistory', "Trainer history required");
+//     if (!isPerformanceValid || !isOwnerValid || !isLifestoryValid || !isPersonaltrainerValid  || !isTrainerHistoryValid)  {
+//         event.preventDefault();
+//     }
+// });  
 
   // Function to open the modal
   function showModal() {
@@ -155,6 +269,7 @@
       }
     }
     </script>
+     
 
   @include('sweetalert::alert')
   </body>

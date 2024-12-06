@@ -172,6 +172,17 @@
                   </a>
                 </li>
                 @endcan
+
+                @can('mare list')
+                <li class="menu_list_items mb20 collaose_menu">
+                  <a href="{{ url('admin/mares') }}" class="d-flex align-items-center gap10">
+                    <span class="list_icon">
+                      <i class="fas fa-play-circle"></i>
+                    </span>
+                    <span class="menu_items_t">category</span>
+                  </a>
+                </li>
+                @endcan
                 
                 <li class="menu_list_items mb20 logout_item">
                   <a href="#" class="d-flex align-items-center gap10">

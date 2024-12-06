@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\Auth\RegisterController;
+
 use App\Http\Controllers\Owner\Auth\LoginController;
 use App\Http\Controllers\Owner\OwnerController;
 use App\Http\Controllers\Owner\StallionController;
@@ -10,7 +11,6 @@ use App\Http\Controllers\Owner\MareController;
 use App\Http\Controllers\Owner\ProgenyController;
 use App\Http\Controllers\Owner\PedigreeController;
 use App\Http\Controllers\Owner\FollowController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +28,7 @@ use App\Http\Controllers\Owner\FollowController;
 Route::get('owner/register',[RegisterController::class,'showRegisterForm'])->name('owner.register');
 Route::post('owner/register',[RegisterController::class,'register'])->name('owner.register.store');
 
+
 Route::get('owner/login',[LoginController::class,'showLoginForm'])->name('owner.login');
 Route::post('owner/login',[LoginController::class,'login'])->name('owner.login.store');
 Route::post('logout',[LoginController::class,'logout'])->name('owner.logout');
@@ -37,6 +38,8 @@ Route::get('dashboard',[DashboardController::class,'dashboard'])->name('dashboar
 // Route::get('stallion/create',[StallionController::class,'create']);
 // Route::post('stallion/store',[StallionController::class,'store'])->name('owner.stallion.store');
 Route::prefix('owner')->name('owner.')->group(function (){
+
+    // stallion 
     Route::get('stallions',[StallionController::class,'index']);
     Route::get('Stallion/{id}',[StallionController::class,'edit'])->name('stallion');
     Route::get('stallion/create',[StallionController::class,'create'])->name('stallion.create');
@@ -49,6 +52,7 @@ Route::prefix('owner')->name('owner.')->group(function (){
     Route::post('stallion-video',[StallionController::class,'stallionvideostore'])->name('stallion-video');
     Route::get('progeny/edit/{id}',[ProgenyController::class,'progenyEdit']);
     Route::post('progeny/update',[ProgenyController::class,'progenyUpdate'])->name('progeny-update');
+    
     // Mare
     Route::get('mares',[MareController::class,'index']);
     Route::get('mares/create',[MareController::class,'create'])->name('mare.create');
@@ -58,12 +62,27 @@ Route::prefix('owner')->name('owner.')->group(function (){
     Route::post('mare-image',[MareController::class,'mareimagestore'])->name('mare-image');
     Route::post('mare-video',[MareController::class,'marevideostore'])->name('mare-video');
     Route::post('semen-contract',[StallionController::class,'semencontractstore'])->name('semen-contract');
+    
+    // progeny Image
     Route::get('progeny/{id}',[ProgenyController::class,'progenyImage']);
     Route::post('progeny-image',[ProgenyController::class,'progenyImageStore'])->name('progeny-image');
-    Route::post('pedigree-store',[PedigreeController::class,'pedigreeStore'])->name('pedigree.store');
+
+    // progeny video
+    Route::get('progeny/{id}',[ProgenyController::class,'progenyImage']);
+    Route::post('progeny-video',[ProgenyController::class,'progenyVideoStore'])->name('progeny-video');
+
+    Route::post('pedigree-stallion',[PedigreeController::class,'pedigreeStallion'])->name('pedigree-stallion');
+
+    // follow stallion owner
     Route::get('follow/stallion',[FollowController::class,'followstallion']);
+
+    // follow mare owner
+    Route::get('follow/mare',[FollowController::class,'followmare']);
+  
+    
 });
 });
+Route::post('paymentregister',[RegisterController::class,'paymentregister'])->name('paymentregister');
 
 Route::post('stripe',[StallionController::class,'stripePost'])->name('stripe.post');
 Route::post('stripe/mare/store',[MareController::class,'stripePost'])->name('mare.stripe.store');

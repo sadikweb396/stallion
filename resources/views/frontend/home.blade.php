@@ -545,7 +545,7 @@
                   @if($planmember){!!$planmember->plan_details!!}@endif
                   </div>
                   <div class="pricing_bttn text-center">
-                    <a href="#" class="btn_i">Get Started</a>
+                    <a href="{{url('member/register')}}" class="btn_i">Get Started</a>
                   </div>
                 </div>
                 <div class="pricing_items gold_pricing">
@@ -718,7 +718,8 @@
                 <h3>Get In Touch</h3>
               </div>
               <div class="forms_main">
-                <form action="#">
+                <form action="{{route('gettouch-store')}}"method="post">
+                  @csrf
                   <div class="main_groups d-flex gap20">
                     <div class="group_fields">
                       <label for="fname"
@@ -728,7 +729,7 @@
                         type="text"
                         id="fname"
                         name="fname"
-                        placeholder="Your Name"
+                        placeholder="Your Name"required
                       />
                     </div>
                     <div class="group_fields">
@@ -739,7 +740,7 @@
                         type="phone"
                         id="phone"
                         name="phone"
-                        placeholder="Your Phone"
+                        placeholder="Your Phone"required
                       />
                     </div>
                   </div>
@@ -752,7 +753,7 @@
                         type="email"
                         id="email"
                         name="email"
-                        placeholder="Your Email"
+                        placeholder="Your Email"required
                       />
                     </div>
                   </div>
@@ -766,7 +767,7 @@
                       >
                       <textarea
                         id="w3review"
-                        name="w3review"
+                        name="message"
                         rows="4"
                         cols="48"
                         placeholder="Enter Your Message"

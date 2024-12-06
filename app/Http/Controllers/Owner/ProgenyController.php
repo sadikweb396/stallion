@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\progeny;
 use App\Models\progenyimage;
+use App\Models\progenyvideo;
 use App\Models\stallion;
 use App\Models\category;
 use Carbon\Carbon;
@@ -33,6 +34,7 @@ class ProgenyController extends Controller
                 $progeny->performace_history=$request->progeny_performace_history;
                 $progeny->trainer=$request->trainer;
                 $progeny->trainer=$request->trainer;
+                $progeny->exceptional_progeny=0;
                 if($request->exceptional_progeny){
                 $progeny->exceptional_progeny=1;
                 }
@@ -48,20 +50,12 @@ class ProgenyController extends Controller
                         'latest_update' => Carbon::now(),
                     ]);
                 }
-                $value=stallion::where('id',$progeny->stallion_id)->value('category');
-                if($value=='mares')
-                {
-                    $value='mare';
-                }
-                elseif($value=='stallions')
-                {
-                    $value='stallion';
-                }
+             
                 stallion::where('id',$progeny->stallion_id)->update([
                     'latest_update' => Carbon::now(),
                 ]);
                 toast('Progeny create successfully!','success');
-                return redirect()->route('owner.' . $value, ['id' => $request->stallion_id]);
+                return redirect()->back();
             } catch (\Exception $e) {
                 Alert::error('Error', 'Error create Progeny: ' . $e->getMessage());
                 return redirect()->back();
@@ -71,9 +65,11 @@ class ProgenyController extends Controller
     {
         $progeny=progeny::where('id',$id)->first();
         $progenyImages=progenyimage::where('progeny_id',$id)->get();
+        $progenyVideos=progenyvideo::where('progeny_id',$id)->get();
         return view('owner.progeny.index')
         ->with('id',$id)
         ->with('progenyImages',$progenyImages)
+        ->with('progenyVideos',$progenyVideos)
         ->with('progeny',$progeny);
     }
 
@@ -106,16 +102,9 @@ class ProgenyController extends Controller
                 // ]);
                 $stallionId=progeny::where('id',$request->stallion_id)->value('stallion_id');
                 $stallionName=stallion::where('id',$stallionId)->value('category');
-                if($stallionName=='mares')
-                {
-                    $stallionName='mare';
-                }
-                elseif($stallionName=='stallions')
-                {
-                    $stallionName='stallion';
-                }
+              
                 toast('Progeny Image create successfully!','success');
-                return redirect()->route('owner.' . $stallionName, ['id' => $stallionId]);
+                return back();
             }
            
         } catch (\Exception $e) {
@@ -166,4 +155,42 @@ class ProgenyController extends Controller
             return redirect()->back();
         }
     }
+
+    public function progenyVideoStore(Request $request)
+    {
+        try {
+            $string = str_shuffle("abcdefghijklmnopqrstwxyz");
+            if($request->stallion_image){
+                
+                $image = $request->stallion_image;
+                $randStr = substr($string, 0, 5);
+                $currYr = date("Y");
+                $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
+
+                $destinationPath = 'stallion/'.$currYr;
+                $image->move($destinationPath,$fileName);
+        
+                // Save to the database
+                $progeny = new progenyvideo();
+                $progeny->progeny_id = $request->stallion_id;
+                $progeny->name = $request->stallion_name;
+                $progeny->progeny_location = $request->stallion_location;
+                $progeny->progeny_video = $destinationPath.'/'.$fileName;
+                $progeny->date=$request->calender;
+                $progeny->progeny_set_video=0;
+                $progeny->save();
+                
+                $stallionId=progeny::where('id',$request->stallion_id)->value('stallion_id');
+                $stallionName=stallion::where('id',$stallionId)->value('category');
+              
+                toast('Progeny Video create successfully!','success');
+                return back();
+            }
+           
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Error create mare image: ' . $e->getMessage());
+            return redirect()->back();
+        }
+    }
+
 }

@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
-                                    Registration Details
+                                    Registration Number
                                   </label>
                                   <input
                                     type="text"
@@ -119,7 +119,7 @@
                                     Put semen available from
                                   </label>
                                   <input
-                                    type="text"
+                                    type="date"
                                     id="semen-available-from"
                                     name="put_semen_available_from"value="{{$stallion->put_semen_available_from}}"
                                   />
@@ -156,7 +156,7 @@
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
-                                  Stallion Heading
+                                  Badges Heading
                                   </label>
                                   <input type="text" name="stallion_heading"value="{{$stallion->stallion_heading}}">
                                 </div>
@@ -177,34 +177,34 @@
                                   <label for="Performance">
                                     Please Select one Option
                                   </label>
-                                  <select id="registration" name="registration">
+                                  <select id="photographer" name="photographer">
                                     <option value="" disabled selected>
                                       Please choose below one
                                     </option>
-                                    <option value="Provide-Photographer-for-me">
+                                    <option id=1 value="1">
                                       Provide Photographer for me
                                     </option>
-                                    <option
-                                      value="Would-like-to-select-my-own-Photographer"
+                                    <option id="2"
+                                      value="2"
                                     >
                                       Would like to select my own Photographer
                                     </option>
-                                    <option
-                                      value="Would-like-to-select-my-own-Photographer"
+                                    <option id="3"
+                                      value="3"
                                     >
                                       Would like my own Personal Photographer-
                                       Please contact me regarding photography
                                       Guidlines
                                     </option>
-                                    <option
-                                      value="Would-like-my-own-Personal-Photographer-Please-contact-me-regarding-photography-Guidlines"
+                                    <option id="4"
+                                      value="4"
                                     >
                                       Would like my own Personal Photographer-
                                       Please contact me regarding photography
                                       Guidlines
                                     </option>
-                                    <option
-                                      value="Already-have-recent-photography-to-supply-Still-need-photography-to-be-done-Contact-me"
+                                    <option id="5"
+                                      value="5"
                                     >
                                       Already have recent photography to supply,
                                       Still need photography to be done. Contact
@@ -213,6 +213,13 @@
                                   </select>
                               
                                 </div>
+                              </div>
+                              <div class="photographerappend"id="photographerappend">
+                                @if($stallion->photographer==2 || $stallion->photographer==3 || $stallion->photographer==4 || $stallion->photographer==5)
+                                @php $baseurl=url('/') @endphp
+                                <span><a href="{{ $baseurl . '/photographers' }}">Photographer Link</a></span>
+                                <span><a href=""><i class="fas fa-file-pdf"></i><a></span>
+                                @endif
                               </div>
                               <div class="update_btn text-right mb50">
                                <button type="submit"class="btn btn_i black_btn">Update</button>
@@ -373,13 +380,7 @@
                                     <div
                                       class="d-flex justify-space-between mb50 gap10"
                                     >
-                                      <!-- <button
-                                        class="btn btn_i black_btn Back_btn"
-                                        onclick="activateTab()"
-                                      >
-                                        Back
-                                      </button> -->
-                                      
+                                                                  
                                     </div>
                                   </div>
                                 </div>
@@ -533,19 +534,7 @@
                                         Save
                                       </button>
                                     </form>
-                                    <!-- <div
-                                      class="d-flex justify-space-between mb50 gap10"
-                                    >
-                                      <button
-                                        class="btn btn_i black_btn Back_btn"
-                                        onclick="activateTab()"
-                                      >
-                                        Back
-                                      </button>
-                                      <button class="btn btn_i black_btn">
-                                        Update
-                                      </button>
-                                    </div> -->
+                                  
                                   </div>
                                 </div>
                               </div>
@@ -861,7 +850,7 @@
                                   </div>
                                   <div class="form-group">
                                     <label for="name"> Name </label>
-                                    <input type="text" id="name" name="progeny_name" />
+                                    <input type="text" id="name" name="progeny_name" required />
                                    
                                   </div>
                                   <div class="form-group">
@@ -871,11 +860,11 @@
                                     <input
                                       type="date"
                                       id="date-of-birth"
-                                      name="date_of_birth"/>
+                                      name="date_of_birth"required/>
                                   </div>
                                   <div class="form-group">
                                     <label for="gender"> Gender </label>
-                                    <select name="gender">
+                                    <select name="gender" required>
                                        <option value="male">Male</option>
                                        <option value="female">Female</option>
                                     </select>
@@ -886,7 +875,7 @@
                                     <input
                                       type="text"
                                       id="color"
-                                      name="color"
+                                      name="color"required
                                     />
                                    
                                   </div>
@@ -897,7 +886,7 @@
                                     <input
                                       type="text"
                                       id="registeration-number"
-                                      name="registration_number"
+                                      name="registration_number"required
                                     />
                                    
                                   </div>
@@ -906,7 +895,7 @@
                                     <input
                                       type="text"
                                       id="breeder"
-                                      name="breeder"
+                                      name="breeder"required
                                     />
                                    
                                   </div>
@@ -953,7 +942,7 @@
                           <div class="title_bar mb20">
                             <p class="text-center">Pedigree Details</p>
                           </div>
-                          <form action="{{route('owner.pedigree.store')}}"method="post">
+                          <form action="{{route('owner.pedigree-stallion')}}"method="post">
                           @csrf
                           <input type="hidden"name="stallion_id"value="{{$stallion->id}}">
                           <div class="main_tab_m pedigreechart_main">
@@ -1370,9 +1359,6 @@
                                     </ul>
                                   </div>
                                 </div>
-                               
-                              
-
                               </div>
                             </div>
                           </div>

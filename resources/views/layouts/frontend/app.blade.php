@@ -44,6 +44,30 @@
 
      <!-- get in touch end -->
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script>
+      $(document).ready(function() {
+            // Load the next page of users when the page link is clicked
+            $(document).on('click', '.pagination a', function(e) {
+
+                e.preventDefault();
+                var page = $(this).attr('href').split('page=')[1]; // Get the page number
+                fetchUsers(page);
+            });
+
+            // Function to fetch users and update the user list
+            function fetchUsers(page) {
+              
+                $.ajax({
+                    url: '/stallions?page=' + page,
+                    type: 'GET',
+                    success: function(data) {
+                   
+                        $('#user-list').html(data); // Replace the user list with new data
+                    }
+                });
+            }
+        });
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/toastr/build/toastr.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/toastr/build/toastr.min.js"></script>
     <script>
@@ -71,29 +95,28 @@ featuredStallionsElement.onclick = function() {
     }
 };
 
-$(document).ready(function() {
-            // Load the next page of users when the page link is clicked
-            $(document).on('click', '.pagination a', function(e) {
-             
-                e.preventDefault();
-                var page = $(this).attr('href').split('page=')[1]; // Get the page number
-                fetchUsers(page);
-            });
 
-            // Function to fetch users and update the user list
-            function fetchUsers(page) {
-              
-                $.ajax({
-                    url: '/stallions?page=' + page,
-                    type: 'GET',
-                    success: function(data) {
-                   
-                        $('#user-list').html(data); // Replace the user list with new data
-                    }
-                });
-            }
-        });
 </script>
 
+<script>
+        $(document).ready(function() {
+            // When the close button is clicked
+            $('.close').click(function() {
+            
+                // Send an AJAX request to destroy the session
+                $.ajax({
+                    url: 'destroysession',
+                    type: 'GET',
+                    success: function(response) {
+                        // Optionally, you can handle the response here (e.g., redirecting or showing a message)
+                        //alert("Session destroyed!");
+            
+                    },
+                   
+                });
+            });
+        });
+    </script>
+ @include('sweetalert::alert')
   </body>
 </html>

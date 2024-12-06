@@ -330,11 +330,12 @@
                           </div>
                         </div>
                       </div>
-                    </div>     
+                    </div> 
+                    
                     <div class="tab-content" id="tab-3">
                       <div class="main_tab_content">
                         <div class="main_stallions_i">
-                          <div class="our_stallions add_video_i">
+                          <div class="our_stallions add_imgs_i">
                             <div
                               class="stallions_list_m d-flex gap20 flexwrap mb50"
                             >
@@ -342,17 +343,48 @@
                                 class="stallion_items stallions_add_new text-center"
                               >
                                 <div class="stallion_title mb20">
-                                  <p>Add New Videos</p>
+                                  <p>Add New</p>
                                 </div>
                                 <div
-                                  class="add_stallion_bar d-flex align-items-center justify-content-center cursor-pointer add_video_b"
+                                  class="add_stallion_bar d-flex align-items-center justify-content-center cursor-pointer add_imgs_b"
                                 >
                                   <p>+</p>
                                 </div>
                               </article>
-                            </div>      
+                              @foreach($progenyVideos as $progenyVideo)
+                              <article class="stallion_items text-center">
+                                <div
+                                  class="add_stallion_bar d-flex align-items-center justify-content-center background-img"
+                                  style="
+                                    background-image: url('{{ asset($progenyVideo->progeny_video) }}');
+                                  "
+                                >
+                                  <span class="percent_box">
+                                    <svg>
+                                      <circle
+                                        cx="105"
+                                        cy="105"
+                                        r="100"
+                                      ></circle>
+                                      <circle
+                                        cx="105"
+                                        cy="105"
+                                        r="100"
+                                        style="--percent: 90"
+                                      ></circle>
+                                    </svg>
+                                  </span>
+                                </div>
+                                <div class="stallion_title mtb20">
+                                  <p class="stallions_name">{{$progenyVideo->name}}</p>
+                                  <p class="stallion-location">{{$progenyVideo->stallion_location}}</p>
+                                  <p class="stallion_date">{{$progenyVideo->date}}</p>
+                                </div>
+                              </article>
+                              @endforeach
+                            </div>  
                           </div>
-                          <div class="add-new-video-p d-none">
+                          <div class="add-new-img-p d-none">
                             <div class="main-img">
                               <div
                                 class="main_stallions_d add_new_progeny"
@@ -362,7 +394,7 @@
                                   <div class="title_bar mb20">
                                     <p class="text-center">Add Video</p>
                                     <p
-                                      class="back_to_btn add_video_b cursor-pointer"
+                                      class="back_to_btn add_imgs_b cursor-pointer"
                                     >
                                       <svg
                                         class="svg-inline--fa fa-arrow-left"
@@ -383,33 +415,91 @@
                                     </p>
                                   </div>
                                   <div class="stallions_d_form mb50">
-                                   
-                                    <!-- <div
+                                    <form action="{{route('owner.progeny-video')}}"method="post"class="mb20"enctype="multipart/form-data">
+                                      @csrf
+                                    <input type="hidden"name="stallion_id"value="{{$id}}">
+                                      <div class="form_main">
+                                        <div class="form-group">
+                                          <div
+                                            class="multi-upload cursor-pointer"
+                                          >
+                                            <label for="files"
+                                              >Select  files:
+                                            </label>
+                                            <input
+                                              id="files"
+                                              type="file"
+                                              name="stallion_image"
+                                              onchange="readURL(this);"
+                                              accept="image/*"
+                                              multiple="true"
+                                              multiple
+                                              class="cursor-pointer"required
+                                            />
+                                            <button
+                                              type="button"
+                                              id="clear"
+                                              class="cursor-pointer"
+                                            >
+                                              Clear
+                                            </button>
+                                            <output id="result" />
+                                          </div>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="name"
+                                            >Stallion Name
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="name"
+                                            name="stallion_name"required
+                                          />
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="Location">
+                                            Location
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="Location"
+                                            name="stallion_location"required
+                                          />
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="Date"> Date </label>
+                                          <input
+                                            type="date"
+                                            id="calender"
+                                            name="calender"required
+                                          />
+                                        </div>
+                                      </div>
+                                      <button type="submit"class="btn btn_i black_btn">
+                                        Update
+                                      </button>
+                                    </form>
+                                    
+                                    <div
                                       class="d-flex justify-space-between mb50 gap10"
                                     >
-                                      <button
+                                      <!-- <button
                                         class="btn btn_i black_btn Back_btn"
                                         onclick="activateTab()"
                                       >
                                         Back
-                                      </button>
-                                      <button class="btn btn_i black_btn">
-                                        Update
-                                      </button>
-                                    </div> -->
+                                      </button> -->
+                                      
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>    
-                          <div class="add-new-img-p">
-                            <div class="main-img">
-                              <!-- image upload area for popup-->
-                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div>     
+                  
                     <div class="tab-content" id="tab-4">
                       <div class="main_tab_content">
                         <div class="main_stallions_d main_stallions_semen">

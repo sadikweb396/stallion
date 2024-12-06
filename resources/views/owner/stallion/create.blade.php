@@ -108,7 +108,7 @@
                                   <label for="Performance">
                                     Lifetime Story
                                   </label>
-                                  <textarea name="lifetime_Story" id="lifetime_Story"></textarea>
+                                  <textarea name="lifetime_story" id="lifetime_Story"></textarea>
                                   <p id="lifetime"class="validation-stallion"><p>
                                 </div>
                                 <div class="form-group">
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
-                                    Registration Details
+                                    Registration Number
                                   </label>
                                   <input
                                     type="text"
@@ -147,7 +147,7 @@
                                     Put semen available from
                                   </label>
                                   <input
-                                    type="text"
+                                    type="date"
                                     id="semen-available-from"
                                     name="put_semen_available_from"required
                                   />
@@ -159,7 +159,7 @@
                                   <input
                                     type="text"
                                     id="performing-discipline"
-                                    name="current_performing_discipline"required
+                                    name="current_performing_discipline"
                                   />
                                 </div>
                                 <div class="form-group">
@@ -185,7 +185,7 @@
                                 </div>
                                 <div class="form-group">
                                   <label for="Performance">
-                                  Stallion Heading
+                                  Badges Heading
                                   </label>
                                   <input type="text" name="stallion_heading"required>
                                 </div>
@@ -203,34 +203,34 @@
                                   <label for="Performance">
                                     Please Select one Option
                                   </label>
-                                  <select id="registration" name="photographer"required>
+                                  <select id="photographer" name="photographer"required>
                                     <option value="" disabled selected>
                                       Please choose below one
                                     </option>
-                                    <option value="Provide-Photographer-for-me">
+                                    <option id="1"value="1">
                                       Provide Photographer for me
                                     </option>
-                                    <option
-                                      value="Would-like-to-select-my-own-Photographer"
+                                    <option id="2"
+                                      value="2"
                                     >
                                       Would like to select my own Photographer
                                     </option>
-                                    <option
-                                      value="Would-like-to-select-my-own-Photographer"
+                                    <option id="3"
+                                      value="3"
                                     >
                                       Would like my own Personal Photographer-
                                       Please contact me regarding photography
                                       Guidlines
                                     </option>
-                                    <option
-                                      value="Would-like-my-own-Personal-Photographer-Please-contact-me-regarding-photography-Guidlines"
+                                    <option id="4"
+                                      value="4"
                                     >
                                       Would like my own Personal Photographer-
                                       Please contact me regarding photography
                                       Guidlines
                                     </option>
-                                    <option
-                                      value="Already-have-recent-photography-to-supply-Still-need-photography-to-be-done-Contact-me"
+                                    <option id="5"
+                                      value="5"
                                     >
                                       Already have recent photography to supply,
                                       Still need photography to be done. Contact
@@ -238,6 +238,8 @@
                                     </option>
                                   </select>
                                 </div>
+                              </div>
+                              <div class="photographerappend"id="photographerappend">
                               </div>
                               <div class="update_btn text-right mb50">
                                <button type="submit"class="btn btn_i black_btn">save</button>
@@ -269,4 +271,5 @@
         <button class="model-button"onclick="closeModal()">Close</button>
       </div>
     </div>  
+
 @endsection          

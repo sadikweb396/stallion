@@ -1,38 +1,42 @@
-    
+
 @extends('layouts.owner.app')
 @section('content')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <div class="container mt-2">
-        <div class="row">
-            <div class="col-md-12">
 
-                @if (session('status'))
-                    <div class="alert alert-success">{{ session('status') }}</div>
-                @endif
-
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h4>
-                            
-                            @can('create user')
-                            <a href="{{ url('users/create') }}" class="btn btn-primary float-end">Add User</a>
-                            @endcan
-                        </h4>
-                    </div>
-                    <div class="card-body">
-
-                        <table class="table table-bordered border-primary">
-                            <thead>
+<div class="dash_body_inner dash_main_body">
+            <div class="our_stallions stallions_details events_m">
+              <div class="add_new_stallions_list">
+                <div class="stallions_tabs_main">
+                  <div class="tabs_i">
+                    <div class="tab-contents row">
+                      <div class="col-lg-12">  
+                       <div class="profile_status_m mb20">
+                          <div class="profile_title mb20 d-flex justify-space-between">
+                            <div class="all_user_title">
+                              <p class="mb20">All User</p>
+                              <div class="add_user">
+                                @can('create user')
+                                  <a href="{{ url('users/create') }}" class="btn btn-primary float-end btn btn_i black_btn">Add User</a>
+                                @endcan
+                              </div>
+                            </div>  
+                            <div class="searchbar">
+                                <input type="search" class="search_i" />
+                                <button class="btn btn_i black_btn">Search</button>
+                            </div>
+                          </div>
+                          <div class="table-box-mm">
+                            <table class="content-table" id="myTable">
+                              <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th width="40%">Action</th>
+                                  <th>Id</th>
+                                  <th>Name</th>
+                                  <th>Action</th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                               @foreach ($users as $user)
+                              </thead>
+                              <tbody class="">
+                              @foreach ($users as $key=>$user)
                                 <tr>
-                                    <td>{{ $user->id }}</td>
+                                    <td>{{ ++$key }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>
                                         @can('update role')
@@ -49,12 +53,16 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
-
+                              </tbody>     
+                            </table>
+                            <div class="pagination d-flex justify-content-center" id="pagination">{{ $users->links() }}</div>
+                          </div>
+                       </div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
 @endsection
