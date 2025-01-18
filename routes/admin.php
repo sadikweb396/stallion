@@ -27,7 +27,6 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\subscriptionController;
 use App\Http\Controllers\admin\serviceController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -272,7 +271,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('update/{id}',[serviceController::class,'update'])->name('update');
         Route::get('delete/{id}',[serviceController::class,'delete']);
     });
-
+    Route::get('gettouch-image',[GettouchController::class,'gettouchImage']);
+    Route::post('gettouch-image-store',[GettouchController::class,'gettouchImageStore'])->name('gettouch-image-store');
     // service banner
     Route::get('service-banner',[serviceController::class,'serviceBanner']);
     Route::post('service-banner-store',[serviceController::class,'serviceBannerStore'])->name('service-banner-store');
@@ -284,6 +284,7 @@ Route::group(['middleware' => ['auth']], function() {
     // Route::post('service-more-information-store',[serviceController::class,'serviceMoreInformationStore'])->name('service-more-information-store');
     });
 
+ 
     
     Route::post('update-profile',[ProfileController::class,'updateProfile'])->name('update-profile');
     Route::get('followed/event',[EventController::class,'followedEvent']);

@@ -40,14 +40,17 @@ class PlanController extends Controller
 
         
         $planDetails = $request->plan_details; 
+
+        if(!empty($planDetails)) {
         foreach ($planDetails as $key => $detail) {
-           
+            if (isset($planDetails[$key])) {
             $planDetailModel = new plandetails();
             $planDetailModel->plan_id = $plan->id; 
             $planDetailModel->plandetails = $detail; 
             $planDetailModel->save(); 
+              }
         }
-
+        }
         
         toast('Plan created  successfully!','success');
         return redirect('admin/plan');
@@ -73,12 +76,15 @@ class PlanController extends Controller
         $planDetails = $request->plan_details;
 
         plandetails::where('plan_id', $id)->delete();
-        foreach ($planDetails as $key => $detail) {
-           
-            $planDetailModel = new plandetails();
-            $planDetailModel->plan_id = $plan->id; 
-            $planDetailModel->plandetails = $detail; 
-            $planDetailModel->save(); 
+        if(!empty($planDetails)) {
+            foreach ($planDetails as $key => $detail) {
+                if (isset($planDetails[$key])) {
+                $planDetailModel = new plandetails();
+                $planDetailModel->plan_id = $plan->id; 
+                $planDetailModel->plandetails = $detail; 
+                $planDetailModel->save(); 
+                  }
+            }
         }
 
         toast('Plan Updated  successfully!','success');

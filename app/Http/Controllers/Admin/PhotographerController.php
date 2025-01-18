@@ -14,7 +14,6 @@ class PhotographerController extends Controller
         $this->middleware('permission:Photographer Banner', ['only' => ['banner','bannerStore']]);
       
     }
-
     public function index()
     {
         $photographers=photographer::select('photographer_name','location','travel_radius','single_pic_price','multiple_pic_price','id','photographer_image')->get();
@@ -34,15 +33,25 @@ class PhotographerController extends Controller
 
             $destinationPath = 'photographer/'.$currYr;
             $photographerimage->move($destinationPath,$fileName);
+
+            $pdf = $request->pdf;
+            $randStr = substr($string, 0, 5);
+            $currYr = date("Y");
+            $pdfName = time().'_'.$randStr.'.'.$pdf->getClientOriginalExtension();
+
+            $destinationpdfPath = 'photographer/'.$currYr;
+            $pdf->move($destinationpdfPath,$pdfName);
     
             $photographer = new photographer();
             $photographer->photographer_name= $request->photographername;
             $photographer->photographer_image = $destinationPath.'/'.$fileName;
+            $photographer->photographer_pdf = $destinationpdfPath.'/'.$pdfName;
             $photographer->location=$request->location;
             $photographer->travel_radius=$request->travel_radius;
             $photographer->single_pic_price=$request->single_pic_price;
             $photographer->multiple_pic_price=$request->multiple_pic_price;
             $photographer->address=$request->address;
+            $photographer->phone=$request->phone;
             $photographer->save();
             toast('Photograph  created  successfully!','success');
             return back();
@@ -75,11 +84,24 @@ class PhotographerController extends Controller
             $photographerimage->move($destinationPath,$fileName);
             $photographer->photographer_image = $destinationPath.'/'.$fileName;
         }
+        if($request->pdf){
+          
+                $pdf = $request->pdf;
+                $randStr = substr($string, 0, 5);
+                $currYr = date("Y");
+                $pdfName = time().'_'.$randStr.'.'.$pdf->getClientOriginalExtension();
+
+                $destinationpdfPath = 'photographer/'.$currYr;
+                $pdf->move($destinationpdfPath,$pdfName);
+                $photographer->photographer_pdf = $destinationpdfPath.'/'.$pdfName;
+        }
+
             $photographer->photographer_name= $request->photographername;
             $photographer->location=$request->location;
             $photographer->travel_radius=$request->travel_radius;
             $photographer->single_pic_price=$request->single_pic_price;
             $photographer->multiple_pic_price=$request->multiple_pic_price;
+            $photographer->phone=$request->phone;
             $photographer->save();
             toast('Photograph  update  successfully!','success');
             return redirect('admin/photographer');

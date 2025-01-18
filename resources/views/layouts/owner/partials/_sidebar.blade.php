@@ -1,7 +1,11 @@
 <div class="dash_sidebar_m">
     <div class="dash_sidebar_inner">
             <div class="User_avtar text-center">
+              @if(!empty(Auth::user()->image))
               <img src="{{url( Auth::user()->image )}}" class="ab-avatar " alt="User avtaar" />
+              @else
+              <img src="{{ asset('assets/admin/image/profile-image.jpeg') }}" class="ab-avatar" alt="User avatar" />
+              @endif
             </div>
             <div class="menu_list">
               <ul class="menu_list_ul">

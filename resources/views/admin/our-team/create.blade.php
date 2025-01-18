@@ -40,10 +40,36 @@
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Image</label>
-                                  <input type="file"name="image"id="imageUpload"onchange="previewImage(event)">
+                                  <input type="file"name="image"id="imageUpload"onchange="previewImage(event)"required>
                                   <img id="imagePreview"style="max-width: 300px;">
                                 </div>
-                              </div>                  
+                              </div> 
+                              
+                              <div class="form_main">
+                                <div class="form-group">
+                                  <label for="name">Facebook Link</label>
+                                  <input type="text"name="facebook_link"/>
+                                </div>
+                              </div>   
+                              <div class="form_main">
+                                <div class="form-group">
+                                  <label for="name">Twitter Link</label>
+                                  <input type="text"name="twitter_link"/>
+                                </div>
+                              </div>        
+                              <div class="form_main">
+                                <div class="form-group">
+                                  <label for="name">Instagram Link</label>
+                                  <input type="text"name="instagram_link"/>
+                                </div>
+                              </div>  
+                              <div class="form_main">
+                                <div class="form-group">
+                                  <label for="name">Video Link</label>
+                                  <input type="text"name="video_link"/>
+                                </div>
+                              </div>  
+
                               <div class="update_btn text-right mb50">
                                <button type="submit"class="btn btn_i black_btn">Save</button>
                               </div>

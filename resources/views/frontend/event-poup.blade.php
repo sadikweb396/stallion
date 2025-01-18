@@ -1,8 +1,8 @@
 
-
 <div class="close_btn_p">
                   <i class="fa-solid fa-xmark"></i>
 </div>
+@if(!empty($event))
 <div class="event-card">
     <div class="event_f_i">
         <img src="{{url($event->image)}}"alt="Event Image" class="img-cover"/>
@@ -56,11 +56,15 @@
                     @php $links=DB::table('links')->where('event_id',$event->id)->get(); @endphp
                     <div class="events_btn">
                        @foreach($links as $link)
-                      <a href="{{url($link->link)}}" class="btn btn_i black_btn link-program"
-                        >{{$link->link_name}}</a
+                       @if(empty($link->event_link))
+                       @else
+                      <a href="{{url($link->event_link)}}" class="btn btn_i black_btn link-program"
+                        >{{$link->event_name}}</a
                       >
+                      @endif
                       @endforeach
                       
                     </div>
                   </div>
-</div>
+        </div>
+  @endif

@@ -70,9 +70,6 @@
         });
     });
 });
-
-
-
 $(document).ready(function(){ 
     var url;  
 
@@ -127,11 +124,6 @@ $(document).ready(function(){
         });
     }
 });
-
-
-
-
-
 </script>
 <script>
     $(document).ready(function(){
@@ -181,29 +173,6 @@ $(document).ready(function(){
   </script>
 
   <script>
-
-    // ClassicEditor
-    //         .create(document.querySelector('#topsideheading'))
-    //         .catch(error => {
-    //             console.error(error);
-    //         });
-      
-    // ClassicEditor
-    //     .create(document.querySelector('#topsideparagraph'))
-    //     .catch(error => {
-    //           console.error(error);
-    //     });
-    // ClassicEditor
-    //         .create(document.querySelector('#homeprogenyheding'))
-    //         .catch(error => {
-    //             console.error(error);
-    //     });
-      
-    // ClassicEditor
-    //         .create(document.querySelector('#homeprogenyparagraph'))
-    //         .catch(error => {
-    //             console.error(error);
-    //     });
 
       function previewImage(event) {
         const imagePreview = document.getElementById('imagePreview');

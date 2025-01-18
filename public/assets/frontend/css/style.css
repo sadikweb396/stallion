@@ -338,6 +338,7 @@ popup_event_s .close_btn_p i {
   color: white;
   font-size: 20px;
   transition: transform 0.3s ease;
+  z-index:10;
 }
 
 .social-icons .social-link:hover {

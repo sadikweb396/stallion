@@ -19,6 +19,7 @@ class EventController extends Controller
          $query = eventdate::orderBy('date', 'desc');
          $eventdates = $query->select('year','month','day','date')->distinct()->paginate(1);
          $eventcount = $query->select('day')->distinct('day')->count();
+         $event='';
   
       //   $eventdates = Eventdate::orderBy('date','desc')->paginate(1);
         if ($request->ajax()) {
@@ -36,6 +37,7 @@ class EventController extends Controller
        ->with('eventbanner',$eventbanner)
        ->with('eventinformation',$eventinformation)
        ->with('advertisements',$advertisements)
+       ->with('event',$event)
        ->with('eventdates',$eventdates);
      }
      public function eventDay($day)

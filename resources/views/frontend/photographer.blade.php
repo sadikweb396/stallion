@@ -50,6 +50,7 @@
                       <th>Location</th>
                       <th>Photographer Name</th>
                       <th>Address</th>
+                      <th>Phone</th>
                       <th>Travel Radius</th>
                       <th>Price</th>
                     </tr>
@@ -60,8 +61,11 @@
                       <td>{{$photographer->location}}</td>
                       <td>{{$photographer->photographer_name}}</td>
                       <td>{{$photographer->address}}</td>
+                      <td>{{$photographer->phone}}</td>
                       <td>{{$photographer->travel_radius}}</td>
-                      <td>For One: {{$photographer->single_pic_price}}$<br />For Multi: {{$photographer->multiple_pic_price}}$</td>
+                      <td>For One: {{$photographer->single_pic_price}}$<br />For Multi: {{$photographer->multiple_pic_price}}$
+                      <a href="{{ asset($photographer->photographer_pdf) }}" target="_blank">Pdf</a>
+                    </td>
                     </tr>
                    @endforeach
                   </tbody>

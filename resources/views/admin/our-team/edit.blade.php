@@ -41,6 +41,30 @@
                                   <input type="file"name="image"id="imageUpload"onchange="previewImage(event)">
                                   <img id="imagePreview"src="{{url($edit->image)}}"style="max-width: 300px;">
                                 </div>
+                              </div> 
+                              <div class="form_main">
+                                <div class="form-group">
+                                  <label for="name">Facebook Link</label>
+                                  <input type="text"value="{{$edit->facebook_link}}"name="facebook_link"/>
+                                </div>
+                              </div>   
+                              <div class="form_main">
+                                <div class="form-group">
+                                  <label for="name">Twitter Link</label>
+                                  <input type="text"value="{{$edit->twitter_link}}"name="twitter_link"/>
+                                </div>
+                              </div>        
+                              <div class="form_main">
+                                <div class="form-group">
+                                  <label for="name">Instagram Link</label>
+                                  <input type="text"value="{{$edit->instagram_link}}"name="instagram_link"/>
+                                </div>
+                              </div>  
+                              <div class="form_main">
+                                <div class="form-group">
+                                  <label for="name">Video Link</label>
+                                  <input type="text"value="{{$edit->video_link}}"name="video_link"/>
+                                </div>
                               </div>     
                               <div class="update_btn text-right mb50">
                                <button type="submit"class="btn btn_i black_btn">Save</button>

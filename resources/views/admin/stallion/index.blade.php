@@ -66,18 +66,18 @@
                             @else
                             @endif
                         </td>   
-                          <td>
+                        <td>
                              @if($stallion->status_count==5)
                               <p class="btn btn_i black_btn form_btn">Completed </p>
                              @else
                               <p class="btn btn_i black_btn form_btn">Incomplete </p>
                              @endif  
-                          </td>
-                          <td>
+                        </td>
+                        <td>
                             <a href="{{ url('admin/stallion/view/' . $stallion->id) }}"class="btn btn_i black_btn form_btn">
                               View
                             </a>                
-                          </td>
+                        </td>
                         </tr>
                         @endforeach
                     </tbody>     

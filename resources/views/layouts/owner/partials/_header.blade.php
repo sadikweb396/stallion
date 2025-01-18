@@ -1,10 +1,9 @@
-
 <div class="dash_top_header">
-            <header class="d-flex align-items-center justify-space-between">
-              <div class="menu-bar d-none">
-                <div class="menu-bar-icon collaose_menu cursor-pointer">
-                  <i class="fas fa-bars"></i>
-                </div>
+  <header class="d-flex align-items-center justify-space-between">
+  <div class="menu-bar d-none">
+      <div class="menu-bar-icon collaose_menu cursor-pointer">
+            <i class="fas fa-bars"></i>
+        </div>
               </div>
               <div class="search_bar_m">
                 <div class="darksoul-search-bar" id="searchbar">
@@ -109,15 +108,11 @@
                         Howdy, <span class="display-name">  {{ Auth::user()->username }} </span>
                       </span>
                       <span class="img-content">
-                        <img
-                          alt=""
-                          src="{{url( Auth::user()->image )}}"
-                          srcset="../assets/image/Ellipse 6.png"
-                          class="ab-avatar"
-                          height="26"
-                          width="26"
-                          decoding="async"
-                        />
+                      @if(!empty(Auth::user()->image))
+                      <img alt=""src="{{url( Auth::user()->image )}}" srcset="../assets/image/Ellipse 6.png" class="ab-avatar" height="26" width="26" decoding="async"/>
+                      @else
+                      <img alt="" src="{{ asset('assets/admin/image/profile-image.jpeg') }}" srcset="../assets/image/Ellipse 6.png" class="ab-avatar" height="26"width="26"decoding="async"/>
+                      @endif  
                       </span>
                     </a>
                     <div class="ab-sub-wrapper d-none">
@@ -129,17 +124,11 @@
                         >
                           <span>
                             <a class="ab-item" role="menuitem" href="#">
-                              <img
-                                alt=""
-                                src="{{url( Auth::user()->image )}}"
-                                srcset="
-                                ../assets/image/Ellipse 6.png
-                                "
-                                class="ab-avatar"
-                                height="70"
-                                width="70"
-                                decoding="async"
-                              />
+                              @if(!empty(Auth::user()->image))
+                              <img alt=""src="{{url( Auth::user()->image )}}"srcset="../assets/image/Ellipse 6.png"class="ab-avatar"height="70"width="70"decoding="async"/>
+                              @else
+                              <img alt=""src="{{ asset('assets/admin/image/profile-image.jpeg') }}"srcset="../assets/image/Ellipse 6.png"class="ab-avatar"height="70"width="70"decoding="async"/>
+                              @endif
                             </a>
                           </span>
                           <span>

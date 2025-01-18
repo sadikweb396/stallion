@@ -77,8 +77,7 @@
                                     <label for="Performance">
                                       Image
                                     </label>
-                                    <input type="file"name="image"
-                                    />
+                                    <input type="file"name="image"required/>
                                 </div>
                                 <div class="row">
                                       <div class="col-md-1">

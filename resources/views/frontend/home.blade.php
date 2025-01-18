@@ -380,6 +380,7 @@
                       @if($planmember){!!$planmember->plan_details!!}@endif
                       </p>
                     </div>
+                    @if($planmember)
                     <ul class="list-none mb20">
                     @php $plandetails=DB::table('plandetails')->where('plan_id',$planmember->id)->get(); @endphp
                     @foreach($plandetails as $plandetail)
@@ -389,6 +390,7 @@
                       </li>
                     @endforeach    
                     </ul>
+                    @endif
                   </div>
                   <div class="pricing_bttn text-center">
                     <a href="{{url('member/register')}}" class="btn_i">Get Started</a>
@@ -438,6 +440,7 @@
           </div>
         </div>
       </div>
+      @if($planOwner)
       <div class="pricing_sec">
         <div class="container">
           <div class="row">
@@ -459,6 +462,7 @@
                       @if($planOwner){!!$planOwner->plan_details!!}@endif
                       </p>
                     </div>
+                    @if($planOwner)
                     <ul class="list-none mb20">
                       @php $plandetails=DB::table('plandetails')->where('plan_id',$planOwner->id)->get(); @endphp
                       @foreach($plandetails as $plandetail)
@@ -476,6 +480,7 @@
                       </li>
                       @endforeach
                     </ul>
+                    @endif
                   </div>
                   <div class="pricing_bttn text-center">
                     <a href="{{url('owner/register')}}" class="btn_i">Get Started</a>
@@ -486,6 +491,7 @@
           </div>
         </div>
       </div>
+      @endif
     </section>
     <!-- Owner pricing plan end -->
     <!-- Owner pricing plan end -->

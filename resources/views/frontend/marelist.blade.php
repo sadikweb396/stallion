@@ -45,11 +45,14 @@
               @if($stallionImage)
               <article class="list_stallion_a d-flex align-items-end justify-content-center"
               style="background-image: url('{{ $stallionImage->stallion_image }}');">
-                  <div class="maque_badges">
+                  @php  $badge=DB::table('badges')->where('type','MARE LIST')->first(); @endphp
+                  @if($badge)
+                  <div class="maque_badges"style="background-color:{{$badge->color}};">
                     <marquee behavior="smooth" direction="left">
-                    {{ ucfirst($stallion->stallion_heading) }}  Profiles
+                    {{ ucfirst($badge->text) }} 
                     </marquee>
                   </div>
+                  @endif
                   <a href="{{ url('single-mare', $stallion->slug) }}" aria-label="listing article">
                     <div class="listing_title">
                       <p>{{ $stallion->name }}</p>
@@ -74,11 +77,14 @@
                 @if($stallionImage)
                 <article class="list_stallion_a d-flex align-items-end justify-content-center"
                   style="background-image: url('{{ $stallionImage->stallion_image }}');">
-              <div class="maque_badges">
-                  <marquee behavior="smooth" direction="left">
-                  {{ ucfirst($stallion->stallion_heading) }}  Profiles
-                  </marquee>
-              </div>
+                  @php  $badge=DB::table('badges')->where('type','MARE LIST')->first(); @endphp
+                  @if($badge)
+                  <div class="maque_badges"style="background-color:{{$badge->color}};">
+                    <marquee behavior="smooth" direction="left">
+                    {{ ucfirst($badge->text) }} 
+                    </marquee>
+                  </div>
+                  @endif
               <a href="{{ url('single-mare', $stallion->name) }}" aria-label="listing article">
                   <div class="listing_title">
                       <p>{{ $stallion->name }}</p>

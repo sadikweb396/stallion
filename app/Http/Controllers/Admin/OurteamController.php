@@ -21,7 +21,7 @@ class OurteamController extends Controller
         return view('admin.our-team.index')
         ->with('ourteams',$ourteams);
     }
-
+  
     public function create()
         {
             return view('admin.our-team.create');
@@ -42,6 +42,10 @@ class OurteamController extends Controller
                 $ourteam = new ourteam();
                 $ourteam->name = $request->name; 
                 $ourteam->description = $request->description; 
+                $ourteam->facebook_link = $request->facebook_link; 
+                $ourteam->twitter_link = $request->twitter_link; 
+                $ourteam->instagram_link = $request->instagram_link; 
+                $ourteam->video_link = $request->video_link; 
                 $ourteam->image = $destinationPath.'/'.$fileName;
                 $ourteam->save(); 
                 toast('ourteam created  successfully!','success');
@@ -82,6 +86,10 @@ class OurteamController extends Controller
             $ourteam = ourteam::find($id);
             $ourteam->name = $request->name; 
             $ourteam->description = $request->description; 
+            $ourteam->facebook_link = $request->facebook_link; 
+            $ourteam->twitter_link = $request->twitter_link; 
+            $ourteam->instagram_link = $request->instagram_link; 
+            $ourteam->video_link = $request->video_link; 
             $ourteam->save(); 
             toast('ourteam updated  successfully!','success');
             return redirect('admin/our-team'); 

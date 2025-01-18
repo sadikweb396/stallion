@@ -14,7 +14,7 @@ class PhotographerController extends Controller
     {
          $advertisements=advertisement::where('page','Photographer')->get();
          $photographerbanner=photographerbanner::first();
-         $photographers=photographer::select('location','photographer_name','address','travel_radius','single_pic_price','multiple_pic_price')->get();
+         $photographers=photographer::select('location','photographer_name','address','travel_radius','single_pic_price','multiple_pic_price','phone','photographer_pdf')->get();
          return view('frontend.photographer')
          ->with('advertisements',$advertisements)
          ->with('photographerbanner',$photographerbanner)

@@ -236,50 +236,10 @@
           </div>
         </div>
       </div>
-    </section>
-    
+    </section>  
     @endif
     @endforeach
     <!-- end-- -->
-    <!-- Category Slider start -->
-    <!-- <section id="categorySlidertwo" class="pdb100 categorySlider">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="team-title mb50 text-center">
-              <h3>OUR TEAM MEMBERS</h3>
-            </div>
-            <div
-              id="catslider_two"
-              class="catslider_listing catslider owl-carousel owl-theme"
-            >
-              @foreach($ourteams as $ourteam)
-              <div class="item">
-                <a href="javascript:void(0)">
-                  <div
-                    class="catimg d-flex align-items-center justify-content-center"
-                    style="background-image: url(@if($ourteam){{ $ourteam->image }} @endif);" >
-                    <div class="slider_info">
-                      <div class="cattitle mb20 text-center">
-                        <p>{{$ourteam->name}}</p>
-                      </div>
-                      <div class="cat_p text-center">
-                        <p>
-                         {{$ourteam->description}}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                
-              </div>
-              @endforeach
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
-
     <section id="categorySlidertwo" class="pdb100 categorySlider">
       <div class="container">
         <style>
@@ -313,20 +273,28 @@
                       </div>
                       <!-- Logos -->
                       <div class="social-icons">
-                          <a href="https://www.youtube.com" target="_blank" class="social-link">
-                              <i class="fab fa-youtube"></i>
+                        @if($ourteam->facebook_link)
+                          <a href="{{ $ourteam->facebook_link }}" target="_blank" class="social-link">
+                            <i class="fab fa-facebook"></i>
                           </a>
-                          <a href="https://www.facebook.com" target="_blank" class="social-link">
-                              <i class="fab fa-facebook"></i>
+                        @endif  
+                        @if($ourteam->twitter_link)
+                          <a href="{{ $ourteam->twitter_link }}" target="_blank" class="social-link">
+                            <i class="fab fa-twitter"></i>
                           </a>
-                          <a href="https://www.twitter.com" target="_blank" class="social-link">
-                              <i class="fab fa-twitter"></i>
+                        @endif
+                        @if($ourteam->instagram_link)
+                          <a href="{{ $ourteam->linkedin_link }}" target="_blank" class="social-link">
+                            <i class="fab fa-instagram"></i>
                           </a>
-                          <a href="https://www.linkedin.com" target="_blank" class="social-link">
-                              <i class="fab fa-linkedin"></i>
+                        @endif
+                        @if($ourteam->video_link)
+                          <a href="{{ $ourteam->video_link }}" target="_blank" class="social-link">
+                            <i class="fab fa-youtube"></i>
                           </a>
+                        @endif
                       </div>
-                  </div>
+                    </div>
                   </div>
                 </a>
               </div>

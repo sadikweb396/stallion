@@ -93,6 +93,12 @@
                               </div>
                               <div class="form_main">
                                 <div class="form-group">
+                                  <label for="name">Phone</label>
+                                  <input type="number"name="phone"required/>
+                                </div>
+                              </div>
+                              <div class="form_main">
+                                <div class="form-group">
                                   <label for="name">Travel Radius</label>
                                   <input type="text" id="name"name="travel_radius"required/>
                                 </div>
@@ -100,13 +106,13 @@
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Individual Price</label>
-                                  <input type="text" id="name"name="single_pic_price"required/>
+                                  <input type="number" id="name"name="single_pic_price"required/>
                                 </div>
                               </div>
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Multi Price</label>
-                                  <input type="text" id="name"name="multiple_pic_price"required/>
+                                  <input type="number" id="name"name="multiple_pic_price"required/>
                                 </div>
                               </div>
                               <div class="form_main">
@@ -122,7 +128,12 @@
                                   <img id="imagePreview" src="" alt="Image Preview" style="max-width: 300px; display: none;">
                                 </div>
                               </div>
-                              
+                              <div class="form_main">
+                                <div class="form-group">
+                                  <label for="name">pdf</label>
+                                  <input type="file" id="imageUpload"name="pdf"accept="application/pdf" required />
+                                </div>
+                              </div>             
                               <div class="update_btn text-right mb50">
                                <button type="submit"class="btn btn_i black_btn">Save</button>
                               </div>

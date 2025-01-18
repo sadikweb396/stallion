@@ -55,7 +55,7 @@ class StallionController extends Controller
         $stalliondetails = stallionpagedetails::where('id',1)->first(); 
         return view('admin.stallion.stallion-list')
         ->with('stalliondetails',$stalliondetails);
-    }
+    } 
     public function stallionListStore(Request $request)
     {
         try { 
@@ -222,8 +222,7 @@ class StallionController extends Controller
         ],
     ]);
     if($validator->fails()) {
-       
-       
+          
     }
     $id=$request->id;
     $slug = Str::slug($request->name);
@@ -247,6 +246,11 @@ class StallionController extends Controller
     $stallion->color = $request->color;
     $stallion->stallion_heading = $request->stallion_heading;
     $stallion->date_of_birth = $request->date_of_birth;
+    $stallion->put_semen_available_from = $request->putsemenavailablefrom;
     $stallion->save();
+
+    $data = stallion::find($id);
+
+    return response()->json($data);
   }
 } 

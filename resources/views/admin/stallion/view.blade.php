@@ -101,7 +101,7 @@
         <span class="close">&times;</span>
         <h3>Edit Stallion Details</h3>
         <form id="insertForm">
-          <input type="text"name="stallionid"id="stallionid"value="{{$stallion->id}}">
+          <input type="hidden"name="stallionid"id="stallionid"value="{{$stallion->id}}">
           <label for="name">Name</label>
           <input type="text" id="name" name="name"value=""placeholder="Enter stallion's name">
           <label for="name">Performance History</label>
@@ -144,13 +144,33 @@
           <input type="date"name="date_of_birth"id="date_of_birth"required/>
           
           <label for="First foal crop year">First foal crop year</label>
-          <input type="text"id="first_foal_crop_year"name="first_foal_crop_year"required/>
-          
+          <input type="text"id="first_foal_crop_year"name="first_foal_crop_year"required/>     
           <button type="submit">Save</button>
         </form>
-      </div>
-      
+      </div>       
     </div>
+
+        <div id="editDetailsModal" class="editSemenDetailsModal modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Edit Semen Contract Details</h3>
+            <form id="insertForm">
+              <input type="hidden"name="stallionid"id="stallionid"value="{{$stallion->id}}">
+              <label for="name">Name of the Breeding center/Vet Clininc:t</label>
+              <input type="text" id="name"name="name"value=""placeholder="Enter stallion's name">
+              <label for="name">Address</label>
+              <input type="text" id="name"name="address"value=""placeholder="Enter Address">
+              <label for="sire">Vet Name</label>
+              <input type="text" id="name"name="vetname"value=""placeholder="Enter vet name">        
+              <label for="sire">Phone</label>
+              <input type="text" id="name"name="phone"value=""placeholder="Enter phone"> 
+              <label for="dam">Professional Trainer</label>
+              <textarea name="professional_trainer" id="professional_trainer"></textarea>
+            
+              <button type="submit">Save</button>
+            </form>
+          </div>       
+        </div>
             <div class="our_stallions stallions_details">
               <div class="add_new_stallions">
                 <div
@@ -210,34 +230,30 @@
                           <div class="stallions_d_form mb50">
                             <div class="preview_list_stallion">
                               <ul class="">
-                                <li class="list_items">Name:{{$stallion->name}} </li>
+                                <li class="list_items name">Name:{{$stallion->name}} </li>
                                 <li class="list_items">Status : Active</li>
-                                <li class="list_items">Register : {{$stallion->registration_details}}</li>
+                                <li class="list_items register">Register : {{$stallion->registration_details}}</li>
                                
-                                <li class="list_items">
-                                  Owner story : Dummy content - Want to inspect
-                                  every detail about the Stallion you’re
-                                  breeding to ? Have questions about the sire of
-                                  your future progeny?
+                                <li class="list_items story">
+                                  Owner story : {{$stallion->owner_story}}
                                 </li>
-                                <li class="list_items">
-                                  Professional Trainer : ABCABCBA
+                                <li class="list_items professional_trainer">
+                                  Professional Trainer : {{$stallion->professional_trainer}}
                                 </li>
-                                <li class="list_items">
+                                <li class="list_items trainer_history">
                                   Trainer History : Active
                                 </li>
-                                <li class="list_items">Bred By : Active</li>
-                                <li class="list_items">Height: 12</li>
-                                <li class="list_items">Gender : Sire</li>
-                                <li class="list_items">Colour : Black</li>
+                                <li class="list_items bred_by">Bred By : Active</li>
+                                <li class="list_items height">Height: {{$stallion->height}}</li>
+                                <li class="list_items color">color : {{$stallion->color}}</li>
                                 <li class="list_items">
-                                  Put semen available from: 12-March-2025
+                                  Put semen available from: {{$stallion->put_semen_available_from}}
                                 </li>
                                 <li class="list_items">
-                                  First foal crop year :2025
+                                  First foal crop year :{{$stallion->put_semen_available_from}}
                                 </li>
                                 <li class="list_items">
-                                  Current performing discipline: abc abc abc
+                                  Current performing discipline: {{$stallion->current_performing_discipline}}
                                 </li>
                                 <li class="list_items">
                                   Photographer Details: Dummy Dummy
@@ -347,51 +363,24 @@
                               <p class="">Semen Contract Details</p>
                             </div>
                             <div class="edit_details">
-                              <a href="#" class="btn black_btn btn_i form_btn"
+                              <a href="#" class="btn black_btn btn_i form_btn editSemenDetailsBtn"
                                 >Edit Details
                               </a>
                             </div>
                           </div>
+                          @php $vetdetail=DB::table('vetdetails')->where('stallion_id',$stallion->id)->first(); @endphp
+
+                          @php $progeniedetail=DB::table('progenies')->where('stallion_id',$stallion->id)->first(); @endphp
+
                           <div class="stallions_d_form mb50">
                             <div class="preview_list_stallion">
                               <ul class="">
-                                <li class="list_items">Name: Sophiya</li>
-                                <li class="list_items">Status : Active</li>
-                                <li class="list_items">Register : HBR</li>
-                                <li class="list_items">
-                                  Registration Details: Abcabcabc
-                                </li>
-                                <li class="list_items">
-                                  Owner story : Dummy content - Want to inspect
-                                  every detail about the Stallion you’re
-                                  breeding to ? Have questions about the sire of
-                                  your future progeny?
-                                </li>
-                                <li class="list_items">
-                                  Professional Trainer : ABCABCBA
-                                </li>
-                                <li class="list_items">
-                                  Trainer History : Active
-                                </li>
-                                <li class="list_items">Bred By : Active</li>
-                                <li class="list_items">Height: 12</li>
-                                <li class="list_items">Gender : Sire</li>
-                                <li class="list_items">Colour : Black</li>
-                                <li class="list_items">
-                                  Put semen available from: 12-March-2025
-                                </li>
-                                <li class="list_items">
-                                  First foal crop year :2025
-                                </li>
-                                <li class="list_items">
-                                  Current performing discipline: abc abc abc
-                                </li>
-                                <li class="list_items">
-                                  Photographer Details: Dummy Dummy
-                                </li>
-                                <li class="list_items">
-                                  DNA Profile : StoredSNP (71176 SNPs)
-                                </li>
+                                <li class="list_items">Name of the Breeding center/Vet Clininc:{{$vetdetail->name_of_clinic}}</li>
+                                <li class="list_items">Address : {{$vetdetail->address}}</li>
+                                <li class="list_items">Vet Name : {{$vetdetail->vet_name}}</li>
+                                <li class="list_items">Phone: {{$vetdetail->phone}}</li>
+                                <li class="list_items">Email : {{$vetdetail->email}}</li>
+                                <li class="list_items">Clinic Number : {{$vetdetail->clinic_number}}</li>                            
                               </ul>
                             </div>
                           </div>
@@ -416,26 +405,12 @@
                           <div class="stallions_d_form mb50">
                             <div class="preview_list_stallion mb50">
                               <ul class="">
-                                <li class="list_items">Name: Sophiya</li>
-                                <li class="list_items">Status : Active</li>
-                                <li class="list_items">Register : HBR</li>
-                                <li class="list_items">
-                                  Registration Details: Abcabcabc
-                                </li>
-                                <li class="list_items">
-                                  Owner story : Dummy content - Want to inspect
-                                  every detail about the Stallion you’re
-                                  breeding to ? Have questions about the sire of
-                                  your future progeny?
-                                </li>
-                                <li class="list_items">
-                                  Professional Trainer : ABCABCBA
-                                </li>
-                                <li class="list_items">
-                                  Trainer History : Active
-                                </li>
-                                <li class="list_items">Bred By : Active</li>
-                                <li class="list_items">Height: 12</li>
+                                <li class="list_items">Name: {{$progeniedetail->progeny_name}}</li>
+                                <li class="list_items">Date of birth: {{$progeniedetail->date_of_birth}}</li>
+                                <li class="list_items">Gender: {{$progeniedetail->gender}}</li>
+                                <li class="list_items">Color: {{$progeniedetail->color}}</li>
+                                <li class="list_items">Color: {{$progeniedetail->registration_number}}</li>
+                                
                               </ul>
                             </div>
                             <div class="title_bar mb20 text-center border0">
@@ -655,7 +630,7 @@ $(document).ready(function() {
         var email = $('#email').val(); 
         var performanceHistory=$('#performance_history').val(); 
         var backgroundStory=$('#background_story').val(); 
-        var ownerStory=$('#background_story').val(); 
+        var ownerStory=$('#owner_story').val(); 
         var lifetimeStory=$('#lifetime_story').val(); 
         var professionaltrainer=$('#professional_trainer').val(); 
         var bredby=$('#bred_by').val();   
@@ -664,9 +639,10 @@ $(document).ready(function() {
         var putsemenavailablefrom=$('#put_semen_available_from').val(); 
         var trainerHistory=$('#trainer_history').val();
         var trainerHistory=$('#trainer_history').val();
-
-        
-               
+        var currentPerformingDiscipline=$('#current_performing_discipline').val();
+        var height=$('#height').val();
+        var color=$('#color').val();
+        var dateOfBirth=$('#date_of_birth').val();      
         $.ajax({
             url: '{{ route('admin.update.stallion') }}', 
             type: 'POST',
@@ -685,12 +661,21 @@ $(document).ready(function() {
                 registration_details:registrationdetails,
                 putsemenavailablefrom:putsemenavailablefrom,
                 trainer_history:trainerHistory,
+                current_performing_discipline:currentPerformingDiscipline,
+                height:height,
+                color:color,
+                dateOfBirth:dateOfBirth
                
             },
-            success: function(response) {      
+            success: function(response) { 
+                $('.name').text('Name: ' + response.name); 
+                $('.color').text('Color: ' + response.color); 
+                $('.story').text('Owner story: ' + response.owner_story); 
+                     
                 $(".editDetailsModal").removeClass('model-open');
                 $('#response').html(response.message);
-                $('#insertForm')[0].reset();      
+                $('#insertForm')[0].reset();
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Success!',
@@ -698,6 +683,7 @@ $(document).ready(function() {
                     confirmButtonText: 'OK'
                 });
             },
+
             error: function(xhr, status, error) {
               $('#response').html('<p style="color:red;">An error occurred: ' + error + '</p>');    
                 Swal.fire({
@@ -733,6 +719,8 @@ $.ajax({
                     $('#first_foal_crop_year').val(response.color);
                     $('#trainer_history').val(response.trainer_history);
                     $('#date_of_birth').val(response.date_of_birth);
+
+                    
                     $('#myModal').show();
                 },
                 // error: function () {
@@ -740,9 +728,42 @@ $.ajax({
                 // }
             });
   });
+
+$(".editSemenDetailsBtn").on('click', function() {
+$(".editSemenDetailsModal").addClass('model-open');
+var id = $(this).data('id');
+$.ajax({
+                url: `/stallion-details/${id}`,
+                method: 'GET',
+                success: function (response) {
+                    $('#id').val(response.id);
+                    $('#name').val(response.name);
+                    $('#performance_history').val(response.performance_history);
+                    $('#owner_story').val(response.owner_story);
+                    $('#lifetime_story').val(response.lifetime_story);
+                    $('#professional_trainer').val(response.professional_trainer);
+                    $('#background_story').val(response.background_story);
+                    $('#bred_by').val(response.bred_by);
+                    $('#registration_details').val(response.registration_details);
+                    $('#put_semen_available_from').val(response.put_semen_available_from);
+                    $('#current_performing_discipline').val(response.current_performing_discipline);
+                    $('#height').val(response.height);
+                    $('#color').val(response.color);
+                    $('#first_foal_crop_year').val(response.color);
+                    $('#trainer_history').val(response.trainer_history);
+                    $('#date_of_birth').val(response.date_of_birth);            
+                    $('#myModal').show();
+                },
+                error: function () {
+                    alert('Unable to fetch data.');
+                }
+            });
+
+});
  
 $(".close").click(function(){
   $(".editDetailsModal").removeClass('model-open');
+  $(".editSemenDetailsModal").removeClass('model-open');
 });
 </script>
 <!-- SweetAlert2 JS -->

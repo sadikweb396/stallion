@@ -43,9 +43,7 @@ class EventController extends Controller
                 $year = $date->format('Y');  
                 $month = $date->format('m'); 
                 $day = $date->format('d');  
-                
                 $count=eventdate::where('date',$start_date)->count();
-              
                 $eventdate = new eventdate();
                 $eventdate->day = $day;
                 $eventdate->month =$month;
@@ -62,8 +60,6 @@ class EventController extends Controller
 
                 $destinationPath = 'stallion/'.$currYr;
                 $image->move($destinationPath,$fileName);
-
-                //$id=eventdate::where('date',$start_date)->value('id');
                 $event = new event();
                 $event->image = $destinationPath.'/'.$fileName;
                 $event->event_name = $request->event_name;
@@ -72,37 +68,30 @@ class EventController extends Controller
                 $event->start_date = $request->start_date;
                 $event->end_date = $request->end_date;
                 $event->association_hosting_event = $request->association_hosting_event;
-                // $event->event_link = $request->event_link;
-                // $event->link_to_program = $request->link_to_program;
-                // $event->facebook_link = $request->facebook_link;
-             
-                $event->link_to_nominate = $request->link_to_nominate;
                 $event->mark_event_prestigious = $request->Prestigious; 
                 $event->event_type = $request->event_type;   
-                // $event->date_id=$id; 
                 $event->save();   
-                
                 
                 $linkNames = $request->linkname;
                 $links = $request->link;
-                
-                foreach ($linkNames as $key => $linkName) {
-                    $newLink = new link(); // Use a different variable name for the instance
-                    $newLink->event_id = $event->id;
-                    $newLink->link_name = $linkName;
-                    $newLink->link = $links[$key]; // Access the corresponding link from the request
-                    $newLink->save();
-                }
-                
-               
+                if (!empty($linkNames) && !empty($links)) {
+                    foreach ($linkNames as $key => $linkName) {
+                        if (isset($links[$key])) {
+                            $newLink = new Link(); 
+                            $newLink->event_id = $event->id;
+                            $newLink->event_name = $linkName;
+                            $newLink->event_link = $links[$key]; 
+                            $newLink->save();
+                        }
+                    }
+                } 
                toast('Event create successfully!','success');
                return redirect('admin/event');
             }
                 
         }   catch (\Exception $e) {
-            
-                     Alert::error('Error', 'Error Event create: ' . $e->getMessage());
-                     return redirect()->back();
+              Alert::error('Error', 'Error Event create: ' . $e->getMessage());
+              return redirect()->back();
          }
     }
     public function edit($id)
@@ -120,8 +109,6 @@ class EventController extends Controller
                 $year = $date->format('Y');  
                 $month = $date->format('m'); 
                 $day = $date->format('d');  
-
-             
                 $eventdate = eventdate::where('id',$request->id)->first(); 
                 $eventdate->day = $day;
                 $eventdate->month =$month;
@@ -129,8 +116,7 @@ class EventController extends Controller
                 $eventdate->date =$start_date;
                 $eventdate->event_location =$request->event_location;
                 $eventdate->event_type =$request->event_type;
-                $eventdate->save();  
-                
+                $eventdate->save();         
                 if($request->image){
                
                 $image = $request->image;
@@ -158,8 +144,21 @@ class EventController extends Controller
                 $event->link_to_nominate = $request->link_to_nominate;
                 $event->mark_event_prestigious = $request->Prestigious; 
                 $event->event_type = $request->event_type;   
-                // $event->date_id=$id; 
-                $event->save();        
+                $event->save();  
+                $linkNames = $request->linkname;
+                $links = $request->link;
+                link::where('event_id',$request->id)->delete();
+                if (!empty($linkNames) && !empty($links)) {
+                    foreach ($linkNames as $key => $linkName) {
+                        if (isset($links[$key])) {
+                            $newLink = new Link(); 
+                            $newLink->event_id = $event->id;
+                            $newLink->event_name = $linkName;
+                            $newLink->event_link = $links[$key]; 
+                            $newLink->save();
+                        }
+                    }
+                }       
                
                toast('Event create successfully!','success');
                return redirect('admin/event');

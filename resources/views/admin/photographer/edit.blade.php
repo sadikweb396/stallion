@@ -33,6 +33,12 @@
                             </div>
                           </div>
                           <div class="form_main">
+                              <div class="form-group">
+                                  <label for="name">Phone</label>
+                                  <input type="number"name="phone"value="{{$photographer->phone}}"required/>
+                              </div>
+                            </div>
+                          <div class="form_main">
                             <div class="form-group">
                               <label for="name">Travel Radius</label>
                               <input type="text" id="name"name="travel_radius"value="{{$photographer->travel_radius}}"required/>
@@ -62,6 +68,12 @@
                                 <input type="file" id="imageUpload"onchange="previewImage(event)"name="photographerimage"/>
                                 <img  src="{{url($photographer->photographer_image)}}"id="imagePreview" src="" alt="Image Preview" style="max-width: 300px; ">
                             </div>
+                          </div> 
+                          <div class="form_main">
+                                <div class="form-group">
+                                  <label for="name">pdf</label>
+                                  <input type="file" id="imageUpload"name="pdf"accept="application/pdf"/>
+                                </div>
                           </div> 
                           <div class="update_btn text-right mb50">
                             <button type="submit"class="btn btn_i black_btn">Save</button>

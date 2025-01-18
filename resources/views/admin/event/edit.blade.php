@@ -121,8 +121,9 @@
 
 
 
-                            <form action="{{route('admin.event.store')}}"method="post"id="myForm"enctype="multipart/form-data">
+                            <form action="{{route('admin.event.update')}}"method="post"id="myForm"enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden"name="id"value="{{$event->id}}">
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Event Name </label>
@@ -213,12 +214,12 @@
                                                   @endif
                                                   @foreach($links as $key=>$link)
                                                   @if($key==0)
-                                                  <input type="text" class="plan" name="linkname[]"value="{{$link->link_name}}"placeholder="enter link name" style="width:95%;margin-top:10px;"> <button type="button" class="add-input">Add</button>
-                                                  <input type="text" class="plan" name="link[]" value="{{$link->link}}" placeholder="enter link" style="width:95%;margin-top:10px;">
+                                                  <input type="text" class="plan" name="linkname[]"value="{{$link->event_name}}"placeholder="enter link name" style="width:95%;margin-top:10px;"> <button type="button" class="add-input">Add</button>
+                                                  <input type="text" class="plan" name="link[]" value="{{$link->event_link}}" placeholder="enter link" style="width:95%;margin-top:10px;">
                                                   
                                                   @else
-                                                  <input type="text" class="plan-{{$key}}"name="linkname[]"value="{{$link->link_name}}"placeholder="enter link name" style="width:95%;margin-top:10px;">
-                                                  <input type="text" class="plan-{{$key}}"name="link[]" value="{{$link->link}}"placeholder="enter link" style="width:95%;margin-top:10px;">
+                                                  <input type="text" class="plan-{{$key}}"name="linkname[]"value="{{$link->event_name}}"placeholder="enter link name" style="width:95%;margin-top:10px;">
+                                                  <input type="text" class="plan-{{$key}}"name="link[]" value="{{$link->event_link}}"placeholder="enter link" style="width:95%;margin-top:10px;">
                                                   <button type="button" class="remove-input-{{$key}}"><i class="fa-solid fa-xmark"></i></button>
                                                   @endif
                                                   @endforeach

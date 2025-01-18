@@ -109,7 +109,7 @@ class serviceController extends Controller
     {
         try { 
             $string = str_shuffle("abcdefghijklmnopqrstwxyz");
-                $service = service::find(1);
+                $service = service::find($id);
                 if($request->image){ 
                     $image = $request->image;
                     $randStr = substr($string, 0, 5);
@@ -146,8 +146,7 @@ class serviceController extends Controller
                     $service->heading1 = $request->heading1;
                     $service->paragraph1 = $request->paragraph1; 
                     $service->heading2 = $request->heading2;
-                    $service->paragraph2 = $request->paragraph2;
-                    $service->serviceid=$request->serviceid;           
+                    $service->paragraph2 = $request->paragraph2;         
                     $service->save(); 
                     toast('Service create  successfully!','success');
                     return redirect('admin/service');

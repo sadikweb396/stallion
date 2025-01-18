@@ -25,7 +25,6 @@
                             <table class="content-table" id="myTable">
                               <thead>
                                 <tr>
-                                  <th>Id</th>
                                   <th>Plan Name</th>
                                   <th>Plan Price</th>
                                   <th>Plan Duration</th>
@@ -36,7 +35,6 @@
                               <tbody class="">
                                 @foreach($plans as $key=>$plan)
                                 <tr>
-                                    <td>{{++$key}}</td>
                                     <td>{{$plan->plan_name}}</td>
                                     <td>{{$plan->plan_price}}</td>
                                     <td>{{$plan->plan_duration}}</td>
