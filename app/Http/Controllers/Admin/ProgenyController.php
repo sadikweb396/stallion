@@ -8,7 +8,7 @@ use App\Models\progenyform;
 use App\Models\progenybanner;
 use App\Models\progenyinformation;
 use App\Models\progeny;
-
+use RealRashid\SweetAlert\Facades\Alert;
 class ProgenyController extends Controller
 {
     public function __construct()
@@ -35,7 +35,7 @@ class ProgenyController extends Controller
          $banner=progenybanner::first();
          return view('admin.progeny.banner')
          ->with('banner',$banner);
-    }
+    } 
     public function bannerStore(Request $request)
     {
         try { 
@@ -43,8 +43,8 @@ class ProgenyController extends Controller
             $count=progenybanner::count();
             if($count>0)
             {
-                if($request->image){ 
-                    $image = $request->image;
+                if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $image = $request->file('bannerimage') ?? $request->file('bannervideo');
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -52,6 +52,7 @@ class ProgenyController extends Controller
                     $image->move($destinationPath,$fileName);
                     $aboutbanner = progenybanner::first();
                     $aboutbanner->image = $destinationPath.'/'.$fileName;
+                    $aboutbanner->type = $request->media;
                     $aboutbanner->save();
                 } 
                 $aboutbanner = progenybanner::first();
@@ -63,8 +64,8 @@ class ProgenyController extends Controller
             }
             else
             {
-                if($request->image){ 
-                $image = $request->image;
+                if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $image = $request->file('bannerimage') ?? $request->file('bannervideo');
                 $randStr = substr($string, 0, 5);
                 $currYr = date("Y");
                 $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -75,6 +76,7 @@ class ProgenyController extends Controller
                 $aboutbanner->heading = $request->heading;  
                 $aboutbanner->text = $request->text; 
                 $aboutbanner->image = $destinationPath.'/'.$fileName;
+                $aboutbanner->type = $request->media;
                 $aboutbanner->save(); 
                 toast('banner created  successfully!','success');
                 return back(); 

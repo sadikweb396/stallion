@@ -4,6 +4,9 @@
     <section
       class="hero_banner_m d-flex align-items-center stallions-banner"
       style="background-image: url(@if($stalliondetails){{ $stalliondetails->banner_image }} @endif);" >
+      <video autoplay loop muted playsinline class="background-video">
+        <source src="{{url($stalliondetails->banner_image)}}" type="video/mp4">
+      </video>
       <div class="container">
         <div class="row">
           <div class="col-lg-12">

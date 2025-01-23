@@ -1,15 +1,18 @@
 @extends('layouts.owner.app')
 @section('content')
 <style>
-    .follow{
-      color: #007BFF;
-      text-decoration:underline;  
-     
-    }
-    a:hover {
-     
-      color: #0056b3; 
-    }
+.category_badeg{
+    position: absolute;
+    top: 0;
+    color: white;
+    background-color: #98806d;
+    width: 100%;
+    z-index: 999;
+    padding: 6px;
+}
+.category_badeg marquee{
+    font-size: 20px;
+}
   </style>
     <div class="dash_body_inner">
         <div class="our_stallions stallions_details">
@@ -39,9 +42,9 @@
                                     <a href="{{ url('single-stallion/'.$follow->stallion->slug) }}" class="btn btn_i" target="_blank">View Stallion</a>
                                 </div>
                             </div>
-                            <div class="category_badegs">
-                                <p>
-                                    <a href="javascript:void(0)">Stallions</a>
+                            <div class="category_badeg">
+                                <p class="upperBanner">
+                                    <marquee behavior="smoth" direction="left">Stallion</marquee>
                                 </p>
                             </div>
                         </a>

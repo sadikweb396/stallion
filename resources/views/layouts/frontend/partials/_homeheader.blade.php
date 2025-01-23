@@ -1,3 +1,12 @@
+<style>
+  .a{
+     display:none;
+   }
+   .b
+   {
+    display: block;
+   }
+</style>
 <!-- header start -->
 <header class="main_header_m">
       <div class="container">

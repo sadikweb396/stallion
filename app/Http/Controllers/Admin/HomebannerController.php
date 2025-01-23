@@ -12,14 +12,12 @@ class HomebannerController extends Controller
         $this->middleware('permission:Home Banner',['only' => ['index','store']]);
       
     }
-
     public function index()
     {
-        $homebanner=homebanner::select('bannerimage','image','text')->first();
+        $homebanner=homebanner::select('bannerimage','image','text','type')->first();
         return view('admin.home.banner')
         ->with('homebanner',$homebanner);
-    }
-
+    } 
     public function store(Request $request)
     {
        
@@ -28,8 +26,9 @@ class HomebannerController extends Controller
         $count=homebanner::count();
         if($count>0)
         {
-            if($request->bannerimage){ 
-                $bannerimage = $request->bannerimage;
+            if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                $bannerimage = $request->file('bannerimage') ?? $request->file('bannervideo');
+                // $bannerimage = $request->bannerimage;
                 $randStr = substr($string, 0, 5);
                 $currYr = date("Y");
                 $fileNamebanner = time().'_'.$randStr.'.'.$bannerimage->getClientOriginalExtension();
@@ -37,8 +36,10 @@ class HomebannerController extends Controller
                 $bannerimage->move($destinationPathbanner,$fileNamebanner);
                 $homebanner = homebanner::where('id',1)->first();
                 $homebanner->bannerimage = $destinationPathbanner.'/'.$fileNamebanner;
+                $homebanner->type = $request->media;
                 $homebanner->save();
             }
+          
             if($request->image){ 
                 $image = $request->image;
                 $randStr = substr($string, 0, 5);
@@ -62,28 +63,30 @@ class HomebannerController extends Controller
                 'bannerimage' => 'required',
                 'image' => 'required',
             ]);
-
-            $bannerimage = $request->bannerimage;
+            $homebanner = new homebanner();
+            if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+            $bannerimage = $request->file('bannerimage') ?? $request->file('bannervideo');
             $randStr = substr($string, 0, 5);
             $currYr = date("Y");
             $fileNamebanner = time().'_'.$randStr.'.'.$bannerimage->getClientOriginalExtension();
             $destinationPathbanner = 'stalliondetails/'.$currYr;
             $bannerimage->move($destinationPathbanner,$fileNamebanner);
-
+            $homebanner->bannerimage = $destinationPathbanner.'/'.$fileName;
+            $homebanner->type = $request->media;
+            
             $image = $request->image;
             $randStr = substr($string, 0, 5);
             $currYr = date("Y");
             $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
             $destinationPath = 'stalliondetails/'.$currYr;
             $image->move($destinationPath,$fileName);
-
-            $homebanner = new homebanner();
+            
             $homebanner->text = $request->text; 
-            $homebanner->bannerimage = $destinationPathbanner.'/'.$fileName;
             $homebanner->image = $destinationPath.'/'.$fileName;
             $homebanner->save(); 
             toast('homebanner created  successfully!','success');
             return back(); 
+            }
         }
         }
         catch (\Exception $e){

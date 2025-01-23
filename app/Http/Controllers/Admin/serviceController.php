@@ -31,7 +31,7 @@ class serviceController extends Controller
             $count++;
         }
         return $slug;
-    }
+    }   
     public function store(Request $request)
     {
         // try { 
@@ -43,7 +43,7 @@ class serviceController extends Controller
                     $currYr = date("Y");
                     $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
                     $destinationPathbanner = 'Service/'.$currYr;
-                    $image->move($destinationPathbanner,$fileName);
+                    $image->move($destinationPathbanner,$fileName); 
                     $service->image = $destinationPathbanner.'/'.$fileName;
                 }
                 if($request->serviceimage){ 
@@ -171,12 +171,10 @@ class serviceController extends Controller
         return view('admin.service.more-information.index')
         ->with('servicedetails',$servicedetails);
     }
-
     public function moreInformationCreate()
     {
         return view('admin.service.more-information.create');
     }  
-
     public function serviceMoreInformationStore(Request $request)
     {
         try { 
@@ -208,7 +206,6 @@ class serviceController extends Controller
 
         }
     }
-
     public function serviceBanner()
     {
         $banner=DB::table('servicebanners')->first();
@@ -223,8 +220,8 @@ class serviceController extends Controller
             $count=servicebanner::count();
             if($count>0)
             {
-                if($request->image){ 
-                    $image = $request->image;
+                if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -236,15 +233,16 @@ class serviceController extends Controller
                 } 
                 $aboutbanner = servicebanner::first();
                 $aboutbanner->heading = $request->heading; 
-                $aboutbanner->text = $request->text; 
+                $aboutbanner->text = $request->text;
+                $aboutbanner->type = $request->media;  
                 $aboutbanner->save();
                 toast('banner updated  successfully!','success');
                 return back(); 
             }
             else
             {
-                if($request->image){ 
-                $image = $request->image;
+            if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                 $randStr = substr($string, 0, 5);
                 $currYr = date("Y");
                 $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -253,7 +251,7 @@ class serviceController extends Controller
     
                 $aboutbanner = new servicebanner();
                 $aboutbanner->heading = $request->heading;  
-                $aboutbanner->text = $request->text; 
+                $aboutbanner->type = $request->media;
                 $aboutbanner->image = $destinationPath.'/'.$fileName;
                 $aboutbanner->save(); 
                 toast('banner created  successfully!','success');
@@ -274,5 +272,4 @@ class serviceController extends Controller
             }
     }
 
-   
 }

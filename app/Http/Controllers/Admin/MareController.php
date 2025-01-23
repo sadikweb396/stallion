@@ -34,8 +34,10 @@ class MareController extends Controller
             $string = str_shuffle("abcdefghijklmnopqrstwxyz");
             $count=maredetails::where('id',1)->count();
             if($count>0){
-                if($request->banner_image){ 
-                    $bannerimage = $request->banner_image;
+                // if($request->banner_image){ 
+                //     $bannerimage = $request->banner_image;
+                if($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $bannerimage = $request->file('bannerimage') ?? $request->file('bannervideo');
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileNamebanner = time().'_'.$randStr.'.'.$bannerimage->getClientOriginalExtension();
@@ -43,6 +45,7 @@ class MareController extends Controller
                     $bannerimage->move($destinationPathbanner,$fileNamebanner);
                     $stalliondetails = maredetails::where('id',1)->first();
                     $stalliondetails->banner_image = $destinationPathbanner.'/'.$fileNamebanner;
+                    $stalliondetails->type = $request->media;
                     $stalliondetails->save();
                 }
         
@@ -58,8 +61,8 @@ class MareController extends Controller
                     return back();      
                 
             }else{
-                if($request->banner_image){
-                    $bannerimage = $request->banner_image;
+                if($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $bannerimage = $request->file('bannerimage') ?? $request->file('bannervideo');
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileNamebanner = time().'_'.$randStr.'.'.$bannerimage->getClientOriginalExtension();
@@ -75,10 +78,13 @@ class MareController extends Controller
                     $stalliondetails->banner_pargaraph = $request->banner_text;
                     $stalliondetails->banner_image = $destinationPathbanner.'/'.$fileName;
                     $stalliondetails->image = $destinationPath.'/'.$fileName;
+                    $stalliondetails->type = $request->media;
                     $stalliondetails->save(); 
                     toast('mare details create  successfully!','success');
                     return back();    
-                }    
+                }
+                Alert::error('Error', 'Banner image required');
+                return back();    
             }
             }catch (\Exception $e){
             Alert::error('Error', 'Error mare details create: ' . $e->getMessage());

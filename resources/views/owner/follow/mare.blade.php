@@ -10,6 +10,19 @@
      
       color: #0056b3; 
     }
+
+    .category_badeg{
+    position: absolute;
+    top: 0;
+    color: white;
+    background-color: #98806d;
+    width: 100%;
+    z-index: 999;
+    padding: 6px;
+}
+.category_badeg marquee{
+    font-size: 20px;
+}
   </style>
     <div class="dash_body_inner">
         <div class="our_stallions stallions_details">
@@ -38,9 +51,9 @@
                                     <a href="{{ url('single-stallion/'.$follow->stallion->slug) }}" class="btn btn_i">View Mare</a>
                                 </div>
                             </div>
-                            <div class="category_badegs">
+                            <div class="category_badeg">
                                 <p>
-                                    <a href="javascript:void(0)">Mares</a>
+                                     <marquee behavior="smoth" direction="left">Mares</marquee>
                                 </p>
                             </div>
                         </a>

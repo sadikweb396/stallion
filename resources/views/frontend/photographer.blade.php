@@ -2,20 +2,24 @@
 @section('content')
     <!-- banner section -->
     <section
-    class="hero_banner_m d-flex align-items-center"
-    style="background-image: url(@if($photographerbanner){{$photographerbanner->image }} @endif);" >
+      class="hero_banner_m d-flex align-items-center stallions-banner"
+      style="background-image: url(@if($photographerbanner){{ $photographerbanner->image }} @endif);" >
+      <video autoplay loop muted playsinline class="background-video">
+        <source src="{{url($photographerbanner->image)}}" type="video/mp4">
+      </video>
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <div class="hero_banner_i">
               <div class="banner_heading-m text-center mb20">
-              <h1>@if($photographerbanner){{$photographerbanner->heading}}@endif</h1>
+                <h1>@if($photographerbanner){{$photographerbanner->heading}}@endif</h1>
               </div>
+              
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </section>  
     <!-- banner section end-->
     <!-- photographer listing -->
     <section class="grapher_m pdb100">

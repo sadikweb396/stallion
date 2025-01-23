@@ -1,3 +1,4 @@
+
 @extends('layouts.owner.app')
 @section('content')
 <div class="dash_body_inner">
@@ -19,24 +20,57 @@
                           <div class="stallions_d_form mb50">
                           <form method="post"action="{{route('admin.home-banner') }}"enctype='multipart/form-data'>
                             @csrf
+                            
+                            <div class="form_main">
+                              <div class="form-group">
+                                  <div class="radio-buttons" style="display: flex; gap: 40px; align-items: center;">
+                                      <label style="display: inline-flex; align-items: center;">
+                                          <input class="imgRadio" type="radio" name="media"value="image" onclick="toggleUploadSection('image')" @if($homebanner && $homebanner->type == 'image') checked @endif>
+                                          Image
+                                      </label>
+                                      <label style="display: inline-flex; align-items: center;">
+                                          <input class="vdoRadio" type="radio" name="media" value="video" onclick="toggleUploadSection('video')" @if($homebanner && $homebanner->type == 'video') checked  @endif >
+                                          Video
+                                      </label>
+                                  </div>
+                                    
+                                  <div class="imguploadSec" style="@if($homebanner && $homebanner->type == 'image') display:block; @else display: none; @endif">
+                                      <div class="imageUpload" style="display: block;">
+                                          <label for="bannerimage">Background Image</label>
+                                          <input type="file" name="bannerimage" id="bannerimage" onchange="bannerimagepreviews(event)" accept="image/*">
+                                          @if($homebanner && $homebanner->type == 'image')
+                                          <img id="bannerimagepreview" src="@if($homebanner){{url($homebanner->bannerimage)}}@endif" alt="Image Preview" style="width:200px;height:200px;margin-top:10px;">
+                                          @else
+                                          <img id="bannerimagepreview" src="{{url('assets/frontend/image/dummy.jpg')}}" alt="Image Preview" style="width:200px;height:200px;margin-top:10px;">
+                                          @endif
+                                        </div>
+                                  </div>
+                                                                                                                          
+                                <div class="vdouploadSec"style="@if($homebanner && $homebanner->type == 'video') display:block; @else display: none; @endif">
+                                    <div class="vdoUpload" style="display: block;">
+                                        <label for="bannervideo">Background Video</label>
+                                        <input type="file" name="bannervideo" id="bannervideo" onchange="bannervideopreviews(event)" accept="video/*">
+                                        <video class="bannervideopreview" controls loop muted  style="width:200px;height:200px;margin-top:10px;">
+                                          <source src="@if($homebanner){{url($homebanner->bannerimage)}}@endif" type="video/mp4">
+                                        </video>
+                                    </div>
+                                  </div>
+                            </div>
+
+
+                          </div>
+
                               <div class="form_main">
                                 <div class="form-group">
-                                  <label for="name">Background Image </label>
-                                  <input type="file"name="bannerimage"id="bannerimage"onchange="bannerimagepreviews(event)">
-                                  <img id="bannerimagepreview" src="{{url($homebanner->bannerimage)}}" alt="Image Preview" style="max-width: 300px;">
-                                </div>
-                              </div>
-                              <div class="form_main">
-                                <div class="form-group">
-                                  <label for="name">Image</label>
+                                  <label for="name">Logo</label>
                                   <input type="file"name="image"id="imageUpload"onchange="previewImage(event)">
-                                  <img id="imagePreview" src="{{url($homebanner->image)}}" alt="Image Preview" style="max-width: 300px;">
+                                  <img id="imagePreview" src="@if($homebanner){{url($homebanner->image)}}@endif" alt="Image Preview" style="max-width: 300px;">
                                 </div>
                               </div>
                               <div class="form_main">
                                 <div class="form-group">
                                   <label for="name">Text</label>
-                                  <textarea name="text"value="{{$homebanner->text}}">@if($homebanner){{$homebanner->text}}@endif</textarea>
+                                  <textarea name="text">@if($homebanner){{$homebanner->text}}@endif</textarea>
                                 </div>
                               </div>                   
                               <div class="update_btn text-right mb50">
@@ -52,4 +86,17 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection 
+
+<script>
+  function toggleUploadSection(type) {
+    document.querySelector(".imguploadSec").style.display = "none";
+    document.querySelector(".vdouploadSec").style.display = "none";
+
+    if (type === "image") {
+        document.querySelector(".imguploadSec").style.display = "block";
+    } else if (type === "video") {
+        document.querySelector(".vdouploadSec").style.display = "block";
+    }
+}
+</script>

@@ -5,6 +5,9 @@
     <section
       class="hero_banner_m d-flex align-items-center stallions-banner"
       style="background-image: url(@if($banner){{ $banner->image }} @endif);" >
+      <video autoplay loop muted playsinline class="background-video">
+        <source src="{{url($banner->image)}}" type="video/mp4">
+      </video>
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -13,7 +16,9 @@
                 <h1>@if($banner){{$banner->heading}}@endif</h1>
               </div>
               <div class="para_banner text-center">
-                <p>@if($banner){{$banner->text}}@endif</p>
+                <p>
+                @if($banner){!!$banner->text!!}@endif
+                </p>
               </div>
             </div>
           </div>
@@ -187,7 +192,7 @@
         </div>
       </div>
       <!-- end -->
-        <!-- section for advertisements start-->
+    <!-- section for advertisements start-->
     <section
       id="categorySlider"
       class="advertisement_sec background-img categorySlider"
@@ -201,21 +206,28 @@
             >
             @foreach($advertisements as $advertisement)
               <div class="item">
-                <a href="{{url($advertisement->link)}}"target="_blank">
-                  <div
-                    class="catimg d-flex align-items-end justify-content-center"
-                    style="background-image: url({{$advertisement->image }});" >
+                <a href="{{ url($advertisement->link) }}" target="_blank">
+                  <div class="catimg d-flex align-items-end justify-content-center"
+                      @if($advertisement->type === 'image') 
+                        style="background-image: url('{{ asset($advertisement->image) }}');"
+                      @endif>
+
+                    @if($advertisement->type === 'video')
+                      <video autoplay loop muted playsinline width="100%" controls>
+                        <source src="{{ asset($advertisement->image) }}" type="video/mp4">
+                       
+                      </video>
+                    @endif
                   </div>
                 </a>
-              </div>  
-            @endforeach 
+              </div>
+            @endforeach
             </div>
           </div>
         </div>
       </div>
     </section>
     <!-- section for advertisements end-->
-
     <!-- policy start -->
     <section class="about_stallions pdb100">
       <div class="container">

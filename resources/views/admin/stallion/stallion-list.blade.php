@@ -39,11 +39,40 @@
                               </div>
                               <div class="form_main">
                                 <div class="form-group">
-                                  <label for="name">Banner image</label>
-              
-                                  <input type="file"name="banner_image"id="imageUpload"onchange="previewImage(event)">
-                                  <img id="imagePreview" src="@if($stalliondetails){{url($stalliondetails->banner_image)}}@endif" alt="Image Preview" style="max-width: 300px;">
-                            
+
+                                  <div class="radio-buttons" style="display: flex; gap: 40px; align-items: center;">
+                                      <label style="display: inline-flex; align-items: center;">
+                                          <input class="imgRadio" type="radio" name="media"value="image" onclick="toggleUploadSection('image')" @if($stalliondetails && $stalliondetails->type == 'image') checked @endif>
+                                          Image
+                                      </label>
+                                      <label style="display: inline-flex; align-items: center;">
+                                          <input class="vdoRadio" type="radio" name="media" value="video" onclick="toggleUploadSection('video')" @if($stalliondetails && $stalliondetails->type == 'video') checked  @endif >
+                                          Video
+                                      </label>
+                                  </div>
+                                <div class="imguploadSec" style="@if($stalliondetails && $stalliondetails->type == 'image') display:block; @else display: none; @endif">
+                                      <div class="imageUpload" style="display: block;">
+                                          <label for="bannerimage">Background Image</label>
+                                          <input type="file" name="bannerimage" id="bannerimage" onchange="bannerimagepreviews(event)" accept="image/*">
+                                          @if($stalliondetails && $stalliondetails->type == 'image')
+                                          <img id="bannerimagepreview" src="@if($stalliondetails){{url($stalliondetails->banner_image)}}@endif" alt="Image Preview" style="width:200px;height:200px;margin-top:10px;">
+                                          @else
+                                          <img id="bannerimagepreview" src="{{url('assets/frontend/image/dummy.jpg')}}" alt="Image Preview" style="width:200px;height:200px;margin-top:10px;">
+                                          @endif
+                                        </div>
+                                  </div>
+                                                                                                                          
+                                 <div class="vdouploadSec"style="@if($stalliondetails && $stalliondetails->type == 'video') display:block; @else display: none; @endif">
+                                    <div class="vdoUpload" style="display: block;">
+                                        <label for="bannervideo">Background Video</label>
+                                        <input type="file" name="bannervideo" id="bannervideo" onchange="bannervideopreviews(event)" accept="video/*">
+                                        <video class="bannervideopreview" controls loop muted  style="width:200px;height:200px;margin-top:10px;">
+                                          <source src="@if($stalliondetails){{url($stalliondetails->banner_image)}}@endif" type="video/mp4">
+                                        </video>
+                                    </div>
+                                  </div>
+
+
                                 </div>
                               </div>
                               <div class="form_main">
@@ -85,7 +114,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> 
           </div>
           <script>
         // Initialize CKEditor
@@ -106,8 +135,18 @@
                 console.error(error);
             });
           
+            function toggleUploadSection(type) {
+            document.querySelector(".imguploadSec").style.display = "none";
+            document.querySelector(".vdouploadSec").style.display = "none";
 
+            if (type === "image") {
+                document.querySelector(".imguploadSec").style.display = "block";
+            } else if (type === "video") {
+                document.querySelector(".vdouploadSec").style.display = "block";
+            }
+        }
     </script>
+   
   @endsection
 
- 
+    

@@ -209,7 +209,8 @@ $(document).ready(function(){
           }
         }
 
-</script>    
+</script>  
+  
   @include('sweetalert::alert')
 </body>
 </html>

@@ -28,8 +28,8 @@ class AdvertisementsController extends Controller
         try { 
             $string = str_shuffle("abcdefghijklmnopqrstwxyz");
           
-                if($request->image){ 
-                    $image = $request->image;
+            if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -39,11 +39,17 @@ class AdvertisementsController extends Controller
                     $Advertisement = new advertisement();
                     $Advertisement->link = $request->link; 
                     $Advertisement->page = $request->page;
+                    $Advertisement->type = $request->media;
                     $Advertisement->image = $destinationPathbanner.'/'.$fileName;
                     $Advertisement->save(); 
                     toast('Advertisement create  successfully!','success');
                     return redirect('admin/advertisement');
 
+                }
+                else
+                {
+                    Alert::error('Image required');
+                    return back();
                 }
         }
          catch (\Exception $e){
@@ -51,7 +57,7 @@ class AdvertisementsController extends Controller
             return back();
 
         }
-    }
+    }  
     public function edit($id)
     {
         $edit=advertisement::find($id);
@@ -64,15 +70,16 @@ class AdvertisementsController extends Controller
            $id=$request->id;
             $string = str_shuffle("abcdefghijklmnopqrstwxyz");
                  
-                if($request->image){ 
+            if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $image = $request->file('bannerimage') ?? $request->file('bannervideo');
                     $Advertisement =  advertisement::find($id);
-                    $image = $request->image;
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
                     $destinationPathbanner = 'Advertisement/'.$currYr;
                     $image->move($destinationPathbanner,$fileName);
                     $Advertisement->image = $destinationPathbanner.'/'.$fileName;
+                    $Advertisement->type = $request->media;
                     $Advertisement->save(); 
                 }
                     $Advertisement =  advertisement::find($id);

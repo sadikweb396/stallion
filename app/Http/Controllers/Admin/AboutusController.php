@@ -195,8 +195,8 @@ class AboutusController extends Controller
             $count=aboutusbanner::count();
             if($count>0)
             {
-                if($request->image){ 
-                    $image = $request->image;
+                if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -204,6 +204,7 @@ class AboutusController extends Controller
                     $image->move($destinationPath,$fileName);
                     $aboutbanner = aboutusbanner::first();
                     $aboutbanner->image = $destinationPath.'/'.$fileName;
+                    $aboutbanner->type=$request->media;
                     $aboutbanner->save();
                 } 
                 $aboutbanner = aboutusbanner::first();
@@ -212,11 +213,11 @@ class AboutusController extends Controller
                 $aboutbanner->save();
                 toast('banner updated  successfully!','success');
                 return back(); 
-            }
+            } 
             else
             {
-                if($request->image){ 
-                $image = $request->image;
+               if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                 $randStr = substr($string, 0, 5);
                 $currYr = date("Y");
                 $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -227,6 +228,7 @@ class AboutusController extends Controller
                 $aboutbanner->heading = $request->heading;  
                 $aboutbanner->text = $request->text; 
                 $aboutbanner->image = $destinationPath.'/'.$fileName;
+                $aboutbanner->type=$request->media;
                 $aboutbanner->save(); 
                 toast('banner created  successfully!','success');
                 return back(); 

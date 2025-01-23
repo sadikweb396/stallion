@@ -51,7 +51,6 @@
       </div>
     </section>
     <!-- end -->
- 
     <!-- Services Plans start -->
     <section id="plans_pricing" class="">
       <div class="heading_sec">

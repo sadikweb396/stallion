@@ -8,10 +8,13 @@ use App\Models\stallion;
 use App\Models\category;
 use App\Models\stallionpagedetails;
 use App\Models\stallionimage;
+use App\Models\semencontract;
+use App\Models\vetdetail;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use DB;
 class StallionController extends Controller
 {
     public function __construct()
@@ -58,12 +61,12 @@ class StallionController extends Controller
     } 
     public function stallionListStore(Request $request)
     {
-        try { 
+        try {  
             $string = str_shuffle("abcdefghijklmnopqrstwxyz");
             $count=stallionpagedetails::where('id',1)->count();
             if($count>0){
-                if($request->banner_image){ 
-                    $bannerimage = $request->banner_image;
+                if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $bannerimage = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileNamebanner = time().'_'.$randStr.'.'.$bannerimage->getClientOriginalExtension();
@@ -71,6 +74,7 @@ class StallionController extends Controller
                     $bannerimage->move($destinationPathbanner,$fileNamebanner);
                     $stalliondetails = stallionpagedetails::where('id',1)->first();
                     $stalliondetails->banner_image = $destinationPathbanner.'/'.$fileNamebanner;
+                    $stalliondetails->type = $request->media;
                     $stalliondetails->save();
                 }
         
@@ -86,14 +90,15 @@ class StallionController extends Controller
                     return back();      
                 
             }else{
-                if($request->banner_image){ 
-                    $bannerimage = $request->banner_image;
+                if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $bannerimage = $request->file('bannerimage') ?? $request->file('bannervideo');
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileNamebanner = time().'_'.$randStr.'.'.$bannerimage->getClientOriginalExtension();
                     $destinationPathbanner = 'stalliondetails/'.$currYr;
                     $bannerimage->move($destinationPathbanner,$fileNamebanner);
-
+                  
+                    
                     $stalliondetails = new stallionpagedetails();
                     $stalliondetails->heading1 = $request->heading_first; 
                     $stalliondetails->heading2 = $request->heading_second;
@@ -101,12 +106,17 @@ class StallionController extends Controller
                     $stalliondetails->paragraph2 = $request->second_paragraph;
                     $stalliondetails->banner_heading = $request->banner_heading;
                     $stalliondetails->banner_pargaraph = $request->banner_text;
-                    $stalliondetails->banner_image = $destinationPathbanner.'/'.$fileName;
+                    $stalliondetails->banner_image = $destinationPathbanner.'/'.$fileNamebanner;
+                    $stalliondetails->type = $request->media;
+                  
                     $stalliondetails->save(); 
                     toast('stallion details create  successfully!','success');
                     return back(); 
-                }       
-            }
+                 }
+                 Alert::error('Error', 'Banner image required');
+                 return back();
+                 }        
+            
         }
          catch (\Exception $e){
             Alert::error('Error', 'Error stallion details create: ' . $e->getMessage());
@@ -124,9 +134,11 @@ class StallionController extends Controller
   public function stallionView($id)
   {
          $stallion=Stallion::where('id',$id)->first();
+         $progeniedetails=DB::table('progenies')->where('stallion_id',1)->get();
          $stalliondata='';
          return view('admin.stallion.view')
          ->with('stalliondata',$stalliondata)
+         ->with('progeniedetails',$progeniedetails)
          ->with('stallion',$stallion);
   }
   public function popupdata(Request $request)
@@ -191,11 +203,9 @@ class StallionController extends Controller
   public function getstalliondetails($id)
   {
         $data = stallion::find($id);
-
         if (!$data) {
             return response()->json(['error' => 'Data not found'], 404);
         }
-
         return response()->json($data);
   }
 
@@ -252,5 +262,51 @@ class StallionController extends Controller
     $data = stallion::find($id);
 
     return response()->json($data);
+  }
+
+  public function updateStallionSemenContact(Request $request)
+  {
+        $semenData = semencontract::where('stallion_id',$request->id)->first(); 
+        $semenData->chilled_semen = $request->chilled_semen;
+        $semenData->chilled_semen_lfg = $request->chilled_semen_lfg;
+        $semenData->chilled_semen_price = $request->chilled_semen_price;
+        $semenData->frozen_semen = $request->frozen_semen;
+        $semenData->frozen_semen_lfg = $request->frozen_semen_lfg;
+        $semenData->frozen_semen_price = $request->frozen_semen_price;
+        $semenData->live_cover = $request->live_cover;
+        $semenData->live_cover_lfg = $request->live_cover_lfg;
+        $semenData->live_cover_price = $request->live_cover_price;
+        $semenData->save();  
+
+        $vetDetail = vetdetail::where('stallion_id',$request->id)->first();
+        $vetDetail->name_of_clinic = $request->clinicname;
+        $vetDetail->address = $request->address;
+        $vetDetail->vet_name = $request->vet_name;
+        $vetDetail->phone = $request->phone;
+        $vetDetail->email = $request->email;
+        $vetDetail->clinic_number = $request->clinic_number;
+        $vetDetail->save();
+
+  }
+ 
+  public function getSemenDetails($id)
+  {
+        // Get data from vetdetail
+        $vetDetail = vetdetail::where('stallion_id', $id)->first();
+        // Get data from semencontract
+        $semenContract = semencontract::where('stallion_id', $id)->first();
+        // Check if neither of the data is found
+        if (!$vetDetail && !$semenContract) {
+                return response()->json(['error' => 'Data not found'], 404);
+        }
+       // Prepare the response data
+            $data = [
+                'vetdetail' => $vetDetail,
+                'semencontract' => $semenContract
+            ];
+
+            // Return the response as JSON
+            return response()->json($data);
+
   }
 } 

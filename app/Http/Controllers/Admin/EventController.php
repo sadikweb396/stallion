@@ -35,9 +35,9 @@ class EventController extends Controller
     }
     public function store(Request $request)
     {   
-        try {  
+         try {  
             $string = str_shuffle("abcdefghijklmnopqrstwxyz");
-            if($request->image){   
+          
                 $start_date = $request->start_date;
                 $date = new DateTime($start_date);
                 $year = $date->format('Y');  
@@ -49,10 +49,12 @@ class EventController extends Controller
                 $eventdate->month =$month;
                 $eventdate->year =$year;
                 $eventdate->date =$start_date;
-                $eventdate->event_location =$request->event_location;
                 $eventdate->event_type =$request->event_type;
-                $eventdate->save();  
-                
+                $eventdate->zone = $request->zone;
+                $eventdate->state = $request->state;
+                $eventdate->save(); 
+                $event = new event();
+                if($request->image){   
                 $image = $request->image;
                 $randStr = substr($string, 0, 5);
                 $currYr = date("Y");
@@ -60,16 +62,23 @@ class EventController extends Controller
 
                 $destinationPath = 'stallion/'.$currYr;
                 $image->move($destinationPath,$fileName);
-                $event = new event();
                 $event->image = $destinationPath.'/'.$fileName;
+                }
                 $event->event_name = $request->event_name;
                 $event->event_description = $request->event_description;
-                $event->event_location = $request->event_location;
+                $event->address = $request->address;
                 $event->start_date = $request->start_date;
                 $event->end_date = $request->end_date;
                 $event->association_hosting_event = $request->association_hosting_event;
                 $event->mark_event_prestigious = $request->Prestigious; 
-                $event->event_type = $request->event_type;   
+                $event->event_type = $request->event_type;  
+                $event->zone = $request->zone;
+                $event->state = $request->state; 
+                $event->phone = $request->phone; 
+                $event->email = $request->email; 
+                $event->websitelink = $request->websitelink; 
+                $event->contact = $request->contact; 
+                $event->nomination_date = $request->nomination_date;
                 $event->save();   
                 
                 $linkNames = $request->linkname;
@@ -87,12 +96,12 @@ class EventController extends Controller
                 } 
                toast('Event create successfully!','success');
                return redirect('admin/event');
-            }
+            
                 
-        }   catch (\Exception $e) {
-              Alert::error('Error', 'Error Event create: ' . $e->getMessage());
-              return redirect()->back();
-         }
+         }   catch (\Exception $e) {
+               Alert::error('Error', 'Error Event create: ' . $e->getMessage());
+               return redirect()->back();
+          }
     }
     public function edit($id)
     {
@@ -114,8 +123,9 @@ class EventController extends Controller
                 $eventdate->month =$month;
                 $eventdate->year =$year;
                 $eventdate->date =$start_date;
-                $eventdate->event_location =$request->event_location;
                 $eventdate->event_type =$request->event_type;
+                $eventdate->zone = $request->zone;
+                $eventdate->state = $request->state;
                 $eventdate->save();         
                 if($request->image){
                
@@ -133,9 +143,9 @@ class EventController extends Controller
                 $event =  Event::where('id',$request->id)->first(); 
                 $event->event_name = $request->event_name;
                 $event->event_description = $request->event_description;
-                $event->event_location = $request->event_location;
                 $event->start_date = $request->start_date;
                 $event->end_date = $request->end_date;
+                $event->address = $request->address;
                 $event->association_hosting_event = $request->association_hosting_event;
                 $event->event_link = $request->event_link;
                 $event->link_to_program = $request->link_to_program;
@@ -143,7 +153,14 @@ class EventController extends Controller
                 $event->facebook_link = $request->facebook_link;
                 $event->link_to_nominate = $request->link_to_nominate;
                 $event->mark_event_prestigious = $request->Prestigious; 
-                $event->event_type = $request->event_type;   
+                $event->event_type = $request->event_type;
+                $event->zone = $request->zone;
+                $event->state = $request->state; 
+                $event->phone = $request->phone; 
+                $event->email = $request->email; 
+                $event->websitelink = $request->websitelink; 
+                $event->contact = $request->contact; 
+                $event->nomination_date = $request->nomination_date;   
                 $event->save();  
                 $linkNames = $request->linkname;
                 $links = $request->link;
@@ -182,8 +199,8 @@ class EventController extends Controller
             $count=eventbanner::count();
             if($count>0)
             {
-                if($request->image){ 
-                    $image = $request->image;
+                if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -191,6 +208,7 @@ class EventController extends Controller
                     $image->move($destinationPath,$fileName);
                     $eventbanner = eventbanner::first();
                     $eventbanner->image = $destinationPath.'/'.$fileName;
+                    $eventbanner->type=$request->media;
                     $eventbanner->save();
                 } 
                 $eventbanner = eventbanner::first();
@@ -202,8 +220,8 @@ class EventController extends Controller
             }
             else
             {
-                if($request->image){ 
-                $image = $request->image;
+                if($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                 $randStr = substr($string, 0, 5);
                 $currYr = date("Y");
                 $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -213,6 +231,7 @@ class EventController extends Controller
                 $eventbanner = new eventbanner();
                 $eventbanner->heading = $request->heading;  
                 $eventbanner->image = $destinationPath.'/'.$fileName;
+                $eventbanner->type=$request->media;
                 $eventbanner->save(); 
                 toast('banner created  successfully!','success');
                 return back(); 
@@ -304,3 +323,4 @@ class EventController extends Controller
     }
 
 }
+

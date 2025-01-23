@@ -18,9 +18,15 @@
 .stallion_para ul li{
   color:black;
 } 
+
+
 </style>
-<section class="hero_banner_m d-flex align-items-center"
-      style="background-image: url(@if($banner){{ $banner->bannerimage }} @endif);" >
+
+<section class="hero_banner_m  {{ $banner->type }} d-flex align-items-center"
+      style="background: url(@if($banner){{ $banner->bannerimage }} @endif);" >
+      <video autoplay loop muted playsinline class="background-video">
+         <source src="{{url($banner->bannerimage)}}" type="video/mp4">
+      </video>
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -49,6 +55,8 @@
         </a>
       </div>
 </section>
+
+
     <!-- banner section end-->
     <!-- Category Slider start -->
     <section id="categorySlider" class="pdb100 categorySlider">
@@ -494,16 +502,8 @@
       @endif
     </section>
     <!-- Owner pricing plan end -->
-    <!-- Owner pricing plan end -->
-    <!-- section for advertisements start-->
-    <!-- <section
-      class="advertisement_sec background-img pdb100"
-      style="background-image: url('{{ asset('assets/frontend/image/Group 28.png') }}');"
-    ></section> -->
-
     
-    <!-- section for advertisements end-->
-<!-- section for advertisements start-->
+   <!-- section for advertisements start-->
     <section
       id="categorySlider"
       class="advertisement_sec background-img categorySlider"
@@ -517,14 +517,22 @@
             >
             @foreach($advertisements as $advertisement)
               <div class="item">
-                <a href="{{url($advertisement->link)}}"target="_blank">
-                  <div
-                    class="catimg d-flex align-items-end justify-content-center"
-                    style="background-image: url({{$advertisement->image }});" >
+                <a href="{{ url($advertisement->link) }}" target="_blank">
+                  <div class="catimg d-flex align-items-end justify-content-center"
+                      @if($advertisement->type === 'image') 
+                        style="background-image: url('{{ asset($advertisement->image) }}');"
+                      @endif>
+
+                    @if($advertisement->type === 'video')
+                      <video autoplay loop muted playsinline width="100%" controls>
+                        <source src="{{ asset($advertisement->image) }}" type="video/mp4">
+                        
+                      </video>
+                    @endif
                   </div>
                 </a>
-              </div>  
-            @endforeach 
+              </div>
+            @endforeach
             </div>
           </div>
         </div>
@@ -667,4 +675,5 @@
         </div>
       </div>
     </section>
+    
 @endsection

@@ -17,14 +17,17 @@ class EventController extends Controller
      public function event(Request $request)
      {
          $query = eventdate::orderBy('date', 'desc');
-         $eventdates = $query->select('year','month','day','date')->distinct()->paginate(1);
-         $eventcount = $query->select('day')->distinct('day')->count();
+         $eventdates = $query->select('year','month','day','date')->distinct()->paginate(30);
+         $eventcounts = $query->select('day')->distinct('day')->count();
+         $result = $eventcounts / 30;
+         $eventcount=ceil($result);
+        
          $event='';
   
       //   $eventdates = Eventdate::orderBy('date','desc')->paginate(1);
         if ($request->ajax()) {
          $query = eventdate::orderBy('date','desc');
-         $eventdates = $query->select('year','month','day','date')->distinct()->paginate(1);
+         $eventdates = $query->select('year','month','day','date')->distinct()->paginate(30);
          return view('frontend.event-list')
         ->with('eventdates',$eventdates);
        }
@@ -38,7 +41,7 @@ class EventController extends Controller
        ->with('eventinformation',$eventinformation)
        ->with('advertisements',$advertisements)
        ->with('event',$event)
-       ->with('eventdates',$eventdates);
+       ->with('eventdates',$eventdates);  
      }
      public function eventDay($day)
      {
@@ -58,7 +61,8 @@ class EventController extends Controller
      {
          $month = $request->month;
          $year = $request->year;
-         $eventLocation = $request->event_location;
+         $zone = $request->zone;
+         $state =$request->state;
          $eventType = $request->event_type;
 
          if ($request->ajax()) {
@@ -76,16 +80,21 @@ class EventController extends Controller
                   $query->where('event_type', $eventType);
             }
             
-            if ($eventLocation) {
-               $query->where('event_location', $eventLocation);
+            if ($zone) {
+               $query->where('zone', $zone);
             }
 
-            $eventdates = $query->select('year','month','day','date')->distinct()->paginate(1);
+            if ($state) {
+               $query->where('state', $state);
+            }
+
+            $eventdates = $query->select('year','month','day','date')->distinct()->paginate(30);
 
             return view('frontend.event-list')
                ->with('month', $month)
                ->with('year', $year)
-               ->with('eventLocation',$eventLocation)
+               ->with('zone',$zone)
+               ->with('state',$state)
                ->with('eventType',$eventType)
                ->with('eventdates', $eventdates);
             }
@@ -99,12 +108,18 @@ class EventController extends Controller
             if ($eventType) {
                   $query->where('event_type', $eventType);
             }        
-            if ($eventLocation) {
-               $query->where('event_location', $eventLocation);
+            if ($zone) {
+               $query->where('zone', $zone);
+            }
+            if ($state) {
+               $query->where('state', $state);
             }
             $eventcounts = $query->select('year','month','day','date')->distinct()->get();  
-            $eventdates = $query->select('month','day','date','year')->distinct()->paginate(1);
-            $eventcount=$eventcounts->count();
+            $eventdates = $query->select('month','day','date','year')->distinct()->paginate(30);
+            $eventcountdata=$eventcounts->count();
+
+            $result = $eventcountdata / 30;
+            $eventcount=ceil($result);
 
             $eventbanner=eventbanner::first();
             $advertisements=advertisement::select('image','link')->where('page','event')->get();
@@ -113,7 +128,8 @@ class EventController extends Controller
             return view('frontend.event')
                ->with('month', $month)
                ->with('year', $year)
-               ->with('eventLocation',$eventLocation)
+               ->with('zone',$zone)
+               ->with('state',$state)
                ->with('eventType',$eventType)
                ->with('eventcount',$eventcount)
                ->with('eventdates', $eventdates)

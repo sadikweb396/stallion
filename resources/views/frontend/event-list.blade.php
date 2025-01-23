@@ -54,12 +54,17 @@
                     @php
                     $eventsQuery = DB::table('events')->where('start_date', $eventdate->date);
 
-                    if ($eventLocation) {
-                        $eventsQuery->where('event_location', $eventLocation);
+                    if ($zone) {
+                      
+                        $eventsQuery->where('zone', $zone);
                     }
 
                     if ($eventType) {
                         $eventsQuery->where('event_type', $eventType);
+                    }
+
+                    if ($state) {
+                        $eventsQuery->where('state', $state);
                     }
 
                     $events = $eventsQuery->get();
@@ -107,7 +112,7 @@
                                 <i class="fa-solid fa-location-dot"></i>
                               </span>
                               <span>
-                                {{$event->event_location}}
+                                {{$event->address}}
                               </span>
                             </p>
                           </div>
@@ -148,12 +153,16 @@
                     @php
                     $eventsQuery = DB::table('events')->where('start_date', $eventdate->date);
 
-                    if ($eventLocation) {
-                        $eventsQuery->where('event_location', $eventLocation);
+                    if ($zone) {
+                        $eventsQuery->where('zone', $zone);
                     }
 
                     if ($eventType) {
                         $eventsQuery->where('event_type', $eventType);
+                    }
+
+                    if ($state) {
+                        $eventsQuery->where('state', $state);
                     }
 
                     $events = $eventsQuery->get();
@@ -188,7 +197,7 @@
                                 <i class="fa-solid fa-location-dot"></i>
                               </span>
                               <span>
-                              {{$event->event_location}}
+                              {{$event->address}}
                               </span>
                             </p>
                           </div>

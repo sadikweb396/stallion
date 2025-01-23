@@ -84,15 +84,15 @@
                     </marquee>
                   </div>
                   @endif
-              <a href="{{ url('single-stallion', $stallion->name) }}" aria-label="listing article">
-                  <div class="listing_title">
-                      <p>{{ $stallion->name }}</p>
-                  </div>
-              </a>
+                <a href="{{ url('single-stallion', $stallion->name) }}" aria-label="listing article">
+                    <div class="listing_title">
+                        <p>{{ $stallion->name }}</p>
+                    </div>
+                </a>
               <div class="" id="featured_stallions">
                   <div  class="featured_star_blank" >☆</div>
               </div>
-          </article>
+              </article>
                @endif
                 @endauth
                 @endforeach
@@ -107,7 +107,7 @@
 </section>
 
 
-      
+         
    
 
 

@@ -316,48 +316,6 @@ class StallionController extends Controller
 
     public function update(Request $request)
     {    
-        // try {
-           
-        //     $slug = Str::slug($request->name);
-        //     $slug = $this->getUniqueSlug($slug);
-        //     $id=$request->stallion_id;   
-        //     $stallion = Stallion::find($id);
-        //     $stallion->name = $request->name;  
-        //     $stallion->slug = $slug; 
-        //     $stallion->lifetime_story = $request->lifetimestory;
-        //     $stallion->performance_history= $request->performance_history;
-        //     $stallion->owner_story=$request->owner_story;
-        //     $stallion->lifetime_story=$request->lifetime_Story;
-        //     $stallion->height = $request->height;
-        //     $stallion->registration_details=$request->registration_details;
-        //     $stallion->professional_trainer=$request->professional_trainer;
-        //     $stallion->put_semen_available_from=$request->put_semen_available_from;
-        //     $stallion->current_performing_discipline=$request->current_performing_discipline;
-        //     $stallion->trainer_history=$request->trainer_history;
-        //     $stallion->bred_by=$request->bred_by;
-        //     $stallion->background_story=$request->background_story;
-        //     $stallion->first_foal_crop_year=$request->first_foal_crop_year;
-        //     $stallion->color=$request->color;
-        //     $stallion->stallion_heading=$request->stallion_heading;
-        //     $stallion->date_of_birth=$request->date_of_birth;
-        //     $stallion->save();
-        //     $id=$stallion->id;
-        //     $updateCount=stallion::where('id',$stallion->id)->where('status',1)->count();
-        //     if($updateCount==1)
-        //     {
-        //         stallion::where('id',$stallion->id)->update([
-        //             'update_status' =>1,
-        //             'latest_update' => Carbon::now(),
-        //         ]);
-        //     }
-
-        //     toast('Stallion update successfully!','success');
-        //     return redirect()->route('owner.stallion',['id' => $stallion->slug]);
-        // } catch (\Exception $e) {
-        //     Alert::error('Error', 'Error updating stallion: ' . $e->getMessage());
-        //     return redirect()->back();
-        // }
-
         try {
             // Validate the request data
             $validator = Validator::make($request->all(), [

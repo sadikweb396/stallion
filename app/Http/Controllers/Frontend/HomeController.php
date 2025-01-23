@@ -31,7 +31,7 @@ class HomeController extends Controller
                 $query->orderBy('new_element','DESC');
             }])->where('status',1)->where('created_at','>=',$date)->where('payment_status','paid')->orderBy('id','DESC')->get();
 
-            $advertisements=advertisement::select('image','link')->where('page','home')->get();
+            $advertisements=advertisement::select('image','link','type')->where('page','home')->get();
 
             $progenyperformance=progenyperformance::first();
             $topside=topside::first();

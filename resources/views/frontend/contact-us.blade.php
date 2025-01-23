@@ -2,21 +2,24 @@
 @extends('layouts.frontend.app')
 @section('content')
    <!-- banner section -->
-   <section
+    <section
       class="hero_banner_m d-flex align-items-center stallions-banner"
       style="background-image: url(@if($banner){{ $banner->image }} @endif);" >
+      <video autoplay loop muted playsinline class="background-video">
+        <source src="{{url($banner->image)}}" type="video/mp4">
+      </video>
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <div class="hero_banner_i">
               <div class="banner_heading-m text-center mb20">
-                <h1>@if($banner){{ $banner->heading }} @endif</h1>
+                <h1>@if($banner){{$banner->heading}}@endif</h1>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </section> 
     <!-- banner section end-->
     <!-- contact Listing -->
     <section class="our_services_main pdb100">

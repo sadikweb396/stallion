@@ -23,7 +23,7 @@
             color: red; /* Color when the link is clicked */
         }
 </style>
-<section
+<section   
       class="hero_banner_m d-flex align-items-center stallions-banner"
       style="background-image: url(@if($bannerImage){{url( $bannerImage->stallion_image) }} @endif);" >
   
@@ -822,15 +822,16 @@
         <div class="container">
             <div class="row">
               <div class="col-lg-12">
-                  @php $pdf=DB::table('semencontracts')->where('stallion_id',$stallion->id)->first(); @endphp
+                  @php $semenlist=DB::table('semencontracts')->where('stallion_id',$stallion->id)->first(); @endphp
                   <h3>
                     If you set the target attribute to "_blank", the link will open in a new browser window or a new tab.
-                    <a href="{{url($pdf->pdf)}}" target="_blank">Click here</a>
+                    <a href="{{url($semenlist->pdf)}}" target="_blank">Click here</a>
                   </h3>
               </div>
             </div>
         </div>
     </section>
+  
     <section class="semen_contract_f pdb50">
       <div class="container">
         <div class="row">
@@ -849,15 +850,15 @@
                     >
                     <label>
                         <input type="checkbox" name="semen_options" value="Chilled Semen" />
-                        Chilled Semen $1650
+                        Chilled Semen ${{$semenlist->chilled_semen_price}}
                     </label>
                     <label>
                         <input type="checkbox" name="semen_options" value="Frozen Semen" />
-                        Frozen Semen $1650
+                        Frozen Semen ${{$semenlist->frozen_semen_price}}
                     </label>
                     <label>
                         <input type="checkbox" name="semen_options" value="Exclusive Open Mare Offer" />
-                        Exclusive Open Mare Offer
+                        Live Cover  ${{$semenlist->live_cover_price}}
                     </label>
                   </div>
                   <div class="owner_detail mb20">
@@ -873,7 +874,7 @@
                         <input
                           type="text"
                           id="trading-name"
-                          name="trading-name"
+                          name="trading_name"
                         />
                       </div>
 
@@ -912,7 +913,7 @@
                       </div>
                       <div class="form-group">
                         <label for="registration">AQHA:</label>
-                        <select id="registration" name="registration">
+                        <select id="registration" name="aqha">
                           <option value="aqha">AQHA</option>
                         </select>
                       </div>
@@ -925,7 +926,7 @@
                         <input
                           type="number"
                           id="membership-number"
-                          name="membership-number"
+                          name="membership_number"
                         />
                       </div>
                     </div>
@@ -965,7 +966,7 @@
                         >
                         <select
                           id="certificate-required"
-                          name="aqha"
+                          name="breeding_aqha"
                         >
                           <option value="aqha">AQHA</option>
                           <!-- Add more options as needed -->
@@ -981,7 +982,7 @@
                         <input
                           type="text"
                           id="vet-owner-name"
-                          name="vet-owner-name"
+                          name="vet_owner_name"
                         />
                       </div>
 
@@ -990,7 +991,7 @@
                         <input
                           type="text"
                           id="vet-trading-name"
-                          name="vet-trading-name"
+                          name="vet_trading_name"
                         />
                       </div>
 
@@ -999,25 +1000,25 @@
                         <input
                           type="text"
                           id="vet-postal-address"
-                          name="vet-postal-address"
+                          name="vet_postal_address"
                         />
                       </div>
                     </div>
                     <div class="row">
                       <div class="form-group">
                         <label for="vet-suburb">Suburb:</label>
-                        <input type="text" id="vet-suburb" name="vet-suburb" />
+                        <input type="text" id="vet_suburb" name="vet_suburb" />
                       </div>
                       <div class="form-group">
                         <label for="vet-state">State:</label>
-                        <input type="text" id="vet-state" name="vet-state" />
+                        <input type="text" id="vet-state" name="vet_state" />
                       </div>
                       <div class="form-group">
                         <label for="vet-postcode">Post Code:</label>
                         <input
                           type="text"
                           id="vet-postcode"
-                          name="vet-postcode"
+                          name="vet_postcode"
                         />
                       </div>
                     </div>
@@ -1025,11 +1026,11 @@
                     <div class="row">
                       <div class="form-group">
                         <label for="vet-phone">Phone:</label>
-                        <input type="tel" id="vet-phone" name="vet-phone" />
+                        <input type="tel" id="vet-phone" name="vet_phone" />
                       </div>
                       <div class="form-group">
                         <label for="vet-email">Email:</label>
-                        <input type="email" id="vet-email" name="vet-email" />
+                        <input type="email" id="vet-email" name="vet_email" />
                       </div>
                     </div>
                   </div>

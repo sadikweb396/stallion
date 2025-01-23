@@ -90,7 +90,7 @@
                 </li>  
                 @endcan 
                 @can('Home')
-                <li class="menu_list_items mb20 have-child @if(Request::is('admin/home/banner') || Request::is('admin/home/stallion-section') || Request::is('admin/category') || Request::is('admin/home/mare-section') || Request::is('admin/about-us/banner') || Request::is('admin/what-we-do') || Request::is('admin/our-team') || Request::is('admin/our-brain-and-thinker') || Request::is('admin/progeny/banner') || Request::is('admin/progeny-information') || Request::is('admin/event')|| Request::is('admin/contact-us/banner') || Request::is('admin/contact-us/details') || Request::is('admin/stallion/list') || Request::is('admin/mare/list') || Request::is('admin/advertisement') || Request::is('admin/photographer') || Request::is('admin/category/create') ||  Request::is('admin/category/edit/*') ||  Request::is('admin/our-team/create') ||  Request::is('admin/photographer/banner') || Request::is('admin/our-team/edit/*') || Request::is('admin/photographer/edit/*') || Request::is('admin/event/edit/*') || Request::is('admin/event/create') || Request::is('admin/badge') ) clicked_sub  @endif">
+                <li class="menu_list_items mb20 have-child @if(Request::is('admin/home/banner') || Request::is('admin/home/stallion-section') || Request::is('admin/category') || Request::is('admin/home/mare-section') || Request::is('admin/about-us/banner') || Request::is('admin/what-we-do') || Request::is('admin/our-team') || Request::is('admin/our-brain-and-thinker') || Request::is('admin/progeny/banner') || Request::is('admin/progeny-information') || Request::is('admin/event')|| Request::is('admin/contact-us/banner') || Request::is('admin/contact-us/details') || Request::is('admin/stallion/list') || Request::is('admin/mare/list') || Request::is('admin/advertisement') || Request::is('admin/photographer') || Request::is('admin/category/create') ||  Request::is('admin/category/edit/*') ||  Request::is('admin/our-team/create') ||  Request::is('admin/photographer/banner') || Request::is('admin/our-team/edit/*') || Request::is('admin/photographer/edit/*') || Request::is('admin/event/edit/*') || Request::is('admin/event/create') || Request::is('admin/badge') || Request::is('admin/service/create') || Request::is('admin/service') || Request::is('admin/service-banner') || Request::is('admin/gettouch-image') || Request::is('admin/logo') || Request::is('admin/plan-service') || Request::is('admin/gettouch/form')) clicked_sub  @endif">
                   <a
                     href="javascript:void(0);"
                     class="d-flex align-items-center gap10"
@@ -100,15 +100,15 @@
                     </span>
                     <span class="menu_items_t">All Pages</span>
                   </a>
-                  <ul class="menu_list_ul_sub"@if(Request::is('admin/home/banner') || Request::is('admin/home/stallion-section') || Request::is('admin/category') || Request::is('admin/home/mare-section') || Request::is('admin/about-us/banner') || Request::is('admin/what-we-do') || Request::is('admin/our-team') || Request::is('admin/our-brain-and-thinker') || Request::is('admin/progeny/banner') || Request::is('admin/progeny-information') || Request::is('admin/event') || Request::is('admin/contact-us/banner') || Request::is('admin/contact-us/details') || Request::is('admin/stallion/list') || Request::is('admin/mare/list') || Request::is('admin/advertisement') || Request::is('admin/photographer') || Request::is('admin/category/create') ||  Request::is('admin/category/edit/*') || Request::is('admin/our-team/create') ||  Request::is('admin/our-team/edit/*') || Request::is('admin/photographer/banner') || Request::is('admin/event/banner') || Request::is('admin/our-brain-and-thinker/create') ||  Request::is('admin/our-brain-and-thinker/edit/*') || Request::is('admin/photographer/edit/*') || Request::is('admin/event/edit/*') || Request::is('admin/event/create') || Request::is('admin/badge') || Request::is('admin/plan-member') || Request::is('admin/plan-owner')) style="display: block;@endif">
-                    <li class="menu_list_items mb20 have-child @if(Request::is('admin/home/banner') || Request::is('admin/home/stallion-section') || Request::is('admin/category') || Request::is('admin/home/mare-section') || Request::is('admin/category/create') ||  Request::is('admin/category/edit/*') || Request::is('admin/our-brain-and-thinker/create') || Request::is('admin/plan-member')  || Request::is('admin/plan-owner')||  Request::is('admin/our-brain-and-thinker/edit/*')) clicked_sub @endif">
+                  <ul class="menu_list_ul_sub"@if(Request::is('admin/home/banner') || Request::is('admin/home/stallion-section') || Request::is('admin/category') || Request::is('admin/home/mare-section') || Request::is('admin/about-us/banner') || Request::is('admin/what-we-do') || Request::is('admin/our-team') || Request::is('admin/our-brain-and-thinker') || Request::is('admin/progeny/banner') || Request::is('admin/progeny-information') || Request::is('admin/event') || Request::is('admin/contact-us/banner') || Request::is('admin/contact-us/details') || Request::is('admin/stallion/list') || Request::is('admin/mare/list') || Request::is('admin/advertisement') || Request::is('admin/photographer') || Request::is('admin/category/create') ||  Request::is('admin/category/edit/*') || Request::is('admin/our-team/create') ||  Request::is('admin/our-team/edit/*') || Request::is('admin/photographer/banner') || Request::is('admin/event/banner') || Request::is('admin/our-brain-and-thinker/create') ||  Request::is('admin/our-brain-and-thinker/edit/*') || Request::is('admin/photographer/edit/*') || Request::is('admin/event/edit/*') || Request::is('admin/event/create') || Request::is('admin/badge') || Request::is('admin/plan-member') || Request::is('admin/plan-owner') || Request::is('admin/service/create') || Request::is('admin/service') || Request::is('admin/service-banner') || Request::is('admin/gettouch-image') || Request::is('admin/logo') || Request::is('admin/plan-service') ||  Request::is('admin/gettouch/form')) style="display: block;@endif">
+                    <li class="menu_list_items mb20 have-child @if(Request::is('admin/home/banner') || Request::is('admin/home/stallion-section') || Request::is('admin/category') || Request::is('admin/home/mare-section') || Request::is('admin/category/create') ||  Request::is('admin/category/edit/*') || Request::is('admin/our-brain-and-thinker/create') || Request::is('admin/plan-member')  || Request::is('admin/plan-owner')||  Request::is('admin/our-brain-and-thinker/edit/*') || Request::is('admin/gettouch-image')) clicked_sub @endif">
                       <a href="javascript:void(0);" class="d-flex align-items-center gap10">
                         <span class="list_icon">
                         <i class="fa-solid fa-house"></i>
                         </span>
                         <span class="menu_items_t">Home</span>
                       </a>
-                      <ul class="menu_list_ul_sub list-none" @if(Request::is('admin/home/banner') || Request::is('admin/home/stallion-section') || Request::is('admin/category') || Request::is('admin/home/mare-section') || Request::is('admin/category/create') ||  Request::is('admin/category/edit/*') || Request::is('admin/plan-member') || Request::is('admin/plan-owner')) style="display: block;@endif">
+                      <ul class="menu_list_ul_sub list-none" @if(Request::is('admin/home/banner') || Request::is('admin/home/stallion-section') || Request::is('admin/category') || Request::is('admin/home/mare-section') || Request::is('admin/category/create') ||  Request::is('admin/category/edit/*') || Request::is('admin/plan-member') || Request::is('admin/plan-owner') ||  Request::is('admin/gettouch-image') ) style="display: block;@endif">
                         <li class="menu_list_items mb20  @if(Request::is('admin/home/banner')) active_menu @endif">
                           <a
                             href="{{url('admin/home/banner')}}"
@@ -177,6 +177,18 @@
                             <span class="menu_items_t">Plan Owner</span>
                           </a>
                         </li>
+
+                        <li class="menu_list_items mb20  @if(Request::is('admin/gettouch-image') ) active_menu @endif">
+                          <a
+                            href="{{url('admin/gettouch-image')}}"
+                            class="d-flex align-items-center gap10"
+                          >
+                            <span class="list_icon">
+                           
+                            </span>
+                            <span class="menu_items_t">Get Touch</span>
+                          </a>
+                        </li>    
                        
                       </ul>
                     </li>
@@ -322,6 +334,7 @@
                             <span class="menu_items_t">Our Brain & Thinker</span>
                           </a>
                         </li>
+
                       </ul>
                     </li>            
                     <li class="menu_list_items mb20 have-child @if(Request::is('admin/contact-us/banner') || Request::is('admin/contact-us/details') ) clicked_sub @endif ">
@@ -366,10 +379,9 @@
                         <span class="menu_items_t">Advertisement</span>
                       </a>
                     </li>
-                  @endcan   
-                  
+                  @endcan  
+                             
                  @can('Photographer')
-
                  <li class="menu_list_items mb20 have-child @if(Request::is('admin/photographer/banner') || Request::is('admin/photographer') || Request::is('admin/photographer/edit/*') ) clicked_sub @endif ">
                       <a href="javascript:void(0);" class="d-flex align-items-center gap10">
                         <span class="list_icon">
@@ -404,7 +416,78 @@
                       </ul>
                 </li> 
                 @endcan
-                @can('Badge')
+
+                @can('Photographer')
+                 <li class="menu_list_items mb20 have-child @if(Request::is('admin/service') || Request::is('admin/service/create') ||  Request::is('admin/service/create') || Request::is('admin/service-banner') || Request::is('admin/plan-service')  ) clicked_sub @endif ">
+                      <a href="javascript:void(0);" class="d-flex align-items-center gap10">
+                        <span class="list_icon">
+                         <i class="fas fa-sliders-h"></i>
+                        </span>
+                        <span class="menu_items_t">Service</span>
+                      </a>
+                      <ul class="menu_list_ul_sub list-none"@if(Request::is('admin/service') || Request::is('admin/service/create') || Request::is('admin/service-banner') || Request::is('admin/plan-service') ) style="display: block;@endif">
+                        <li class="menu_list_items mb20 @if(Request::is('admin/service-banner')) active_menu @endif">
+                          <a
+                            href="{{url('admin/photographer/banner')}}"
+                            class="d-flex align-items-center gap10"
+                          >
+                            <span class="list_icon">
+                             
+                            </span>
+                            <span class="menu_items_t">Banner</span>
+                          </a>
+                        </li>
+                        <li class="menu_list_items mb20 @if(Request::is('admin/service') ||  Request::is('admin/service/create')) active_menu @endif">
+                          <a
+                            href="{{url('admin/service')}}"
+                            class="d-flex align-items-center gap10"
+                          >
+                            <span class="list_icon">
+                             
+                            </span>
+                            <span class="menu_items_t">Service</span>
+                          </a>
+                        </li>  
+                        
+                        <li class="menu_list_items mb20 @if(Request::is('admin/plan-service') ||  Request::is('admin/plan-service')) active_menu @endif">
+                          <a
+                            href="{{url('admin/service')}}"
+                            class="d-flex align-items-center gap10"
+                          >
+                            <span class="list_icon">
+                             
+                            </span>
+                            <span class="menu_items_t">Plan Service</span>
+                          </a>
+                        </li> 
+                      
+                      </ul>
+                </li> 
+                @endcan
+                  <li class="menu_list_items mb20 @if(Request::is('admin/logo') ) active_menu @endif">
+                          <a
+                            href="{{url('admin/logo')}}"
+                            class="d-flex align-items-center gap10"
+                          >
+                            <span class="list_icon">
+                             
+                            </span>
+                            <span class="menu_items_t">Logo</span>
+                          </a>
+                        </li>
+
+                <li class="menu_list_items mb20 @if(Request::is('admin/gettouch/form') ) active_menu @endif">
+                          <a
+                            href="{{url('admin/gettouch/form')}}"
+                            class="d-flex align-items-center gap10"
+                          >
+                            <span class="list_icon">
+                             
+                            </span>
+                            <span class="menu_items_t">Get Touch Form</span>
+                          </a>
+                </li>
+                 @can('Badge')
                     <li class="menu_list_items mb20  @if(Request::is('admin/badge')) active_menu @endif">
                       <a href="{{ url('admin/badge') }}" class="d-flex align-items-center gap10">
                         <span class="list_icon">

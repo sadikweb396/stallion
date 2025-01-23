@@ -24,7 +24,7 @@ class PhotographerController extends Controller
     {
         try { 
         $string = str_shuffle("abcdefghijklmnopqrstwxyz");
-        if($request->photoimage){
+        if($request->photoimage){ 
 
             $photographerimage = $request->photoimage;
             $randStr = substr($string, 0, 5);
@@ -119,14 +119,14 @@ class PhotographerController extends Controller
          ->with('banner',$banner);
     }
     public function bannerStore(Request $request)
-    {
+    { 
         try { 
             $string = str_shuffle("abcdefghijklmnopqrstwxyz");
             $count=photographerbanner::count();
             if($count>0)
             {
-                if($request->image){ 
-                    $image = $request->image;
+                if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -134,6 +134,7 @@ class PhotographerController extends Controller
                     $image->move($destinationPath,$fileName);
                     $photographer = photographerbanner::first();
                     $photographer->image = $destinationPath.'/'.$fileName;
+                    $photographer->type=$request->media;
                     $photographer->save();
                 } 
                 $photographer = photographerbanner::first();
@@ -144,8 +145,8 @@ class PhotographerController extends Controller
             }
             else
             {
-                if($request->image){ 
-                $image = $request->image;
+            if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                 $randStr = substr($string, 0, 5);
                 $currYr = date("Y");
                 $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -155,6 +156,7 @@ class PhotographerController extends Controller
                 $photographer = new photographerbanner();
                 $photographer->heading = $request->heading;  
                 $photographer->image = $destinationPath.'/'.$fileName;
+                $photographer->type=$request->media;
                 $photographer->save(); 
                 toast('banner created  successfully!','success');
                 return back(); 

@@ -62,7 +62,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::prefix('admin')->name('admin.')->group(function (){
         // dashboard
         Route::get('/dashboard', [DashboardController::class,'dashboard']); 
-        // category
+
+           // home banner
+        Route::get('home/banner',[HomebannerController::class,'index']);
+        Route::post('home-banner',[HomebannerController::class,'store'])->name('home-banner');
+
+        // home page category
         Route::prefix('category')->name('category.')->group(function(){
         Route::get('/',[CategoryController::class,'index']);
         Route::get('create',[CategoryController::class,'create']);
@@ -71,6 +76,59 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('update',[CategoryController::class,'update'])->name('update');
         });
 
+        // home page content performance progeny route
+        Route::get('home/mare-section',[HomeController::class,'mareSection']);
+      
+        Route::post('mare-section/store',[HomeController::class,'mareSectionStore'])->name('mare-section.store');
+   
+        // home page content topside route
+        Route::get('home/stallion-section',[HomeController::class,'stallionSection']);
+   
+        Route::post('stallion-section/store',[HomeController::class,'stallionSectionStore'])->name('stallion-section.store');
+     
+        // home page plan member service
+        Route::get('plan-member',[PlanController::class,'planMember']);
+        Route::post('plan-member-store',[PlanController::class,'planMemberStore'])->name('plan-member-store');
+            
+        // home page plan owner service
+        Route::get('plan-owner',[PlanController::class,'planOwner']);
+        Route::post('plan-owner-store',[PlanController::class,'planOwnerStore'])->name('plan-owner-store');
+
+        Route::get('gettouch-image',[GettouchController::class,'gettouchImage']);
+        Route::post('gettouch-image-store',[GettouchController::class,'gettouchImageStore'])->name('gettouch-image-store');
+
+        // about us page banner 
+        Route::prefix('about-us')->name('about-us.')->group(function(){
+            Route::get('banner',[AboutusController::class,'banner']);
+            Route::post('banner-store',[AboutusController::class,'bannerStore'])->name('banner-store');
+        });
+
+         // about us page Our Team
+         Route::prefix('our-team')->name('our-team.')->group(function(){
+            Route::get('/',[OurteamController::class,'index']);
+            Route::get('create',[OurteamController::class,'create']);
+            Route::post('store',[OurteamController::class,'store'])->name('store');
+            Route::get('edit/{id}',[OurteamController::class,'edit']);
+            Route::post('update',[OurteamController::class,'update'])->name('update');
+            Route::get('delete/{id}',[OurteamController::class,'delete']);
+            });
+        
+        // about  us page  
+        Route::prefix('what-we-do')->name('what-we-do.')->group(function(){
+                Route::get('/',[AboutusController::class,'whatweDo']);
+                Route::post('store',[AboutusController::class,'whatwedoStore'])->name('store');
+            });
+        // about us page
+        Route::prefix('our-brain-and-thinker')->name('our-brain-and-thinker.')->group(function(){
+                Route::get('/',[AboutusController::class,'ourBrainrainThinker']);
+                Route::get('create',[AboutusController::class,'create']);
+                Route::post('store',[AboutusController::class,'ourbrainrainthinkerStore'])->name('store');
+                Route::get('edit/{id}',[AboutusController::class,'edit']);
+                Route::post('update',[AboutusController::class,'update'])->name('update');
+                Route::get('delete/{id}',[AboutusController::class,'delete']);
+            });
+           
+          
         // photographer 
         Route::prefix('photographer')->name('photographer.')->group(function(){
             Route::get('/',[PhotographerController::class,'index']);  
@@ -78,43 +136,62 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('edit/{id}',[PhotographerController::class,'edit'])->name('edit');
             Route::post('update',[PhotographerController::class,'update'])->name('update');
         });
-
-         // photographer 
-         Route::prefix('badge')->name('badge.')->group(function(){
-            Route::get('/',[BadgeController::class,'index']);  
-            Route::get('create',[BadgeController::class,'create']);  
-            Route::post('store',[BadgeController::class,'store'])->name('store');
-            Route::get('edit/{id}',[BadgeController::class,'edit'])->name('edit');
-            Route::post('update',[BadgeController::class,'update'])->name('update');
-            Route::get('delete/{id}',[BadgeController::class,'delete']);  
+        // photographer banner
+        Route::prefix('photographer')->name('photographer.')->group(function(){
+            Route::get('banner',[PhotographerController::class,'banner']);
+            Route::post('banner-store',[PhotographerController::class,'bannerStore'])->name('banner-store');
         });
+            
+      // event 
+        Route::prefix('event')->name('event.')->group(function(){
+            Route::get('/',[EventController::class,'index']);
+            Route::get('create',[EventController::class,'create']);
+            Route::post('store',[EventController::class,'store'])->name('store');
+            Route::get('edit/{id}',[EventController::class,'edit']);
+            Route::post('update',[EventController::class,'update'])->name('update');
+            Route::get('delete/{id}',[EventController::class,'delete']);
+
+            Route::get('banner',[EventController::class,'banner']);
+            Route::post('banner-store',[EventController::class,'bannerStore'])->name('banner-store');
+
+        });
+
+          //event information
+          Route::get('event-information',[EventController::class,'eventInformation']);
+          Route::post('event-information-store',[EventController::class,'eventInformationStore'])->name('event-information-store');
+
+         // service
+       Route::prefix('service')->name('service.')->group(function(){
+        Route::get('/',[serviceController::class,'index']);
+        Route::get('create',[serviceController::class,'create']);
+        Route::post('store',[serviceController::class,'store'])->name('store');
+        Route::get('edit/{id}',[serviceController::class,'edit']);
+        Route::post('update/{id}',[serviceController::class,'update'])->name('update');
+        Route::get('delete/{id}',[serviceController::class,'delete']);
+    });
+    
+    // plan  service
+    Route::get('plan-service',[PlanController::class,'planService']);
+    Route::post('plan-service-store',[PlanController::class,'planServiceStore'])->name('plan-service-store');
+    
+    // service banner
+    Route::get('service-banner',[serviceController::class,'serviceBanner']);
+    Route::post('service-banner-store',[serviceController::class,'serviceBannerStore'])->name('service-banner-store');
+
+    // stallion list
+    Route::get('stallions',[StallionController::class,'index']);
         
-        // stallion list
-        Route::get('stallions',[StallionController::class,'index']);
-        
-        // mare list
-        Route::get('mares',[MareController::class,'index']);
+    // mare list
+    Route::get('mares',[MareController::class,'index']);
 
-        Route::get('home',[HomeController::class,'index']);
+       // approve stallion & mare 
+       Route::post('approve/{id}',[StallionController::class,'approve']);
 
-        // approve stallion & mare 
-        Route::post('approve/{id}',[StallionController::class,'approve']);
+       // decline stallion & mare
+       Route::post('decline/{id}',[StallionController::class,'decline'])->name('decline');
 
-        // decline stallion & mare
-        Route::post('decline/{id}',[StallionController::class,'decline'])->name('decline');
-
-        Route::post('active/{id}',[StallionController::class,'active'])->name('active');
-        Route::post('inactive/{id}',[StallionController::class,'inactive'])->name('inactive');
-
-        // home page content performance progeny route
-        Route::get('home/mare-section',[HomeController::class,'mareSection']);
-      
-        Route::post('mare-section/store',[HomeController::class,'mareSectionStore'])->name('mare-section.store');
-
-        // home page content topside route
-        Route::get('home/stallion-section',[HomeController::class,'stallionSection']);
-
-        Route::post('stallion-section/store',[HomeController::class,'stallionSectionStore'])->name('stallion-section.store');
+       Route::post('active/{id}',[StallionController::class,'active'])->name('active');
+       Route::post('inactive/{id}',[StallionController::class,'inactive'])->name('inactive');
 
         // stallion list page details route
         Route::get('stallion/list',[StallionController::class,'stallionList']);
@@ -123,79 +200,21 @@ Route::group(['middleware' => ['auth']], function() {
         // mare list page details route
         Route::get('mare/list',[MareController::class,'mareList']);
         Route::post('mare-list',[MareController::class,'mareListStore'])->name('mare-list.store');
-        
-        // plan 
-        Route::get('plan',[PlanController::class,'index'])->name('plans.index');
-        Route::get('plan/create',[PlanController::class,'create']);
-        Route::post('plan',[PlanController::class,'store'])->name('plan.store');
-        Route::get('plan/edit/{id}',[PlanController::class,'edit']);
-        Route::post('plan/update/{id}',[PlanController::class,'update'])->name('plan.update');
-        Route::get('plan/delete/{id}',[PlanController::class,'delete']);
 
-        // home banner
-        Route::get('home/banner',[HomebannerController::class,'index']);
-        Route::post('home-banner',[HomebannerController::class,'store'])->name('home-banner');
+        // stallion view 
+        Route::get('stallion/view/{id}',[StallionController::class,'stallionView']);
+        // mare view
+        Route::get('mare/view/{id}',[StallionController::class,'stallionView']);
 
-        // advertisement
-        Route::prefix('advertisement')->name('advertisement.')->group(function(){
-        Route::get('/',[AdvertisementsController::class,'index']);
-        Route::get('create',[AdvertisementsController::class,'create']);
-        Route::post('store',[AdvertisementsController::class,'store'])->name('store');
-        Route::get('edit/{id}',[AdvertisementsController::class,'edit']);
-        Route::post('update',[AdvertisementsController::class,'update'])->name('update');
-        Route::get('delete/{id}',[AdvertisementsController::class,'delete']);
-        });
+        Route::get('popupdata',[StallionController::class,'popupdata']);
 
-        // event 
-        Route::prefix('event')->name('event.')->group(function(){
-        Route::get('/',[EventController::class,'index']);
-        Route::get('create',[EventController::class,'create']);
-        Route::post('store',[EventController::class,'store'])->name('store');
-        Route::get('edit/{id}',[EventController::class,'edit']);
-        Route::post('update',[EventController::class,'update'])->name('update');
-        Route::get('delete/{id}',[EventController::class,'delete']);
-        //banner
-        Route::get('banner',[EventController::class,'banner']);
-        Route::post('banner-store',[EventController::class,'bannerStore'])->name('banner-store');
-        });
-        
-        //event information
-        Route::get('event-information',[EventController::class,'eventInformation']);
-        Route::post('event-information-store',[EventController::class,'eventInformationStore'])->name('event-information-store');
-        
-        // logo
-        Route::get('logo',[LogoController::class,'index']);
-        Route::post('store',[LogoController::class,'store'])->name('logo.store');
+        Route::post('set-image',[StallionController::class,'setImage'])->name('set-image');
 
-        // Our Team
-        Route::prefix('our-team')->name('our-team.')->group(function(){
-        Route::get('/',[OurteamController::class,'index']);
-        Route::get('create',[OurteamController::class,'create']);
-        Route::post('store',[OurteamController::class,'store'])->name('store');
-        Route::get('edit/{id}',[OurteamController::class,'edit']);
-        Route::post('update',[OurteamController::class,'update'])->name('update');
-        Route::get('delete/{id}',[OurteamController::class,'delete']);
-        });
+        Route::post('update-stallion',[StallionController::class,'updateStallion'])->name('update.stallion');
 
-        Route::prefix('what-we-do')->name('what-we-do.')->group(function(){
-            Route::get('/',[AboutusController::class,'whatweDo']);
-            Route::post('store',[AboutusController::class,'whatwedoStore'])->name('store');
-        });
+        Route::post('update-stallion-semencontact',[StallionController::class,'updateStallionSemenContact'])->name('update.stallion-semencontact');
 
-        Route::prefix('our-brain-and-thinker')->name('our-brain-and-thinker.')->group(function(){
-            Route::get('/',[AboutusController::class,'ourBrainrainThinker']);
-            Route::get('create',[AboutusController::class,'create']);
-            Route::post('store',[AboutusController::class,'ourbrainrainthinkerStore'])->name('store');
-            Route::get('edit/{id}',[AboutusController::class,'edit']);
-            Route::post('update',[AboutusController::class,'update'])->name('update');
-            Route::get('delete/{id}',[AboutusController::class,'delete']);
-        });
-       
-        Route::prefix('about-us')->name('about-us.')->group(function(){
-            Route::get('banner',[AboutusController::class,'banner']);
-            Route::post('banner-store',[AboutusController::class,'bannerStore'])->name('banner-store');
-        });
-
+        // contact us 
         Route::prefix('contact-us')->name('contact-us.')->group(function(){
             Route::get('details',[ContactusController::class,'details']);
             Route::post('details-store',[ContactusController::class,'detailsStore'])->name('details-store');
@@ -203,19 +222,18 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('banner-store',[ContactusController::class,'bannerStore'])->name('banner-store');
         });
 
+        // progeny page 
+        Route::get('progeny',[ProgenyController::class,'progeny']);
+        Route::get('progeny-information',[ProgenyController::class,'progenyInformation']);
+        Route::post('progeny-information-store',[ProgenyController::class,'progenyinformationStore'])->name('progeny-information-store');
+
+        // progeny banner
         Route::prefix('progeny')->name('progeny.')->group(function(){
             Route::get('banner',[ProgenyController::class,'banner']);
             Route::post('banner-store',[ProgenyController::class,'bannerStore'])->name('banner-store');
         });
-
-        Route::prefix('photographer')->name('photographer.')->group(function(){
-            Route::get('banner',[PhotographerController::class,'banner']);
-            Route::post('banner-store',[PhotographerController::class,'bannerStore'])->name('banner-store');
-        });
-      
-        Route::get('progeny-information',[ProgenyController::class,'progenyInformation']);
-        Route::post('progeny-information-store',[ProgenyController::class,'progenyinformationStore'])->name('progeny-information-store');
-
+        
+        // search
         Route::get('user-search',[App\Http\Controllers\UserController::class,'userSearch'])->name('user-search');
 
         Route::get('permission-search',[App\Http\Controllers\PermissionController::class,'permissionSearch'])->name('permission-search');
@@ -233,73 +251,61 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('our-team-search',[OurteamController::class,'ourteamSearch'])->name('our-team-search');
 
         Route::get('our-brain-and-thinker-search',[AboutusController::class,'ourBrainerandThinkerSearch'])->name('our-brain-and-thinker-search');
-      
-       //progeny
-       Route::get('progeny',[ProgenyController::class,'progeny']);
+        
 
-       Route::get('stallion/view/{id}',[StallionController::class,'stallionView']);
+         // badge 
+         Route::prefix('badge')->name('badge.')->group(function(){
+            Route::get('/',[BadgeController::class,'index']);  
+            Route::get('create',[BadgeController::class,'create']);  
+            Route::post('store',[BadgeController::class,'store'])->name('store');
+            Route::get('edit/{id}',[BadgeController::class,'edit'])->name('edit');
+            Route::post('update',[BadgeController::class,'update'])->name('update');
+            Route::get('delete/{id}',[BadgeController::class,'delete']);  
+        });
+        
+          // plan 
+          Route::get('plan',[PlanController::class,'index'])->name('plans.index');
+          Route::get('plan/create',[PlanController::class,'create']);
+          Route::post('plan',[PlanController::class,'store'])->name('plan.store');
+          Route::get('plan/edit/{id}',[PlanController::class,'edit']);
+          Route::post('plan/update/{id}',[PlanController::class,'update'])->name('plan.update');
+          Route::get('plan/delete/{id}',[PlanController::class,'delete']);
 
-       Route::get('mare/view/{id}',[StallionController::class,'stallionView']);
 
-       Route::get('popupdata',[StallionController::class,'popupdata']);
+          // advertisement
+          Route::prefix('advertisement')->name('advertisement.')->group(function(){
+            Route::get('/',[AdvertisementsController::class,'index']);
+            Route::get('create',[AdvertisementsController::class,'create']);
+            Route::post('store',[AdvertisementsController::class,'store'])->name('store');
+            Route::get('edit/{id}',[AdvertisementsController::class,'edit']);
+            Route::post('update',[AdvertisementsController::class,'update'])->name('update');
+            Route::get('delete/{id}',[AdvertisementsController::class,'delete']);
+            });
+        
+                    
+        // logo
+        Route::get('logo',[LogoController::class,'index']);
+        Route::post('store',[LogoController::class,'store'])->name('logo.store');
 
-       Route::post('set-image',[StallionController::class,'setImage'])->name('set-image');
+        Route::get('home',[HomeController::class,'index']);
 
-       Route::get('plan-member',[PlanController::class,'planMember']);
-       Route::post('plan-member-store',[PlanController::class,'planMemberStore'])->name('plan-member-store');
+        Route::get('gettouch/form',[GettouchController::class,'gettouch']);
 
-       Route::get('plan-owner',[PlanController::class,'planOwner']);
-       Route::post('plan-owner-store',[PlanController::class,'planOwnerStore'])->name('plan-owner-store');
-
-       Route::get('plan-service',[PlanController::class,'planService']);
-       Route::post('plan-service-store',[PlanController::class,'planServiceStore'])->name('plan-service-store');
-
-       Route::prefix('service')->name('service.')->group(function(){
-        Route::get('/',[serviceController::class,'index']);
-        Route::get('create',[serviceController::class,'create']);
-        Route::post('store',[serviceController::class,'store'])->name('store');
-        Route::get('edit/{id}',[serviceController::class,'edit']);
-        Route::post('update/{id}',[serviceController::class,'update'])->name('update');
-        Route::get('delete/{id}',[serviceController::class,'delete']);
     });
-
-    Route::prefix('service')->name('service.')->group(function(){
-        Route::get('/',[serviceController::class,'index']);
-        Route::get('create',[serviceController::class,'create']);
-        Route::post('store',[serviceController::class,'store'])->name('store');
-        Route::get('edit/{id}',[serviceController::class,'edit']);
-        Route::post('update/{id}',[serviceController::class,'update'])->name('update');
-        Route::get('delete/{id}',[serviceController::class,'delete']);
-    });
-    Route::get('gettouch-image',[GettouchController::class,'gettouchImage']);
-    Route::post('gettouch-image-store',[GettouchController::class,'gettouchImageStore'])->name('gettouch-image-store');
-    // service banner
-    Route::get('service-banner',[serviceController::class,'serviceBanner']);
-    Route::post('service-banner-store',[serviceController::class,'serviceBannerStore'])->name('service-banner-store');
-
-    Route::post('update-stallion',[StallionController::class,'updateStallion'])->name('update.stallion');
-
-    // Route::get('service/more-information/create',[serviceController::class,'moreInformationCreate']);
-    // Route::get('service/more-information',[serviceController::class,'moreInformation']);
-    // Route::post('service-more-information-store',[serviceController::class,'serviceMoreInformationStore'])->name('service-more-information-store');
-    });
-
- 
     
+    // Subscription and Follow Routes
     Route::post('update-profile',[ProfileController::class,'updateProfile'])->name('update-profile');
     Route::get('followed/event',[EventController::class,'followedEvent']);
     Route::get('subscription',[subscriptionController::class,'subscription']);
     Route::get('subscription/{id}',[subscriptionController::class,'singleSubscription']);
     Route::get('subscription-renew/{id}',[subscriptionController::class,'renewSubscription']);
-   
     Route::get('/stallion-details/{id}', [StallionController::class, 'getstalliondetails'])->name('stallion.details');
+    Route::get('/stallion-semen-details/{id}',[StallionController::class,'getSemenDetails'])->name('stallion-semen-details');
   
 });
 
-
-
 // Get touch form fill route
-Route::get('gettouch',[GettouchController::class,'gettouch']);
+
 Route::post('gettouch-store',[GettouchController::class,'store'])->name('gettouch-store');
 // progeny form fill route
 Route::post('progeny',[ProgenyController::class,'store'])->name('progeny-form');

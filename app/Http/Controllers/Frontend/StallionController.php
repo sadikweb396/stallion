@@ -85,7 +85,7 @@ class StallionController extends Controller
         ->with('previewImage',$previewImage)
         ->with('stallionimages',$stallionimages);
     }
-    else
+    else  
     {
         $count=Stallion::where('registration_details',$slug)->count();
         if($count==1)

@@ -4,18 +4,21 @@
     <section
       class="hero_banner_m d-flex align-items-center stallions-banner"
       style="background-image: url(@if($stalliondetails){{ $stalliondetails->banner_image }} @endif);" >
+      <video autoplay loop muted playsinline class="background-video">
+        <source src="{{url($stalliondetails->banner_image)}}" type="video/mp4">
+      </video>
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <div class="hero_banner_i">
-                <div class="banner_heading-m text-center mb20">
-                  <h1>@if($stalliondetails){{$stalliondetails->banner_heading}}@endif</h1>
-                </div>
-                <div class="para_banner text-center">
-                  <p>
-                  @if($stalliondetails){{$stalliondetails->banner_pargaraph}}@endif
-                  </p>
-                </div>
+              <div class="banner_heading-m text-center mb20">
+                <h1>@if($stalliondetails){{$stalliondetails->banner_heading}}@endif</h1>
+              </div>
+              <div class="para_banner text-center">
+                <p>
+                @if($stalliondetails){{$stalliondetails->banner_pargaraph}}@endif
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -259,6 +262,43 @@
             });
             }
         });
+        $("body").on('click','.follow-button',function(){
+        var stallionId =  $(this).attr('data'); 
+        var button = $(this);
+        var action = button.text().trim().toLowerCase();    
+        $.ajax({
+            url: '/stallions-follow',
+            type:'Get',
+            data:{
+              stallionId:stallionId,
+            },
+            success: function(response) {
+            if (response.success) {
+            button.text('★'); 
+            button.toggleClass('follow-button unfollow-button');  
+            }
+          }
+        });
+      })
+
+      $("body").on('click','.unfollow-button',function(){
+        var stallionId =  $(this).attr('data'); 
+        var button = $(this);
+        var action = button.text().trim().toLowerCase();    
+        $.ajax({
+            url: '/stallions-unfollow',
+            type:'Get',
+            data:{
+              stallionId:stallionId,
+            },
+            success: function(response) {
+            if (response.success) {
+            button.text('☆'); 
+            button.toggleClass('follow-button unfollow-button');  
+            }
+          }
+        });
+      })
     </script>
 @endpush
-@endsection
+@endsection 

@@ -166,9 +166,7 @@ section.stallion-info_m {
                     referrerpolicy="strict-origin-when-cross-origin"
                     allowfullscreen
                   ></iframe>
-
-                </div>
-               
+                </div>      
               </div>
               @endif
             </div>
@@ -203,9 +201,7 @@ section.stallion-info_m {
                 <div class="progeny_para">
                   {!!$stallion->background_story!!}
                 </div>
-
               </div>
-
             </div>
           </div>
         </div>
@@ -730,7 +726,6 @@ section.stallion-info_m {
       id="categorySlider"
       class="advertisement_sec background-img categorySlider"
     >
-    @php $advertisements=DB::table('advertisements')->where('page','Single Mare')->get(); @endphp
       <div class="container_fluid">
         <div class="row">
           <div class="col-lg-12">
@@ -740,14 +735,22 @@ section.stallion-info_m {
             >
             @foreach($advertisements as $advertisement)
               <div class="item">
-                <a href="{{url($advertisement->link)}}"target="_blank">
-                  <div
-                    class="catimg d-flex align-items-end justify-content-center"
-                    style="background-image: url('{{url( $advertisement->image) }}');">
+                <a href="{{ url($advertisement->link) }}" target="_blank">
+                  <div class="catimg d-flex align-items-end justify-content-center"
+                      @if($advertisement->type === 'image') 
+                        style="background-image: url('{{ asset($advertisement->image) }}');"
+                      @endif>
+
+                    @if($advertisement->type === 'video')
+                      <video autoplay loop muted playsinline width="100%" controls>
+                        <source src="{{ asset($advertisement->image) }}" type="video/mp4">
+                      
+                      </video>
+                    @endif
                   </div>
                 </a>
-              </div>  
-            @endforeach 
+              </div>
+            @endforeach
             </div>
           </div>
         </div>

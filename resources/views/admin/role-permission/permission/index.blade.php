@@ -1,11 +1,7 @@
 
 @extends('layouts.owner.app')
 @section('content')
-<style>
- /* .Previous{
-    display:none;
-  } */
-</style>
+
 <div class="dash_body_inner dash_main_body">
             <div class="our_stallions stallions_details events_m">
               <div class="add_new_stallions_list">

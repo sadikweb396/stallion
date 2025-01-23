@@ -28,8 +28,8 @@ class ContactusController extends Controller
             $count=contactusbanner::count();
             if($count>0)
             {
-                if($request->image){ 
-                    $image = $request->image;
+                if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                    $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                     $randStr = substr($string, 0, 5);
                     $currYr = date("Y");
                     $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -37,6 +37,7 @@ class ContactusController extends Controller
                     $image->move($destinationPath,$fileName);
                     $contactusbanner = contactusbanner::first();
                     $contactusbanner->image = $destinationPath.'/'.$fileName;
+                    $contactusbanner->type=$request->media;
                     $contactusbanner->save();
                 } 
                 $contactusbanner = contactusbanner::first();
@@ -45,10 +46,10 @@ class ContactusController extends Controller
                 toast('banner updated  successfully!','success');
                 return back(); 
             }
-            else
+            else 
             {
-                if($request->image){ 
-                $image = $request->image;
+            if ($request->hasFile('bannerimage') || $request->hasFile('bannervideo')) {
+                $image = $request->file('bannerimage') ?? $request->file('bannervideo'); 
                 $randStr = substr($string, 0, 5);
                 $currYr = date("Y");
                 $fileName = time().'_'.$randStr.'.'.$image->getClientOriginalExtension();
@@ -58,6 +59,7 @@ class ContactusController extends Controller
                 $contactusbanner = new contactusbanner();
                 $contactusbanner->heading = $request->heading; 
                 $contactusbanner->image = $destinationPath.'/'.$fileName;
+                $contactusbanner->type=$request->media;
                 $contactusbanner->save(); 
                 toast('banner created  successfully!','success');
                 return back(); 

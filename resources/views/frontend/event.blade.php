@@ -2,9 +2,12 @@
 @section('content')
     <!-- header end -->
     <!-- banner section -->
-    <section 
-      class="hero_banner_m d-flex align-items-center stallions-banner hero_calender"
+    <section
+      class="hero_banner_m d-flex align-items-center stallions-banner  hero_calender"
       style="background-image: url(@if($eventbanner){{url( $eventbanner->image) }} @endif);" >
+      <video autoplay loop muted playsinline class="background-video">
+        <source src="{{url($eventbanner->image)}}" type="video/mp4">
+      </video>
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -36,40 +39,96 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <select class="dropdown-location"name="event_location">
 
-                          <option value="">Select Location</option>
-                          @php $locations=DB::table('eventdates')->select('event_location')->distinct()->get(); @endphp
+                        <select class="dropdown-location"name="zone">
+                          <option value="">Select Zone</option>
+                          @php $locations=DB::table('eventdates')->select('zone')->distinct()->get(); @endphp
                           @foreach($locations as $location)
                           @if(Request::path()=='event/seach')
-                          <option value="{{ $location->event_location }}" 
-                              @if($eventLocation == $location->event_location) selected @endif>
-                              {{ $location->event_location }}
+                          @if(!empty($location->zone))
+                          <option value="{{ $location->zone }}" 
+                              @if($zone == $location->zone) selected @endif>
+                              {{ $location->zone }}
                           </option>
+                          @endif
                          @else
-                          <option value="{{ $location->event_location }}">
-                              {{ $location->event_location }}
+                          @if(!empty($location->zone))
+                          <option value="{{ $location->zone }}">
+                              {{ $location->zone }}
                           </option>
+                          @endif
+                          @endif
+                          @endforeach   
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <select class="dropdown-location"name="state">
+
+                          <option value="">Select State</option>
+                          @php $locations=DB::table('eventdates')->select('state')->distinct()->get(); @endphp
+                          @foreach($locations as $location)
+                          @if(Request::path()=='event/seach')
+                          @if(!empty($location->state))
+                          <option value="{{ $location->state }}" 
+                              @if($state == $location->state) selected @endif>
+                              {{ $location->state }}
+                          </option>
+                         @endif
+                         @else
+                         @if(!empty($location->state))
+                          <option value="{{ $location->state }}">
+                              {{ $location->state }}
+                          </option>
+                          @endif
                           @endif
                           @endforeach
                          
                         </select>
                       </div>
                       <div class="form-group">
-                        <select class="dropdown-month"name="month">
+                          <select class="dropdown-month"name="month">
                           <option value="">Select Month</option>
-                          <option value="01">January</option>
-                          <option value="02">February</option>
-                          <option value="03">March</option>
-                          <option value="12">December</option>
+                              @php 
+                                  $locations = DB::table('eventdates')->select('month')->distinct()->get();
+                                  $monthNames = [
+                                      '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April', '05' => 'May', '06' => 'June',
+                                      '07' => 'July', '08' => 'August', '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
+                                  ];
+                              @endphp
+                              @foreach($locations as $location)
+                                  @php
+                                      $numericMonth = (int)$location->month; 
+                                  @endphp
+                                  @if(Request::path() == 'event/seach')
+                                      <option value="{{ $location->month }}" 
+                                          @if($month == $location->month) selected @endif>
+                                          {{ $monthNames[str_pad($numericMonth, 2, '0', STR_PAD_LEFT)] }}
+                                      </option>
+                                  @else
+                                      <option value="{{  $location->month }}">
+                                          {{ $monthNames[str_pad($numericMonth, 2, '0', STR_PAD_LEFT)] }}
+                                      </option>
+                                  @endif
+                              @endforeach
                         </select>
+                        
                       </div>
                       <div class="form-group">
                         <select class="dropdown-year"name="year">
                           <option value="">Select Year</option>
-                          <option value="2021">2021</option>
-                          <option value="2022">2022</option>
-                          <option value="2024">2024</option>
+                          @php $locations=DB::table('eventdates')->select('year')->distinct()->get(); @endphp
+                          @foreach($locations as $location)
+                          @if(Request::path()=='event/seach')
+                          <option value="{{ $location->year }}" 
+                              @if($year == $location->year) selected @endif>
+                              {{ $location->year }}
+                          </option>
+                         @else
+                          <option value="{{ $location->year }}">
+                              {{ $location->year }}
+                          </option>
+                          @endif
+                          @endforeach
                         </select>
                       </div>
                       <div class="form-group">
@@ -104,14 +163,22 @@
             >
             @foreach($advertisements as $advertisement)
               <div class="item">
-                <a href="{{url($advertisement->link)}}"target="_blank">
-                  <div
-                    class="catimg d-flex align-items-end justify-content-center"
-                    style="background-image: url({{$advertisement->image }});" >
+                <a href="{{ url($advertisement->link) }}" target="_blank">
+                  <div class="catimg d-flex align-items-end justify-content-center"
+                      @if($advertisement->type === 'image') 
+                        style="background-image: url('{{ asset($advertisement->image) }}');"
+                      @endif>
+
+                    @if($advertisement->type === 'video')
+                      <video autoplay loop muted playsinline width="100%" controls>
+                        <source src="{{ asset($advertisement->image) }}" type="video/mp4">
+                       
+                      </video>
+                    @endif
                   </div>
                 </a>
-              </div>  
-            @endforeach 
+              </div>
+            @endforeach
             </div>
           </div>
         </div>
@@ -273,8 +340,8 @@ $(document).ready(function() {
 var csrfToken = $('meta[name="csrf-token"]').attr('content');
 var year = <?php echo json_encode($year); ?>;
 var month = <?php echo json_encode($month); ?>;
-var eventLocation = <?php echo json_encode($eventLocation); ?>;
-var eventLocation = <?php echo json_encode($eventLocation); ?>;
+var zone = <?php echo json_encode($zone); ?>;
+var state = <?php echo json_encode($state); ?>;
 var eventType=<?php echo json_encode($eventType); ?>;
 var eventcount=<?php echo json_encode($eventcount); ?>;
 var eventcount=eventcount+1;
@@ -295,7 +362,8 @@ function fetchUsers(page) {
             _token: csrfToken, 
             year: year,         
             month: month,  
-            event_location: eventLocation,
+            zone: zone,
+            state: state,
             event_type: eventType    
         },
         success: function(data) {
@@ -332,6 +400,24 @@ $("body").on('click','.follow-button', function() {
   });
 
 })
+
+$("body").on('click', '[data-id]', function() {
+var eventId =  $(this).data('id');
+
+$.ajax({
+          url: '/event-poup',
+          type: 'Get',
+          data: {
+            eventId: eventId,     
+        },      
+          success: function(data) {
+              $('#eventpoup').html(data); 
+          },
+          error: function(xhr, status, error) {
+              console.error("Error: " + error); 
+          }
+      });
+});
 
 $("body").on('click','.unfollow-button',function(){
   var eventId =  $(this).attr('data'); 
@@ -373,15 +459,19 @@ $("body").on('click','.unfollow-button',function(){
 $(document).ready(function(){
 var eventcount=<?php echo json_encode($eventcount); ?>;
 var eventcount=eventcount+1;
+
 $(document).on('click','.pagination a', function(e) {
       e.preventDefault();
       var page = $(this).attr('href').split('page=')[1]; 
       
-      // if(page==eventcount)
-      // {
-      //   var page=eventcount;
+     
+      if(page==eventcount)
+      {
        
-      // }
+        var page=<?php echo json_encode($eventcount); ?>;
+       
+       
+      }
       fetchUsers(page);
   });
 
@@ -401,6 +491,7 @@ $(document).on('click','.pagination a', function(e) {
 });
 $("body").on('click', '[data-id]', function() {
 var eventId =  $(this).data('id');
+
 $.ajax({
           url: '/event-poup',
           type: 'Get',

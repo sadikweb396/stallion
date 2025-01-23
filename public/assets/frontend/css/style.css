@@ -435,3 +435,42 @@ header.main_header_m .menu_m .main_sidebar_section .sidebar_inner_e .main_menu_m
       opacity: 1;
   }
 }
+
+
+.relative .w-5{
+  display: none;
+}
+.relative span{
+  display: none;
+}
+.relative a{
+  display: none;
+}
+.flex .relative + a {
+  margin-left: 20px; 
+}
+
+.event-card
+{
+  width: 30%;
+}
+
+.background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1; 
+  object-fit: cover; 
+}
+
+.hero_banner_m{
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
